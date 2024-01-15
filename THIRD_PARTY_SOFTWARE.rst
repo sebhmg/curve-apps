@@ -1,4 +1,4 @@
-The my-app repository and source distributions bundle several libraries that are
+The edge-detection repository and source distributions bundle several libraries that are
 compatibly licensed.  We list these here.
 
 # TODO

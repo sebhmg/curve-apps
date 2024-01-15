@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "my-app"
+name = "edge-detection"
 version = "0.1.0-alpha.1"
 license = ""  # TODO: pick a license type
 description = "My application"
 authors = ["Mira Geoscience <support@mirageoscience.com>"]
-repository = "https://github.com/MiraGeoscience/my-app"
+repository = "https://github.com/MiraGeoscience/edge-detection"
 homepage = "https://mirageoscience.com"
 readme = "README.rst"
 packages = [
-     { include = "my_app" },
-     { include = "my_app-assets" },
+     { include = "edge_detection" },
+     { include = "edge_detection-assets" },
 ]
 
 # TODO: adjust classifiers
@@ -28,7 +28,7 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-my_app_hello = 'my_app.commands.hello'
+my_app_hello = 'edge_detection.commands.hello'
 
 [tool.poetry.dependencies]
 python = "^3.9, <3.11"
@@ -88,13 +88,13 @@ plugins = [
 ]
 
 [tool.pytest.ini_options]
-addopts = "--cov my_app --cov-report html --cov-report term-missing:skip-covered"
+addopts = "--cov edge_detection --cov-report html --cov-report term-missing:skip-covered"
 
 [tool.coverage.run]
 branch = true
-source = ["my_app"]
+source = ["edge_detection"]
 omit = [
-    "my_app/commands/hello_world.py"
+    "edge_detection/commands/hello_world.py"
 ]
 
 [tool.coverage.report]
