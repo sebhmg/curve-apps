@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: d6229e1567a0517fa9a4c0d48312dc76036a7de02428fbf7ddc1073f4726eda1
-    linux-64: 0fea1d203cbb2386200af1be92784d7bceb40a9c484c3ff829df8fe562dbcd9c
+    win-64: cf4585b0087d0918d31739f129dfbbe0a09cdec00198db577401b96fd36dcc99
+    linux-64: c08a7974863fa58a6e260f2877fddf396522adf7ce9149bd3ac75f9a444ec60e
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1284,8 +1284,8 @@ package:
   hash:
     md5: a92a6440c3fe7052d63244f3aba2a4a7
     sha256: f3c5be8673bfd905c4665efcb27fa50192f24f84fa8eff2f19cba5d09753d905
-  category: dev
-  optional: true
+  category: main
+  optional: false
 - name: wheel
   version: 0.42.0
   manager: conda
@@ -1514,8 +1514,8 @@ package:
   hash:
     md5: c16524c1b7227dc80b36b4fa6f77cc86
     sha256: d795c1eb1db4ea147f01ece74e5a504d7c2e8d5ee8c11ec987884967dd938f9c
-  category: dev
-  optional: true
+  category: main
+  optional: false
 - name: urllib3
   version: 2.1.0
   manager: conda
@@ -1528,6 +1528,19 @@ package:
   hash:
     md5: f8ced8ee63830dec7ecc1be048d1470a
     sha256: eff5029820b4eaeab3a291a39854a6cd8fc8c4216264087f68c2d8d59822c869
+  category: main
+  optional: false
+- name: annotated-types
+  version: 0.6.0
+  manager: conda
+  platform: linux-64
+  dependencies:
+    python: '>=3.7'
+    typing-extensions: '>=4.0.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/annotated-types-0.6.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 997c29372bdbe2afee073dff71f35923
+    sha256: 3a2c98154d95cfd54daba6b7d507d31f5ba07ac2ad955c44eb041b66563193cd
   category: main
   optional: false
 - name: astroid
@@ -1572,6 +1585,21 @@ package:
   hash:
     md5: ea5d332e361eb72c2593cf79559bc0ec
     sha256: ab8c088aa07adfed0ec39ca53541b09cdf13538d7f96086f60b784cdb7ee1ff0
+  category: main
+  optional: false
+- name: pydantic-core
+  version: 2.14.6
+  manager: conda
+  platform: linux-64
+  dependencies:
+    libgcc-ng: '>=12'
+    python: '>=3.9,<3.10.0a0'
+    python_abi: 3.9.*
+    typing-extensions: '>=4.6.0,!=4.7.0'
+  url: https://conda.anaconda.org/conda-forge/linux-64/pydantic-core-2.14.6-py39h9fdd4d6_1.conda
+  hash:
+    md5: 26910c0ed0b85e87d5c1dd19723b2996
+    sha256: 3770a69799d1366629a9944fb2eef9c15ecfd4c0d00cabee8b264d23bebf3726
   category: main
   optional: false
 - name: pytest-cov
@@ -1712,6 +1740,21 @@ package:
   hash:
     md5: 134b2b57b7865d2316a7cce1915a51ed
     sha256: 51b02987370bbff28dbf782063c23e3b264aa34173b344454203cd691946e077
+  category: main
+  optional: false
+- name: pydantic
+  version: 2.5.3
+  manager: conda
+  platform: linux-64
+  dependencies:
+    annotated-types: '>=0.4.0'
+    pydantic-core: 2.14.6
+    python: '>=3.7'
+    typing-extensions: '>=4.6.1'
+  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.5.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 3569001fd8b37e542aaefdf5de124e19
+    sha256: 07ec778cbf17737b740f0547fb5cba91a7bff52945fe637287458e4119c58ffe
   category: main
   optional: false
 - name: pylint
@@ -2966,8 +3009,8 @@ package:
   hash:
     md5: a92a6440c3fe7052d63244f3aba2a4a7
     sha256: f3c5be8673bfd905c4665efcb27fa50192f24f84fa8eff2f19cba5d09753d905
-  category: dev
-  optional: true
+  category: main
+  optional: false
 - name: wheel
   version: 0.42.0
   manager: conda
@@ -3268,8 +3311,21 @@ package:
   hash:
     md5: c16524c1b7227dc80b36b4fa6f77cc86
     sha256: d795c1eb1db4ea147f01ece74e5a504d7c2e8d5ee8c11ec987884967dd938f9c
-  category: dev
-  optional: true
+  category: main
+  optional: false
+- name: annotated-types
+  version: 0.6.0
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.7'
+    typing-extensions: '>=4.0.0'
+  url: https://conda.anaconda.org/conda-forge/noarch/annotated-types-0.6.0-pyhd8ed1ab_0.conda
+  hash:
+    md5: 997c29372bdbe2afee073dff71f35923
+    sha256: 3a2c98154d95cfd54daba6b7d507d31f5ba07ac2ad955c44eb041b66563193cd
+  category: main
+  optional: false
 - name: astroid
   version: 3.0.2
   manager: conda
@@ -3334,6 +3390,23 @@ package:
     sha256: fc08925521c8839ace0b0b62f37757ab95d3934c63bb6b7da10c1f10917be002
   category: main
   optional: false
+- name: pydantic-core
+  version: 2.14.6
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.9,<3.10.0a0'
+    python_abi: 3.9.*
+    typing-extensions: '>=4.6.0,!=4.7.0'
+    ucrt: '>=10.0.20348.0'
+    vc: '>=14.2,<15'
+    vc14_runtime: '>=14.29.30139'
+  url: https://conda.anaconda.org/conda-forge/win-64/pydantic-core-2.14.6-py39hf21820d_1.conda
+  hash:
+    md5: 76c40db7f4588e7dcc768394be9757c7
+    sha256: 9c779eebd588b07fc7339936795a18a83ef038f6fd6de9db8802a10e5101aa0d
+  category: main
+  optional: false
 - name: pytest-cov
   version: 4.1.0
   manager: conda
@@ -3393,6 +3466,21 @@ package:
   hash:
     md5: 6cad6cd2fbdeef4d651b8f752a4da960
     sha256: 34becfe991510be7b9ee05b4ae466c5a26a72af275c3071c1ca7e2308d3f7e64
+  category: main
+  optional: false
+- name: pydantic
+  version: 2.5.3
+  manager: conda
+  platform: win-64
+  dependencies:
+    python: '>=3.7'
+    annotated-types: '>=0.4.0'
+    typing-extensions: '>=4.6.1'
+    pydantic-core: 2.14.6
+  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.5.3-pyhd8ed1ab_0.conda
+  hash:
+    md5: 3569001fd8b37e542aaefdf5de124e19
+    sha256: 07ec778cbf17737b740f0547fb5cba91a7bff52945fe637287458e4119c58ffe
   category: main
   optional: false
 - name: pylint
