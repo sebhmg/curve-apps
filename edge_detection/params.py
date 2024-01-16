@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 
 from geoh5py.data import FloatData
 from geoh5py.objects import Grid2D
@@ -28,16 +29,16 @@ class ApplicationParameters(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    conda_environment: str | None = "curve-apps"
+    conda_environment: Optional[str] = "curve-apps"
     detection: DetectionParameters
-    input_file: InputFile | None = None
+    input_file: Optional[InputFile] = None
     geoh5: Workspace
-    monitoring_directory: str | Path | None = None
+    monitoring_directory: Optional[str | Path] = None
     output: OutputParameters
     run_command: str = "geomodpy.model_from_surfaces"
     source: SourceParameters
     title: str = "Model from surfaces"
-    workspace_geoh5: Workspace | None = None
+    workspace_geoh5: Optional[Workspace] = None
 
     @classmethod
     def parse_input(cls, input_data: InputFile | dict) -> ApplicationParameters:
@@ -113,7 +114,7 @@ class DetectionParameters(BaseModel):
     line_gap: int = 1
     sigma: float = 10
     threshold: int = 1
-    window_size: int | None = None
+    window_size: Optional[int] = None
 
 
 class OutputParameters(BaseModel):
@@ -124,5 +125,5 @@ class OutputParameters(BaseModel):
     :param ga_group_name: Name of the output group.
     """
 
-    export_as: int | None = None
-    out_group: int | None = None
+    export_as: Optional[int] = None
+    out_group: Optional[int] = None
