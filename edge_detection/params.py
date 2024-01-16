@@ -11,8 +11,9 @@ from pathlib import Path
 
 from geoh5py.data import FloatData
 from geoh5py.objects import Grid2D
+from geoh5py.ui_json import InputFile
 from geoh5py.workspace import Workspace
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class ApplicationParameters(BaseModel):
@@ -25,13 +26,21 @@ class ApplicationParameters(BaseModel):
     :param source: Parameters for the source object and data.
     """
 
-    core: UIJsonParameters
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    conda_environment: str | None = "geomodpy"
     detection: DetectionParameters
+    input_file: InputFile | None = None
+    geoh5: Workspace
+    monitoring_directory: str | Path | None = None
     output: OutputParameters
+    run_command: str = "geomodpy.model_from_surfaces"
     source: SourceParameters
+    title: str = "Model from surfaces"
+    workspace_geoh5: Workspace | None = None
 
     @classmethod
-    def parse_input_data(cls, data: dict) -> ApplicationParameters:
+    def parse_input(cls, input_data: InputFile | dict) -> ApplicationParameters:
         """
         Parse input parameter and values from ui.json data.
 
@@ -39,13 +48,18 @@ class ApplicationParameters(BaseModel):
 
         :return: Dataclass of application parameters.
         """
-        workspace = data.get("geoh5")
-
-        if workspace is None:
-            raise UserWarning("No workspace found in input data.")
+        input_file = None
+        if isinstance(input_file, InputFile):
+            input_file = input_data
+            data = input_data.data
+        elif isinstance(input_data, dict):
+            data = input_data
+        else:
+            raise TypeError("Input data must be a dictionary or InputFile.")
 
         parameters = cls(
-            core=UIJsonParameters(**data),
+            **data,
+            input_file=input_file,
             detection=DetectionParameters(**data),
             output=OutputParameters(**data),
             source=SourceParameters(**data),
@@ -53,26 +67,21 @@ class ApplicationParameters(BaseModel):
 
         return parameters
 
+    def flatten(self) -> dict:
+        """
+        Flatten the parameters to a dictionary.
 
-class UIJsonParameters(BaseModel):
-    """
-    Core parameters expected by the ui.json file format.
+        :return: Dictionary of parameters.
+        """
+        param_dict = dict(self)
+        out_dict = {}
+        for key, value in param_dict.items():
+            if isinstance(value, BaseModel):
+                out_dict.update(dict(value))
+            else:
+                out_dict.update({key: value})
 
-    :param conda_environment: Conda environment used to run run_command.
-    :param geoh5: Current workspace path.
-    :param monitoring_directory: Path to monitoring directory, where .geoh5 files
-        are automatically processed by GA.
-    :param run_command: Command to run the application through GA.
-    :param title: Application title.
-    :param workspace_geoh5: Path of the source .geoh5 file where the ui.json was created.
-    """
-
-    monitoring_directory: str | Path | None = None
-    workspace_geoh5: Workspace | None = None
-    geoh5: Workspace
-    title: str = "Model from surfaces"
-    run_command: str = "geomodpy.model_from_surfaces"
-    conda_environment: str | None = "geomodpy"
+        return out_dict
 
 
 class SourceParameters(BaseModel):
@@ -82,6 +91,8 @@ class SourceParameters(BaseModel):
     :param objects: A Grid2D source object.
     :param data: Data values to find edges on.
     """
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
     objects: Grid2D
     data: FloatData
@@ -98,10 +109,10 @@ class DetectionParameters(BaseModel):
     :param window_size: Size of the window to search for lines.
     """
 
-    line_length: int
-    line_gap: int
-    sigma: float
-    threshold: int
+    line_length: int = 1
+    line_gap: int = 1
+    sigma: float = 10
+    threshold: int = 1
     window_size: int | None = None
 
 
@@ -113,5 +124,5 @@ class OutputParameters(BaseModel):
     :param ga_group_name: Name of the output group.
     """
 
-    export_as: str | None
-    out_group: str | None
+    export_as: str | None = None
+    out_group: str | None = None

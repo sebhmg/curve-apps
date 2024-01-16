@@ -14,8 +14,8 @@ import sys
 import numpy as np
 from geoapps_utils.driver.driver import BaseDriver
 from geoh5py.data import FloatData
-from geoh5py.groups import ContainerGroup
-from geoh5py.objects import Curve, Grid2D
+from geoh5py.groups import ContainerGroup, Group
+from geoh5py.objects import Curve, Grid2D, ObjectBase
 from geoh5py.ui_json import InputFile
 from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
@@ -49,13 +49,13 @@ class EdgeDetectionDriver(BaseDriver):
             parent = None
             if self.params.output.out_group is not None:
                 parent = ContainerGroup.create(
-                    workspace=self.params.core.geoh5,
+                    workspace=workspace,
                     name=self.params.output.ga_group_name,
                 )
 
             vertices, cells = EdgeDetectionDriver.get_edges(
                 self.params.source.objects,
-                self.params.data,
+                self.params.source.data,
                 self.params.detection,
             )
 
@@ -123,8 +123,14 @@ class EdgeDetectionDriver(BaseDriver):
         edges = canny(grid_data, sigma=detection.sigma, use_quantiles=True)
 
         shape = edges.shape
+
         # Cycle through tiles of square size
-        max_l = np.min([detection.window_size, shape[0], shape[1]])
+        if detection.window_size is None:
+            window_size = np.inf
+        else:
+            window_size = detection.window_size
+
+        max_l = np.min([window_size, shape[0], shape[1]])
         half = np.floor(max_l / 2)
         overlap = 1.25
 
@@ -189,6 +195,20 @@ class EdgeDetectionDriver(BaseDriver):
         if not isinstance(val, ApplicationParameters):
             raise TypeError("Parameters must be of type ApplicationParameters.")
         self._params = val
+
+    def add_ui_json(self, entity: ObjectBase | Group):
+        """
+        Add ui.json file to entity.
+
+        :param entity: Object to add ui.json file to.
+        """
+        if self.params.input_file is None:
+            return
+
+        param_dict = self.params.flatten()
+        self.params.input_file.update_ui_values(param_dict)
+        file_path = self.params.input_file.write_ui_json()
+        entity.add_file(str(file_path))
 
 
 if __name__ == "__main__":

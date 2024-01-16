@@ -101,12 +101,16 @@ default_ui_json.update(
         },
         "export_as": {
             "main": True,
+            "optional": True,
+            "enabled": False,
             "label": "Save as",
             "value": "",
             "group": "Python run preferences",
         },
         "out_group": {
             "main": True,
+            "optional": True,
+            "enabled": False,
             "label": "Group",
             "value": "",
             "group": "Python run preferences",
