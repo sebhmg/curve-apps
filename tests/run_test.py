@@ -18,16 +18,20 @@ def setup_example(workspace: Workspace):
     with workspace.open(mode="r+"):
         grid = Grid2D.create(
             workspace,
-            origin=[0, 0, 0],
+            origin=[128, 64, 32],
             u_cell_size=8.0,
             v_cell_size=8.0,
-            u_count=64,
+            u_count=128,
             v_count=64,
+            dip=45.0,
+            rotation=60.0,
         )
 
-        model = np.zeros((64, 64))
+        model = np.ones((128, 64)) * 2.0
         model[16:32, 8:24] = 1.0
-        data = grid.add_data({"values": {"values": model.flatten()}})
+        model[64:72, 40:48] = 3.0
+        model[120:, 40:] = np.nan
+        data = grid.add_data({"values": {"values": model.flatten(order="F")}})
 
     return grid, data
 
@@ -42,7 +46,7 @@ def test_driver(tmp_path: Path):
             "objects": grid,
             "data": data,
             "line_length": 12,
-            "line_gap": 8,
+            "line_gap": 1,
             "sigma": 1,
             "export_as": "square",
         }
@@ -54,4 +58,17 @@ def test_driver(tmp_path: Path):
     with workspace.open():
         edges = workspace.get_entity("square")[0]
 
-        assert len(edges.cells) == 4
+        assert len(edges.cells) == 5
+
+    # Repeat with different window size
+
+    params.detection.window_size = 32
+    params.detection.line_gap = 1
+    params.detection.line_length = 7
+    params.output.export_as = "square_32"
+    driver.run()
+
+    with workspace.open():
+        edges = workspace.get_entity("square_32")[0]
+
+        assert len(edges.cells) == 26

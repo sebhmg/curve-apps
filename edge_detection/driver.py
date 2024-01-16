@@ -5,7 +5,6 @@
 #  geoapps is distributed under the terms and conditions of the MIT License
 #  (see LICENSE file at the root of this source code package).
 
-# pylint: disable=too-many-locals
 
 from __future__ import annotations
 
@@ -94,96 +93,87 @@ class EdgeDetectionDriver(BaseDriver):
             n x 2 float array. Cells of edges.
 
         """
-        if grid.centroids is None or grid.shape is None or data.values is None:
+        if grid.shape is None or data.values is None:
             return None, None
 
-        x = grid.centroids[:, 0].reshape(grid.shape, order="F")
-        y = grid.centroids[:, 1].reshape(grid.shape, order="F")
-        z = grid.centroids[:, 2].reshape(grid.shape, order="F")
         grid_data = data.values.reshape(grid.shape, order="F")
 
-        indices = np.ones_like(grid_data, dtype="bool")
-
-        ind_x, ind_y = (
-            np.any(indices, axis=1),
-            np.any(indices, axis=0),
-        )
-        x = x[ind_x, :][:, ind_y]
-        y = y[ind_x, :][:, ind_y]
-        z = z[ind_x, :][:, ind_y]
-        grid_data = grid_data[ind_x, :][:, ind_y]
-        grid_data -= np.nanmin(grid_data)
-        grid_data /= np.nanmax(grid_data)
-        grid_data[np.isnan(grid_data)] = 0
-
-        if not np.any(grid_data):
+        if np.all(np.isnan(grid_data)):
             return None, None
 
         # Find edges
-        edges = canny(grid_data, sigma=detection.sigma, use_quantiles=True)
+        edges = canny(
+            grid_data,
+            sigma=detection.sigma,
+            use_quantiles=True,
+            mask=~np.isnan(grid_data),
+            mode="reflect",
+        )
+        grid.add_data({"canny filter": {"values": edges.flatten(order="F")}})
 
-        shape = edges.shape
+        # Find lines
+        indices = EdgeDetectionDriver.get_line_indices(
+            edges,
+            detection.line_length,
+            detection.line_gap,
+            detection.threshold,
+            detection.window_size,
+        )
 
+        if len(indices) == 0:
+            return None, None
+
+        u_ind, r_ind = np.unique(np.vstack(indices), axis=0, return_inverse=True)
+        vertices = map_indices_to_coordinates(grid, u_ind)
+        cells = r_ind.reshape((-1, 2))
+        return vertices, cells
+
+    @staticmethod
+    def get_line_indices(
+        canny_image: np.ndarray,
+        line_length: int = 1,
+        line_gap: int = 1,
+        threshold: int = 1,
+        window_size: int | None = None,
+    ) -> list:
+        """
+        Get indices forming lines on a canny image.
+
+        The process is done over tiles of square size. The tiles overlap by 25%.
+
+        :param canny_image: Edges.
+        :param line_length: Minimum accepted pixel length of detected lines. (Hough)
+        :param line_gap: Maximum gap between pixels to still form a line. (Hough)
+        :param threshold: Value threshold. (Hough)
+
+        :returns: List of indices.
+        """
         # Cycle through tiles of square size
-        if detection.window_size is None:
-            window_size = np.inf
-        else:
-            window_size = detection.window_size
+        width = np.min(canny_image.shape)
+        if window_size is not None:
+            width = np.min([window_size, width])
 
-        max_l = np.min([window_size, shape[0], shape[1]])
-        half = np.floor(max_l / 2)
-        overlap = 1.25
+        x_limits = get_overlapping_limits(canny_image.shape[0], width)
+        y_limits = get_overlapping_limits(canny_image.shape[1], width)
 
-        n_cell_y = (shape[0] - 2 * half) * overlap / max_l
-        n_cell_x = (shape[1] - 2 * half) * overlap / max_l
-
-        if n_cell_x > 0:
-            cnt_x = np.linspace(
-                half, shape[1] - half, 2 + int(np.round(n_cell_x)), dtype=int
-            ).tolist()
-            half_x = half
-        else:
-            cnt_x = [np.ceil(shape[1] / 2)]
-            half_x = np.ceil(shape[1] / 2)
-
-        if n_cell_y > 0:
-            cnt_y = np.linspace(
-                half, shape[0] - half, 2 + int(np.round(n_cell_y)), dtype=int
-            ).tolist()
-            half_y = half
-        else:
-            cnt_y = [np.ceil(shape[0] / 2)]
-            half_y = np.ceil(shape[0] / 2)
-
-        coords = []
-        for cx in cnt_x:
-            for cy in cnt_y:
-                i_min, i_max = int(cy - half_y), int(cy + half_y)
-                j_min, j_max = int(cx - half_x), int(cx + half_x)
+        # TODO: Loop in parallel
+        indices = []
+        for x_lim in x_limits:
+            for y_lim in y_limits:
                 lines = probabilistic_hough_line(
-                    edges[i_min:i_max, j_min:j_max],
-                    line_length=detection.line_length,
-                    threshold=detection.threshold,
-                    line_gap=detection.line_gap,
+                    canny_image[x_lim[0] : x_lim[1], y_lim[0] : y_lim[1]],
+                    line_length=line_length,
+                    threshold=threshold,
+                    line_gap=line_gap,
                     seed=0,
                 )
 
                 if np.any(lines):
-                    coord = np.vstack(lines)
-                    coords.append(
-                        np.c_[
-                            x[i_min:i_max, j_min:j_max][coord[:, 1], coord[:, 0]],
-                            y[i_min:i_max, j_min:j_max][coord[:, 1], coord[:, 0]],
-                            z[i_min:i_max, j_min:j_max][coord[:, 1], coord[:, 0]],
-                        ]
-                    )
+                    # Add the limits of the tile to the indices
+                    lines = np.vstack(lines)[:, ::-1] + np.c_[x_lim[0], y_lim[0]]
+                    indices.append(lines)
 
-        if coords:
-            vertices = np.vstack(coords)
-            cells = np.arange(vertices.shape[0]).astype("uint32").reshape((-1, 2))
-            return vertices, cells
-
-        return None, None
+        return indices
 
     @property
     def params(self) -> ApplicationParameters:
@@ -209,6 +199,48 @@ class EdgeDetectionDriver(BaseDriver):
         self.params.input_file.update_ui_values(param_dict)
         file_path = self.params.input_file.write_ui_json()
         entity.add_file(str(file_path))
+
+
+def map_indices_to_coordinates(grid: Grid2D, indices: np.ndarray) -> np.ndarray:
+    """
+    Map indices to coordinates.
+
+    :param grid: Grid2D object.
+    :param indices: Indices (i, j) of grid cells.
+    """
+
+    if grid.centroids is None or grid.shape is None:
+        raise ValueError("Grid2D object must have centroids.")
+
+    x = grid.centroids[:, 0].reshape(grid.shape, order="F")
+    y = grid.centroids[:, 1].reshape(grid.shape, order="F")
+    z = grid.centroids[:, 2].reshape(grid.shape, order="F")
+
+    return np.c_[
+        x[indices[:, 0], indices[:, 1]],
+        y[indices[:, 0], indices[:, 1]],
+        z[indices[:, 0], indices[:, 1]],
+    ]
+
+
+def get_overlapping_limits(n: int, width: int, overlap: float = 1.25) -> list:
+    """
+    Get the limits of overlapping tiles.
+
+    :param n: Number of cells along the axis.
+    :param width: Size of the tile.
+    :param overlap: Overlap factor.
+
+    :returns: List of limits.
+    """
+    if n <= width:
+        return [[0, int(width)]]
+
+    n_tiles = 2 + int(np.round(overlap * n / width))
+    cnt = np.linspace(width / 2, n - width / 2, n_tiles, dtype=int)
+    limits = np.c_[cnt - width / 2, cnt + width / 2].astype(int)
+
+    return limits.tolist()
 
 
 if __name__ == "__main__":
