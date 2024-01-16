@@ -7,7 +7,6 @@
 
 from __future__ import annotations
 
-from typing import Union
 from pathlib import Path
 
 from geoh5py.data import FloatData
@@ -29,16 +28,16 @@ class ApplicationParameters(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    conda_environment: Union[str, None] = "geomodpy"
+    conda_environment: str | None = "geomodpy"
     detection: DetectionParameters
-    input_file: Union[InputFile, None] = None
+    input_file: InputFile | None = None
     geoh5: Workspace
-    monitoring_directory: Union[str, Path, None] = None
+    monitoring_directory: str | Path | None = None
     output: OutputParameters
     run_command: str = "geomodpy.model_from_surfaces"
     source: SourceParameters
     title: str = "Model from surfaces"
-    workspace_geoh5: Union[Workspace, None] = None
+    workspace_geoh5: Workspace | None = None
 
     @classmethod
     def parse_input(cls, input_data: InputFile | dict) -> ApplicationParameters:
@@ -114,7 +113,7 @@ class DetectionParameters(BaseModel):
     line_gap: int = 1
     sigma: float = 10
     threshold: int = 1
-    window_size: Union[int, None] = None
+    window_size: int | None = None
 
 
 class OutputParameters(BaseModel):
@@ -125,5 +124,5 @@ class OutputParameters(BaseModel):
     :param ga_group_name: Name of the output group.
     """
 
-    export_as: Union[int, None] = None
-    out_group: Union[int, None] = None
+    export_as: int | None = None
+    out_group: int | None = None
