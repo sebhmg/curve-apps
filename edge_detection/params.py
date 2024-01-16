@@ -28,7 +28,7 @@ class ApplicationParameters(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    conda_environment: str | None = "geomodpy"
+    conda_environment: str | None = "curve-apps"
     detection: DetectionParameters
     input_file: InputFile | None = None
     geoh5: Workspace
