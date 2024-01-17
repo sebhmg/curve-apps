@@ -45,12 +45,12 @@ class ApplicationParameters(BaseModel):
         """
         Parse input parameter and values from ui.json data.
 
-        :param data: Dictionary of parameters and values.
+        :param input_data: Dictionary of parameters and values.
 
         :return: Dataclass of application parameters.
         """
         input_file = None
-        if isinstance(input_file, InputFile):
+        if isinstance(input_data, InputFile) and input_data.data is not None:
             input_file = input_data
             data = input_data.data
         elif isinstance(input_data, dict):
