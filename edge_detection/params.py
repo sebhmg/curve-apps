@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 from geoh5py.data import FloatData
 from geoh5py.objects import Grid2D
@@ -33,7 +33,7 @@ class ApplicationParameters(BaseModel):
     detection: DetectionParameters
     input_file: Optional[InputFile] = None
     geoh5: Workspace
-    monitoring_directory: Optional[str | Path] = None
+    monitoring_directory: Optional[Union[str, Path]] = None
     output: OutputParameters
     run_command: str = "geomodpy.model_from_surfaces"
     source: SourceParameters
