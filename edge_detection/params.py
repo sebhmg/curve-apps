@@ -125,5 +125,5 @@ class OutputParameters(BaseModel):
     :param ga_group_name: Name of the output group.
     """
 
-    export_as: Optional[int] = None
-    out_group: Optional[int] = None
+    export_as: Optional[str] = None
+    out_group: Optional[str] = None
