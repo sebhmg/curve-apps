@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 1f1b6d28531bb8d3d65df351a76fb94856365933eb939319624841edb3860a59
-    linux-64: 026ed66ea2d05f831e4a57f61c8d924fc22097d26b63888077ed341b5dbbcf99
+    win-64: ef869b850ca1834228a5c6e345b81e200c2ef46203b89ada56f0575256f66e0e
+    linux-64: 786d3ca75c4b6fa0e4f9968832ceef2a670ef3e472b4a3541c190fba5b1532ae
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -1870,19 +1870,23 @@ package:
   category: main
   optional: false
 - name: geoapps-utils
-  version: 0.2.0
+  version: 0.3.0-alpha
   manager: pip
   platform: linux-64
   dependencies:
-    pillow: '>=10.0.1,<11.0.0'
-    geoh5py: '>=0.8.0rc1,<0.9.0'
-    h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
+    h5py: '>=3.2.1,<4.0.0'
+    geoh5py: '>=0.8.0rc1,<0.9.0'
+    pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/6e/b6/1c7703855b6aa8100d54d72fd119d9b5a8fa1da235c7ac0cbd041958550d/geoapps_utils-0.2.0-py3-none-any.whl
+    pillow: '>=10.0.1,<11.0.0'
+  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-768.zip
   hash:
-    sha256: 3db78986bb4ca66d081ade9af91ffb397bf079a5abdbce694f17c3e01080f821
+    sha256: ''
   category: main
+  source:
+    type: url
+    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-768.zip#sha256=
   optional: false
 - name: ca-certificates
   version: 2023.11.17
@@ -2518,7 +2522,7 @@ package:
   category: main
   optional: false
 - name: libxml2
-  version: 2.11.6
+  version: 2.12.4
   manager: conda
   platform: win-64
   dependencies:
@@ -2527,10 +2531,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/libxml2-2.11.6-hc3477c8_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/libxml2-2.12.4-hc3477c8_1.conda
   hash:
-    md5: 08ffbb4c22dd3622e122058368f8b708
-    sha256: 6ed853ef69bf43998eacc6fd022d7ac170d9e2d3d273b0be0dc3da593fb0fc90
+    md5: bc7291fa70257ccf420b564c870a53b2
+    sha256: b3aa51adb9fb9413227cedc0ce7c5d9f9cf99940911cca3da117e940a8b778ce
   category: main
   optional: false
 - name: m2w64-gcc-libs
@@ -2795,7 +2799,7 @@ package:
   manager: conda
   platform: win-64
   dependencies:
-    libxml2: '>=2.11.5,<2.12.0a0'
+    libxml2: '>=2.11.5,<3.0.0a0'
     pthreads-win32: ''
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
@@ -3750,17 +3754,21 @@ package:
   category: main
   optional: false
 - name: geoapps-utils
-  version: 0.2.0
+  version: 0.3.0-alpha
   manager: pip
   platform: win-64
   dependencies:
-    pillow: '>=10.0.1,<11.0.0'
-    geoh5py: '>=0.8.0rc1,<0.9.0'
-    h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
+    h5py: '>=3.2.1,<4.0.0'
+    geoh5py: '>=0.8.0rc1,<0.9.0'
+    pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/6e/b6/1c7703855b6aa8100d54d72fd119d9b5a8fa1da235c7ac0cbd041958550d/geoapps_utils-0.2.0-py3-none-any.whl
+    pillow: '>=10.0.1,<11.0.0'
+  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-768.zip
   hash:
-    sha256: 3db78986bb4ca66d081ade9af91ffb397bf079a5abdbce694f17c3e01080f821
+    sha256: ''
   category: main
+  source:
+    type: url
+    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-768.zip#sha256=
   optional: false
