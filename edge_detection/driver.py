@@ -12,6 +12,7 @@ import sys
 
 import numpy as np
 from geoapps_utils.driver.driver import BaseDriver
+from geoapps_utils.locations import get_overlapping_limits, map_indices_to_coordinates
 from geoh5py.data import FloatData
 from geoh5py.groups import ContainerGroup, Group
 from geoh5py.objects import Curve, Grid2D, ObjectBase
@@ -19,7 +20,7 @@ from geoh5py.ui_json import InputFile
 from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
-from .params import ApplicationParameters, DetectionParameters
+from .params import DetectionParameters, Parameters
 
 
 class EdgeDetectionDriver(BaseDriver):
@@ -29,12 +30,12 @@ class EdgeDetectionDriver(BaseDriver):
     :param parameters: Application parameters.
     """
 
-    def __init__(self, parameters: ApplicationParameters | InputFile):
+    def __init__(self, parameters: Parameters | InputFile):
         if isinstance(parameters, InputFile):
             if not isinstance(parameters.data, dict):
                 raise TypeError("InputFile must have a 'data' dictionary.")
 
-            parameters = ApplicationParameters.parse_input_data(parameters.data)
+            parameters = Parameters.parse_input_data(parameters.data)
 
         super().__init__(parameters)
 
@@ -176,14 +177,14 @@ class EdgeDetectionDriver(BaseDriver):
         return indices
 
     @property
-    def params(self) -> ApplicationParameters:
+    def params(self) -> Parameters:
         """Application parameters."""
         return self._params
 
     @params.setter
-    def params(self, val: ApplicationParameters):
-        if not isinstance(val, ApplicationParameters):
-            raise TypeError("Parameters must be of type ApplicationParameters.")
+    def params(self, val: Parameters):
+        if not isinstance(val, Parameters):
+            raise TypeError("Parameters must be of type Parameters.")
         self._params = val
 
     def add_ui_json(self, entity: ObjectBase | Group):
@@ -199,48 +200,6 @@ class EdgeDetectionDriver(BaseDriver):
         self.params.input_file.update_ui_values(param_dict)
         file_path = self.params.input_file.write_ui_json()
         entity.add_file(str(file_path))
-
-
-def map_indices_to_coordinates(grid: Grid2D, indices: np.ndarray) -> np.ndarray:
-    """
-    Map indices to coordinates.
-
-    :param grid: Grid2D object.
-    :param indices: Indices (i, j) of grid cells.
-    """
-
-    if grid.centroids is None or grid.shape is None:
-        raise ValueError("Grid2D object must have centroids.")
-
-    x = grid.centroids[:, 0].reshape(grid.shape, order="F")
-    y = grid.centroids[:, 1].reshape(grid.shape, order="F")
-    z = grid.centroids[:, 2].reshape(grid.shape, order="F")
-
-    return np.c_[
-        x[indices[:, 0], indices[:, 1]],
-        y[indices[:, 0], indices[:, 1]],
-        z[indices[:, 0], indices[:, 1]],
-    ]
-
-
-def get_overlapping_limits(n: int, width: int, overlap: float = 1.25) -> list:
-    """
-    Get the limits of overlapping tiles.
-
-    :param n: Number of cells along the axis.
-    :param width: Size of the tile.
-    :param overlap: Overlap factor.
-
-    :returns: List of limits.
-    """
-    if n <= width:
-        return [[0, int(width)]]
-
-    n_tiles = 2 + int(np.round(overlap * n / width))
-    cnt = np.linspace(width / 2, n - width / 2, n_tiles, dtype=int)
-    limits = np.c_[cnt - width / 2, cnt + width / 2].astype(int)
-
-    return limits.tolist()
 
 
 if __name__ == "__main__":

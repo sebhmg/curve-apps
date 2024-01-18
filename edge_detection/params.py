@@ -17,7 +17,7 @@ from geoh5py.workspace import Workspace
 from pydantic import BaseModel, ConfigDict
 
 
-class ApplicationParameters(BaseModel):
+class Parameters(BaseModel):
     """
     Model surface input parameters.
 
@@ -41,7 +41,7 @@ class ApplicationParameters(BaseModel):
     workspace_geoh5: Optional[Workspace] = None
 
     @classmethod
-    def parse_input(cls, input_data: InputFile | dict) -> ApplicationParameters:
+    def parse_input(cls, input_data: InputFile | dict) -> Parameters:
         """
         Parse input parameter and values from ui.json data.
 

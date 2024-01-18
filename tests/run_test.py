@@ -11,7 +11,7 @@ from geoh5py import Workspace
 from geoh5py.objects import Grid2D
 
 from edge_detection.driver import EdgeDetectionDriver
-from edge_detection.params import ApplicationParameters
+from edge_detection.params import Parameters
 
 
 def setup_example(workspace: Workspace):
@@ -40,7 +40,7 @@ def test_driver(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
 
     grid, data = setup_example(workspace)
-    params = ApplicationParameters.parse_input(
+    params = Parameters.parse_input(
         {
             "geoh5": workspace,
             "objects": grid,
@@ -58,17 +58,17 @@ def test_driver(tmp_path: Path):
     with workspace.open():
         edges = workspace.get_entity("square")[0]
 
-        assert len(edges.cells) == 5
+        assert len(edges.cells) == 4
 
     # Repeat with different window size
 
     params.detection.window_size = 32
     params.detection.line_gap = 1
-    params.detection.line_length = 7
+    params.detection.line_length = 4
     params.output.export_as = "square_32"
     driver.run()
 
     with workspace.open():
         edges = workspace.get_entity("square_32")[0]
 
-        assert len(edges.cells) == 26
+        assert len(edges.cells) == 22
