@@ -1,6 +1,6 @@
-#  Copyright (c) 2022-2023 Mira Geoscience Ltd.
+#  Copyright (c) 2024 Mira Geoscience Ltd.
 #
-#  This file is part of edge-detection package.
+#  This file is part of curve-apps package.
 #
 #  All rights reserved.
 
@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-__version__ = "0.1.0-alpha.1"
+__version__ = "0.1.0"
 
 
 def assets_path() -> Path:
