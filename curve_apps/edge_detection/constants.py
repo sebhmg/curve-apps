@@ -1,5 +1,10 @@
 #  Copyright (c) 2024 Mira Geoscience Ltd.
 #
+#  This file is part of edge-detection package.
+#
+#  All rights reserved.
+#
+#
 #  This file is part of geoapps.
 #
 #  geoapps is distributed under the terms and conditions of the MIT License
@@ -8,7 +13,7 @@
 
 from __future__ import annotations
 
-from . import __version__
+from curve_apps import __version__
 
 defaults = {
     "version": __version__,
@@ -35,7 +40,7 @@ default_ui_json = {
     "workspace_geoh5": "",
     "run_command": "curve_apps.driver",
     "monitoring_directory": "",
-    "conda_environment": "geoapps",
+    "conda_environment": "curve_apps.edge_detection",
     "conda_environment_boolean": False,
     "objects": {
         "group": "Data Selection",
