@@ -97,6 +97,8 @@ default_ui_json = {
     "window_size": {
         "group": "Parameters",
         "main": True,
+        "optional": True,
+        "enabled": False,
         "label": "Window Size",
         "min": 16,
         "max": 512,

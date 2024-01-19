@@ -1,0 +1,92 @@
+{
+    "version": "0.1.0",
+    "title": "Edge Detection",
+    "geoh5": "C:\\Users\\dominiquef\\AppData\\Local\\Temp\\pytest-of-dominiquef\\pytest-835\\test_input_file0\\test_edge_detection.geoh5",
+    "workspace_geoh5": "",
+    "run_command": "curve_apps.edge_detection.driver",
+    "monitoring_directory": "",
+    "conda_environment": "curve_apps",
+    "conda_environment_boolean": false,
+    "objects": {
+        "group": "Data Selection",
+        "meshType": [
+            "{48f5054a-1c5c-4ca4-9048-80f36dc60a06}"
+        ],
+        "main": true,
+        "label": "Object",
+        "value": ""
+    },
+    "data": {
+        "group": "Data Selection",
+        "main": true,
+        "association": [
+            "Cell"
+        ],
+        "dataType": "Float",
+        "label": "Data",
+        "parent": "objects",
+        "value": ""
+    },
+    "line_length": {
+        "group": "Parameters",
+        "main": true,
+        "label": "Line Length",
+        "min": 1,
+        "max": 100,
+        "value": 12
+    },
+    "line_gap": {
+        "group": "Parameters",
+        "main": true,
+        "label": "Line Gap",
+        "min": 1,
+        "max": 100,
+        "value": 1
+    },
+    "sigma": {
+        "group": "Parameters",
+        "main": true,
+        "label": "Sigma",
+        "value": 1.0,
+        "min": 0.0,
+        "precision": 1,
+        "lineEdit": true,
+        "max": 10.0
+    },
+    "threshold": {
+        "group": "Parameters",
+        "main": true,
+        "label": "Threshold",
+        "min": 1,
+        "max": 100,
+        "precision": 1,
+        "lineEdit": true,
+        "value": 1.0
+    },
+    "window_size": {
+        "group": "Parameters",
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Window Size",
+        "min": 16,
+        "max": 512,
+        "value": 64
+    },
+    "export_as": {
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Save as",
+        "value": "",
+        "group": "Python run preferences"
+    },
+    "out_group": {
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Group",
+        "value": "",
+        "group": "Python run preferences"
+    }
+}

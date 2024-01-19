@@ -1,5 +1,10 @@
 #  Copyright (c) 2024 Mira Geoscience Ltd.
 #
+#  This file is part of edge-detection package.
+#
+#  All rights reserved.
+#
+#
 #  This file is part of geoapps.
 #
 #  geoapps is distributed under the terms and conditions of the MIT License
@@ -202,4 +207,7 @@ class EdgeDetectionDriver(BaseDriver):
 
 if __name__ == "__main__":
     file = sys.argv[1]
-    EdgeDetectionDriver.start(file)
+    ifile = InputFile.read_ui_json(file)
+
+    driver = EdgeDetectionDriver(ifile)
+    driver.run()
