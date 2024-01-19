@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  source_dir: edge_detection
+  source_dir: curve_apps
 
 jobs:
   pre-commit:

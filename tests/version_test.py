@@ -11,7 +11,7 @@ from pathlib import Path
 
 import tomli as toml
 
-import edge_detection
+import curve_apps
 
 
 def get_version():
@@ -24,7 +24,7 @@ def get_version():
 
 
 def test_version_is_consistent():
-    assert edge_detection.__version__ == get_version()
+    assert curve_apps.__version__ == get_version()
 
 
 def test_version_is_semver():
@@ -34,4 +34,4 @@ def test_version_is_semver():
         r"(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?"
         r"(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
     )
-    assert re.search(semver_re, edge_detection.__version__) is not None
+    assert re.search(semver_re, curve_apps.__version__) is not None

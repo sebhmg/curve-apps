@@ -1,7 +1,7 @@
 
 default_language_version:
     python: python3
-exclude: (^docs/(conf.py|_ext/)|^edge_detection-assets/)
+exclude: (^docs/(conf.py|_ext/)|^curve_apps-assets/)
 default_stages: [commit,push]
 fail_fast: false
 

@@ -25,9 +25,9 @@ defaults = {
     "export_as": "",
     "ga_group_name": None,
     "generate_sweep": False,
-    "run_command": "edge_detection.driver",
+    "run_command": "curve_apps.driver",
     "workspace_geoh5": None,
-    "conda_environment": "edge_detection",
+    "conda_environment": "curve_apps",
     "conda_environment_boolean": False,
 }
 
@@ -37,7 +37,7 @@ default_ui_json.update(
         "version": __version__,
         "title": "Edge Detection",
         "geoh5": "",
-        "run_command": "edge_detection.driver",
+        "run_command": "curve_apps.driver",
         "monitoring_directory": "",
         "conda_environment": "geoapps",
         "conda_environment_boolean": False,

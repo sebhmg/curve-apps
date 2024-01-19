@@ -10,8 +10,8 @@ import numpy as np
 from geoh5py import Workspace
 from geoh5py.objects import Grid2D
 
-from edge_detection.driver import EdgeDetectionDriver
-from edge_detection.params import Parameters
+from curve_apps.driver import EdgeDetectionDriver
+from curve_apps.params import Parameters
 
 
 def setup_example(workspace: Workspace):

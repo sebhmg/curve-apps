@@ -5,7 +5,7 @@
 #  All rights reserved.
 #
 
-from edge_detection import assets_path
+from curve_apps import assets_path
 
 
 def test_assets_directory_exist():
