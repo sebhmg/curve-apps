@@ -1,6 +1,6 @@
 #  Copyright (c) 2024 Mira Geoscience Ltd.
 #
-#  This file is part of edge-detection package.
+#  This file is part of curve-apps package.
 #
 #  All rights reserved.
 #
@@ -12,9 +12,9 @@ from geoh5py.data import FilenameData
 from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
 
-from curve_apps.constants import default_ui_json
-from curve_apps.driver import EdgeDetectionDriver
-from curve_apps.params import Parameters
+from curve_apps.edge_detection.constants import default_ui_json
+from curve_apps.edge_detection.driver import EdgeDetectionDriver
+from curve_apps.edge_detection.params import Parameters
 
 
 def setup_example(workspace: Workspace):
