@@ -28,7 +28,6 @@ classifiers = [
 ]
 
 [tool.poetry.scripts]
-run = 'curve_apps.edge_detection.driver'
 
 [tool.poetry.dependencies]
 pydantic = {version = "~2.5", optional = true}
@@ -95,9 +94,6 @@ plugins = [
 [tool.coverage.run]
 branch = true
 source = ["curve_apps"]
-omit = [
-    "curve_apps/commands/hello_world.py"
-]
 
 [tool.coverage.report]
 exclude_lines = [

@@ -38,9 +38,9 @@ default_ui_json = {
     "title": "Edge Detection",
     "geoh5": "",
     "workspace_geoh5": "",
-    "run_command": "curve_apps.driver",
+    "run_command": "curve_apps.edge_detection.driver",
     "monitoring_directory": "",
-    "conda_environment": "curve_apps.edge_detection",
+    "conda_environment": "curve_apps",
     "conda_environment_boolean": False,
     "objects": {
         "group": "Data Selection",
