@@ -82,6 +82,7 @@ class Parameters(BaseModel):
             else:
                 out_dict.update({key: value})
 
+        out_dict.pop("input_file")
         return out_dict
 
 

@@ -8,8 +8,11 @@ from pathlib import Path
 
 import numpy as np
 from geoh5py import Workspace
+from geoh5py.data import FilenameData
 from geoh5py.objects import Grid2D
+from geoh5py.ui_json import InputFile
 
+from curve_apps.constants import default_ui_json
 from curve_apps.driver import EdgeDetectionDriver
 from curve_apps.params import Parameters
 
@@ -72,3 +75,31 @@ def test_driver(tmp_path: Path):
         edges = workspace.get_entity("square_32")[0]
 
         assert len(edges.cells) == 22
+
+
+def test_input_file(tmp_path: Path):
+    workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
+
+    grid, data = setup_example(workspace)
+    ifile = InputFile(ui_json=default_ui_json)
+
+    ifile.update_ui_values(
+        {
+            "geoh5": workspace,
+            "objects": grid,
+            "data": data,
+            "line_length": 12,
+            "line_gap": 1,
+            "sigma": 1.0,
+            "export_as": "square",
+        }
+    )
+    ifile.write_ui_json(str(tmp_path / "test_edge_detection"))
+    driver = EdgeDetectionDriver(ifile)
+    driver.run()
+
+    with workspace.open():
+        edges = workspace.get_entity("square")[0]
+        assert edges is not None
+
+        assert any(child for child in edges.children if isinstance(child, FilenameData))

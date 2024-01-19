@@ -32,11 +32,9 @@ class EdgeDetectionDriver(BaseDriver):
 
     def __init__(self, parameters: Parameters | InputFile):
         if isinstance(parameters, InputFile):
-            if not isinstance(parameters.data, dict):
-                raise TypeError("InputFile must have a 'data' dictionary.")
+            parameters = Parameters.parse_input(parameters)
 
-            parameters = Parameters.parse_input_data(parameters.data)
-
+        # TODO need to re-type params in base class
         super().__init__(parameters)
 
     def run(self):
