@@ -56,7 +56,7 @@ def test_driver_curve(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
 
     curve, data = setup_example(workspace)
-    params = Parameters.parse_input(
+    params = Parameters.instantiate(
         {
             "geoh5": workspace,
             "entity": curve,
@@ -90,7 +90,7 @@ def test_driver_points(tmp_path: Path):
         )
         new_data = data.copy(parent=points)
 
-    params = Parameters.parse_input(
+    params = Parameters.instantiate(
         {
             "geoh5": workspace,
             "entity": points,
@@ -118,7 +118,7 @@ def test_driver_points_no_parts(tmp_path: Path):
         points = Points.create(workspace, vertices=curve.vertices)
         new_data = data.copy(parent=points)
 
-    params = Parameters.parse_input(
+    params = Parameters.instantiate(
         {
             "geoh5": workspace,
             "entity": points,

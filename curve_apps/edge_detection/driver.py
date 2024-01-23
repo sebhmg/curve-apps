@@ -16,30 +16,28 @@ from __future__ import annotations
 import sys
 
 import numpy as np
-from geoapps_utils.driver.driver import BaseDriver
 from geoapps_utils.locations import get_overlapping_limits, map_indices_to_coordinates
 from geoh5py.data import FloatData
-from geoh5py.groups import ContainerGroup, Group
-from geoh5py.objects import Curve, Grid2D, ObjectBase
+from geoh5py.groups import ContainerGroup
+from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile
 from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
+from ..driver import BaseCurveDriver
 from .params import DetectionParameters, Parameters
 
 
-class EdgeDetectionDriver(BaseDriver):
+class EdgeDetectionDriver(BaseCurveDriver):
     """
     Driver for the edge detection application.
 
     :param parameters: Application parameters.
     """
 
-    def __init__(self, parameters: Parameters | InputFile):
-        if isinstance(parameters, InputFile):
-            parameters = Parameters.parse_input(parameters)
+    _parameter_class = Parameters
 
-        # TODO need to re-type params in base class
+    def __init__(self, parameters: Parameters | InputFile):
         super().__init__(parameters)
 
     def run(self):
@@ -178,31 +176,6 @@ class EdgeDetectionDriver(BaseDriver):
                     indices.append(lines)
 
         return indices
-
-    @property
-    def params(self) -> Parameters:
-        """Application parameters."""
-        return self._params
-
-    @params.setter
-    def params(self, val: Parameters):
-        if not isinstance(val, Parameters):
-            raise TypeError("Parameters must be of type Parameters.")
-        self._params = val
-
-    def add_ui_json(self, entity: ObjectBase | Group):
-        """
-        Add ui.json file to entity.
-
-        :param entity: Object to add ui.json file to.
-        """
-        if self.params.input_file is None:
-            return
-
-        param_dict = self.params.flatten()
-        self.params.input_file.update_ui_values(param_dict)
-        file_path = self.params.input_file.write_ui_json()
-        entity.add_file(str(file_path))
 
 
 if __name__ == "__main__":
