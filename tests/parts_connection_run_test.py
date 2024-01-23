@@ -20,23 +20,30 @@ from curve_apps.parts_connection.params import Parameters
 def setup_example(workspace: Workspace):
     with workspace.open(mode="r+"):
         y_array = np.linspace(0, 50, 10)
+
         curvey = 5 * np.sin(y_array) + 10
         oblique = 0.7 * y_array + 20
         straight = np.ones_like(y_array) * 30
+        randos = np.random.rand(len(y_array)) * 10
+
+        anomalies = [curvey, oblique, straight, randos]
 
         vertices = np.c_[
-            np.r_[curvey, oblique, straight],
-            np.r_[y_array, y_array, y_array],
-            np.zeros(len(y_array) * 3),
+            np.hstack(anomalies),
+            np.tile(y_array, len(anomalies)),
+            np.zeros(len(y_array) * len(anomalies)),
         ]
-        parts = np.tile(np.arange(len(y_array)), 3)
-        values = np.kron(np.arange(1, 4), np.ones(len(y_array)))
+        parts = np.tile(np.arange(len(y_array)), len(anomalies))
+        values = np.r_[
+            np.kron(np.arange(1, 4), np.ones(len(y_array))), np.zeros(len(y_array))
+        ]
+
         curve = Curve.create(workspace=workspace, vertices=vertices, parts=parts)
         data = curve.add_data(
             {
                 "values": {
                     "values": values.flatten(order="F"),
-                    "value_map": {1: "A", 2: "B", 3: "C"},
+                    "value_map": {1: "A", 2: "B", 3: "C", 4: "D"},
                     "type": "referenced",
                 },
             }

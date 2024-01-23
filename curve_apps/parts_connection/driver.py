@@ -54,7 +54,7 @@ class PartsConnectionDriver(BaseDriver):
                     name=self.params.output.ga_group_name,
                 )
 
-            vertices, cells = PartsConnectionDriver.get_connections(
+            vertices, cells, labels = PartsConnectionDriver.get_connections(
                 self.params.source.objects,
                 self.params.source.data,
                 self.params.detection,
@@ -71,6 +71,16 @@ class PartsConnectionDriver(BaseDriver):
                 cells=cells,
                 parent=parent,
             )
+            if self.params.source.data is not None:
+                edges.add_data(
+                    {
+                        self.params.source.data.name: {
+                            "values": labels,
+                            "entity_type": self.params.source.data.entity_type,
+                            "association": "VERTEX",
+                        }
+                    }
+                )
 
             if edges is not None:
                 self.update_monitoring_directory(
@@ -105,20 +115,40 @@ class PartsConnectionDriver(BaseDriver):
         else:
             values = np.ones(curve.vertices.shape[0])
 
-        # out_labels = np.zeros(curve.n_cells).astype("int32")
+        max_distance = detection.max_distance
 
-        for label in np.unique(values):
-            ind = values == label
+        if max_distance is None:
+            max_distance = np.inf
 
-            path = find_curves(
-                curve.vertices[ind, :2],
-                parts_id[ind],
-                detection.min_edges,
-                detection.max_distance,
-                detection.damping,
+        path_list = []
+        labels = np.zeros_like(values).astype("int32")
+
+        for value in np.unique(values):
+            if value == 0:
+                continue
+
+            ind = np.where(values == value)[0]
+
+            if len(ind) < 2:
+                continue
+
+            segments = np.vstack(
+                find_curves(
+                    curve.vertices[ind, :2],
+                    parts_id[ind],
+                    detection.min_edges,
+                    max_distance,
+                    detection.damping,
+                )
             )
+            path_list += ind[segments].tolist()
+            labels[ind] = value
 
-        return curve.vertices, path
+        path = np.vstack(path_list)
+        uni_ind, inv_ind = np.unique(path.flatten(), return_inverse=True)
+        path = uni_ind[inv_ind.reshape((-1, 2))]
+
+        return curve.vertices[uni_ind, :], path, labels[uni_ind]
 
     @property
     def params(self) -> Parameters:
