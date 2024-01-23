@@ -15,8 +15,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional, Union
 
-from geoh5py.data import ReferencedData
-from geoh5py.objects import Curve
+from geoh5py.data import Data, ReferencedData
+from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
 from geoh5py.workspace import Workspace
 from pydantic import BaseModel, ConfigDict
@@ -94,14 +94,16 @@ class SourceParameters(BaseModel):
     """
     Source parameters expected by the ui.json file format.
 
-    :param objects: A Grid2D source object.
+    :param entity: A Grid2D source object.
     :param data: Data values to find edges on.
+    :param parts: Optional parts to connect.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    objects: Curve
-    data: Optional[ReferencedData]
+    entity: Union[Curve, Points]
+    data: Optional[ReferencedData] = None
+    parts: Optional[Data] = None
 
 
 class DetectionParameters(BaseModel):

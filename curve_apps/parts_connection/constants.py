@@ -22,11 +22,25 @@ default_ui_json = {
     "monitoring_directory": "",
     "conda_environment": "curve_apps",
     "conda_environment_boolean": False,
-    "objects": {
+    "entity": {
         "group": "Data Selection",
-        "meshType": ["{48f5054a-1c5c-4ca4-9048-80f36dc60a06}"],
+        "meshType": [
+            "{48f5054a-1c5c-4ca4-9048-80f36dc60a06}",
+            "{202C5DB1-A56D-4004-9CAD-BAAFD8899406}",
+        ],
         "main": True,
         "label": "Object",
+        "value": None,
+    },
+    "parts": {
+        "group": "Data Selection",
+        "main": True,
+        "association": ["Vertex"],
+        "optional": True,
+        "enabled": False,
+        "label": "Data",
+        "parent": "entity",
+        "tooltip": "Optional parts field to connect",
         "value": None,
     },
     "data": {
@@ -35,9 +49,9 @@ default_ui_json = {
         "association": ["Vertex"],
         "optional": True,
         "enabled": False,
-        "dataType": "Float",
+        "dataType": "Referenced",
         "label": "Data",
-        "parent": "objects",
+        "parent": "entity",
         "value": None,
     },
     "min_edges": {

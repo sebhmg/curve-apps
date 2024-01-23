@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 from geoh5py import Workspace
 from geoh5py.data import FilenameData
-from geoh5py.objects import Curve
+from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
 
 from curve_apps.parts_connection.constants import default_ui_json
@@ -52,14 +52,14 @@ def setup_example(workspace: Workspace):
     return curve, data
 
 
-def test_driver(tmp_path: Path):
+def test_driver_curve(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
 
     curve, data = setup_example(workspace)
     params = Parameters.parse_input(
         {
             "geoh5": workspace,
-            "objects": curve,
+            "entity": curve,
             "data": data,
             "export_as": "test",
         }
@@ -71,32 +71,83 @@ def test_driver(tmp_path: Path):
     with workspace.open():
         edges = workspace.get_entity("test")[0]
 
-        assert len(edges.cells) == 4
+        assert len(edges.cells) == 27
 
-    # Repeat with different window size
 
-    params.detection.window_size = 32
-    params.detection.line_gap = 1
-    params.detection.line_length = 4
-    params.output.export_as = "square_32"
+def test_driver_points(tmp_path: Path):
+    workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
+
+    curve, data = setup_example(workspace)
+
+    with workspace.open():
+        points = Points.create(workspace, vertices=curve.vertices)
+        parts = points.add_data(
+            {
+                "parts": {
+                    "values": curve.parts + 1,
+                },
+            }
+        )
+        new_data = data.copy(parent=points)
+
+    params = Parameters.parse_input(
+        {
+            "geoh5": workspace,
+            "entity": points,
+            "parts": parts,
+            "data": new_data,
+            "export_as": "test",
+        }
+    )
+
+    driver = PartsConnectionDriver(params)
     driver.run()
 
     with workspace.open():
-        edges = workspace.get_entity("square_32")[0]
+        edges = workspace.get_entity("test")[0]
 
-        assert len(edges.cells) == 22
+        assert len(edges.cells) == 27
+
+
+def test_driver_points_no_parts(tmp_path: Path):
+    workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
+
+    curve, data = setup_example(workspace)
+
+    with workspace.open():
+        points = Points.create(workspace, vertices=curve.vertices)
+        new_data = data.copy(parent=points)
+
+    params = Parameters.parse_input(
+        {
+            "geoh5": workspace,
+            "entity": points,
+            "data": new_data,
+            "export_as": "test",
+        }
+    )
+
+    driver = PartsConnectionDriver(params)
+    driver.run()
+
+    with workspace.open():
+        edges = workspace.get_entity("test")[0]
+
+        assert len(edges.cells) == 27
+
+    # Repeat with different window size
 
 
 def test_input_file(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
 
-    grid, data = setup_example(workspace)
+    curve, data = setup_example(workspace)
     ifile = InputFile(ui_json=default_ui_json)
 
     ifile.update_ui_values(
         {
             "geoh5": workspace,
-            "objects": grid,
+            "entity": curve,
             "data": data,
             "export_as": "square",
         }

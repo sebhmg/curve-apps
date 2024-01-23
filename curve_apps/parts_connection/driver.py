@@ -9,21 +9,22 @@
 #
 #  geoapps is distributed under the terms and conditions of the MIT License
 #  (see LICENSE file at the root of this source code package).
-
-
 from __future__ import annotations
 
+import logging
 import sys
 
 import numpy as np
 from geoapps_utils.driver.driver import BaseDriver
 from geoapps_utils.numerical import find_curves
-from geoh5py.data import ReferencedData
 from geoh5py.groups import ContainerGroup, Group
 from geoh5py.objects import Curve, ObjectBase
 from geoh5py.ui_json import InputFile
+from tqdm import tqdm
 
-from .params import DetectionParameters, Parameters
+from .params import Parameters
+
+logger = logging.getLogger(__name__)
 
 
 class PartsConnectionDriver(BaseDriver):
@@ -42,7 +43,7 @@ class PartsConnectionDriver(BaseDriver):
 
     def run(self):
         """
-        Driver for Grid2D objects for the automated detection of line features.
+        Driver for Grid2D entity for the automated detection of line features.
         The application relies on the Canny and Hough transforms from the
         Scikit-Image library.
         """
@@ -54,11 +55,15 @@ class PartsConnectionDriver(BaseDriver):
                     name=self.params.output.ga_group_name,
                 )
 
-            vertices, cells, labels = PartsConnectionDriver.get_connections(
-                self.params.source.objects,
-                self.params.source.data,
-                self.params.detection,
-            )
+            logger.info("Begin connecting labels ...")
+
+            vertices, cells, labels = self.get_connections()
+
+            logger.info("Process completed.")
+
+            if cells is None:
+                logger.info("No connections found.")
+                return
 
             name = "Parts Connection"
             if self.params.output.export_as is not None:
@@ -71,32 +76,31 @@ class PartsConnectionDriver(BaseDriver):
                 cells=cells,
                 parent=parent,
             )
-            if self.params.source.data is not None:
-                edges.add_data(
-                    {
-                        self.params.source.data.name: {
-                            "values": labels,
-                            "entity_type": self.params.source.data.entity_type,
-                            "association": "VERTEX",
-                        }
-                    }
-                )
-
             if edges is not None:
+                if self.params.source.data is not None:
+                    edges.add_data(
+                        {
+                            self.params.source.data.name: {
+                                "values": labels,
+                                "entity_type": self.params.source.data.entity_type,
+                                "association": "VERTEX",
+                            }
+                        }
+                    )
+
                 self.update_monitoring_directory(
                     parent if parent is not None else edges
                 )
 
-    @staticmethod
-    def get_connections(
-        curve: Curve,
-        data: ReferencedData | None,
-        detection: DetectionParameters,
-    ) -> tuple:
-        """
-        Find connections between curve parts.
+                logger.info(
+                    "Curve object '%s' saved to '%s'.", name, str(workspace.h5file)
+                )
 
-        :params curve: A Curve object with parts.
+    def get_connections(self) -> tuple:
+        """
+        Find connections between entity parts.
+
+        :params entity: A Curve object with parts.
         :params data: Input referenced data.
         :params detection: Detection parameters.
 
@@ -105,50 +109,85 @@ class PartsConnectionDriver(BaseDriver):
             n x 2 float array. Cells of edges.
 
         """
-        if curve.vertices is None or curve.parts is None:
-            raise ValueError("Curve must have parts and vertices to find connections.")
-
-        parts_id = curve.parts
-
-        if data is not None and data.values is not None:
-            values = data.values
-        else:
-            values = np.ones(curve.vertices.shape[0])
-
-        max_distance = detection.max_distance
+        max_distance = self.params.detection.max_distance
 
         if max_distance is None:
             max_distance = np.inf
 
         path_list = []
-        labels = np.zeros_like(values).astype("int32")
+        out_labels = np.zeros_like(self.labels).astype("int32")
 
-        for value in np.unique(values):
+        for value in tqdm(np.unique(self.labels)):
             if value == 0:
                 continue
 
-            ind = np.where(values == value)[0]
+            ind = np.where(self.labels == value)[0]
 
             if len(ind) < 2:
                 continue
 
-            segments = np.vstack(
-                find_curves(
-                    curve.vertices[ind, :2],
-                    parts_id[ind],
-                    detection.min_edges,
-                    max_distance,
-                    detection.damping,
-                )
+            segments = find_curves(
+                self.vertices[ind, :2],
+                self.parts[ind],
+                self.params.detection.min_edges,
+                max_distance,
+                self.params.detection.damping,
             )
-            path_list += ind[segments].tolist()
-            labels[ind] = value
 
-        path = np.vstack(path_list)
-        uni_ind, inv_ind = np.unique(path.flatten(), return_inverse=True)
-        path = uni_ind[inv_ind.reshape((-1, 2))]
+            if any(segments):
+                path_list += ind[np.vstack(segments)].tolist()
+                out_labels[ind] = value
 
-        return curve.vertices[uni_ind, :], path, labels[uni_ind]
+        if any(path_list):
+            path = np.vstack(path_list)
+            uni_ind, inv_ind = np.unique(path.flatten(), return_inverse=True)
+            path = uni_ind[inv_ind.reshape((-1, 2))]
+
+            return (
+                self.vertices[uni_ind, :],
+                path,
+                out_labels[uni_ind],
+            )
+
+        return self.vertices, None, out_labels
+
+    @property
+    def vertices(self) -> np.ndarray:
+        """
+        Get vertices from entity.
+        """
+        entity = self.params.source.entity
+        if entity.vertices is None:
+            raise ValueError("Curve must have vertices to find connections.")
+
+        return entity.vertices
+
+    @property
+    def parts(self) -> np.ndarray:
+        """
+        Get parts from entity or data.
+        """
+        entity = self.params.source.entity
+        if self.params.source.parts is not None:
+            return self.params.source.parts.values
+
+        if isinstance(entity, Curve) and entity.parts is not None:
+            return entity.parts
+
+        return np.arange(self.vertices.shape[0]).astype("int32")
+
+    @property
+    def labels(self) -> np.ndarray:
+        """
+        Get labels from data.
+        """
+        data = self.params.source.data
+        if data is not None and data.values is not None:
+            values = data.values
+        else:
+            values = np.ones_like(self.parts)
+
+        return values
 
     @property
     def params(self) -> Parameters:
