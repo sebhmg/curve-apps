@@ -25,7 +25,7 @@ from curve_apps import assets_path
 
 from ..params import BaseParameters, OutputParameters
 
-NAME = "parts_connection"
+NAME = "trend_lines"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
 

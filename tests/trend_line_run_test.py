@@ -16,8 +16,8 @@ from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
 
 from curve_apps import assets_path
-from curve_apps.parts_connection.driver import PartsConnectionDriver
-from curve_apps.parts_connection.params import Parameters
+from curve_apps.trend_lines.driver import TrendLinesDriver
+from curve_apps.trend_lines.params import Parameters
 
 
 def setup_example(workspace: Workspace):
@@ -68,7 +68,7 @@ def test_driver_curve(tmp_path: Path):
         }
     )
 
-    driver = PartsConnectionDriver(params)
+    driver = TrendLinesDriver(params)
     driver.run()
 
     with workspace.open():
@@ -103,7 +103,7 @@ def test_driver_points(tmp_path: Path):
         }
     )
 
-    driver = PartsConnectionDriver(params)
+    driver = TrendLinesDriver(params)
     driver.run()
 
     with workspace.open():
@@ -130,7 +130,7 @@ def test_driver_points_no_parts(tmp_path: Path):
         }
     )
 
-    driver = PartsConnectionDriver(params)
+    driver = TrendLinesDriver(params)
     driver.run()
 
     with workspace.open():
@@ -146,7 +146,7 @@ def test_input_file(tmp_path: Path):
 
     curve, data = setup_example(workspace)
     ifile = InputFile.read_ui_json(
-        assets_path() / "uijson/parts_connection.ui.json", validate=False
+        assets_path() / "uijson/trend_lines.ui.json", validate=False
     )
 
     changes = {
@@ -159,7 +159,7 @@ def test_input_file(tmp_path: Path):
         ifile.set_data_value(key, value)
 
     ifile.write_ui_json(str(tmp_path / "test_parts_connection"))
-    driver = PartsConnectionDriver(ifile)
+    driver = TrendLinesDriver(ifile)
     driver.run()
 
     with workspace.open():

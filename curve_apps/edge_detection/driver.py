@@ -20,7 +20,7 @@ from geoapps_utils.locations import get_overlapping_limits, map_indices_to_coord
 from geoh5py.data import FloatData
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve, Grid2D
-from geoh5py.ui_json import InputFile
+from geoh5py.ui_json import InputFile, utils
 from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
@@ -40,30 +40,21 @@ class EdgeDetectionDriver(BaseCurveDriver):
     def __init__(self, parameters: Parameters | InputFile):
         super().__init__(parameters)
 
-    def run(self):
+    def create_output(self, name, parent: ContainerGroup | None = None):
         """
         Driver for Grid2D objects for the automated detection of line features.
         The application relies on the Canny and Hough transforms from the
         Scikit-Image library.
-        """
-        with self.workspace.open(mode="r+") as workspace:
-            parent = None
-            if self.params.output.out_group is not None:
-                parent = ContainerGroup.create(
-                    workspace=workspace,
-                    name=self.params.output.ga_group_name,
-                )
 
+        :param name: Name of the output object.
+        :param parent: Optional parent group.
+        """
+        with utils.fetch_active_workspace(self.workspace) as workspace:
             vertices, cells = EdgeDetectionDriver.get_edges(
                 self.params.source.objects,
                 self.params.source.data,
                 self.params.detection,
             )
-
-            name = "Edge Detection"
-            if self.params.output.export_as is not None:
-                name = self.params.output.export_as
-
             edges = Curve.create(
                 workspace=workspace,
                 name=name,
@@ -72,10 +63,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
                 parent=parent,
             )
 
-            if edges is not None:
-                self.update_monitoring_directory(
-                    parent if parent is not None else edges
-                )
+        return edges
 
     @staticmethod
     def get_edges(

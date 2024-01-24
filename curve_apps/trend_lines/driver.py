@@ -21,18 +21,18 @@ import numpy as np
 from geoapps_utils.numerical import find_curves
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve
-from geoh5py.ui_json import InputFile
+from geoh5py.ui_json import InputFile, utils
 from tqdm import tqdm
 
 from curve_apps.driver import BaseCurveDriver
-from curve_apps.parts_connection.params import Parameters
+from curve_apps.trend_lines.params import Parameters
 
 logger = logging.getLogger(__name__)
 
 
-class PartsConnectionDriver(BaseCurveDriver):
+class TrendLinesDriver(BaseCurveDriver):
     """
-    Driver for the detection of curves across an object parts.
+    Driver for the detection of trend curves across an object parts.
 
     :param parameters: Application parameters.
     """
@@ -42,31 +42,19 @@ class PartsConnectionDriver(BaseCurveDriver):
     def __init__(self, parameters: Parameters | InputFile):
         super().__init__(parameters)
 
-    def run(self):
+    def create_output(self, name, parent: ContainerGroup | None = None):
         """
         Run the application for the detection of curves across an object parts.
+
+        :param name: Name of the output object.
+        :param parent: Optional parent group.
         """
-        with self.workspace.open(mode="r+") as workspace:
-            parent = None
-            if self.params.output.out_group is not None:
-                parent = ContainerGroup.create(
-                    workspace=workspace,
-                    name=self.params.output.ga_group_name,
-                )
-
-            logger.info("Begin connecting labels ...")
-
+        with utils.fetch_active_workspace(self.workspace) as workspace:
             vertices, cells, labels = self.get_connections()
-
-            logger.info("Process completed.")
 
             if cells is None:
                 logger.info("No connections found.")
-                return
-
-            name = "Parts Connection"
-            if self.params.output.export_as is not None:
-                name = self.params.output.export_as
+                return None
 
             edges = Curve.create(
                 workspace=workspace,
@@ -76,25 +64,18 @@ class PartsConnectionDriver(BaseCurveDriver):
                 parent=parent,
             )
 
-            if edges is not None:
-                if self.params.source.data is not None:
-                    edges.add_data(
-                        {
-                            self.params.source.data.name: {
-                                "values": labels,
-                                "entity_type": self.params.source.data.entity_type,
-                                "association": "VERTEX",
-                            }
+            if edges is not None and self.params.source.data is not None:
+                edges.add_data(
+                    {
+                        self.params.source.data.name: {
+                            "values": labels,
+                            "entity_type": self.params.source.data.entity_type,
+                            "association": "VERTEX",
                         }
-                    )
-
-                self.update_monitoring_directory(
-                    parent if parent is not None else edges
+                    }
                 )
 
-                logger.info(
-                    "Curve object '%s' saved to '%s'.", name, str(workspace.h5file)
-                )
+        return edges
 
     def get_connections(self) -> tuple:
         """
@@ -203,5 +184,5 @@ if __name__ == "__main__":
     # file = r"C:\Users\dominiquef\Desktop\parts.ui.json"
     ifile = InputFile.read_ui_json(file)
 
-    driver = PartsConnectionDriver(ifile)
+    driver = TrendLinesDriver(ifile)
     driver.run()

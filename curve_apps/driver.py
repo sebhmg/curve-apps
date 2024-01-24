@@ -13,15 +13,18 @@
 
 from __future__ import annotations
 
+import logging
 import tempfile
 from abc import abstractmethod
 
 from geoapps_utils.driver.driver import BaseDriver
-from geoh5py.groups import Group
+from geoh5py.groups import ContainerGroup
 from geoh5py.objects import ObjectBase
 from geoh5py.ui_json import InputFile
 
 from .params import BaseParameters
+
+logger = logging.getLogger(__name__)
 
 
 class BaseCurveDriver(BaseDriver):
@@ -32,6 +35,7 @@ class BaseCurveDriver(BaseDriver):
     """
 
     _parameter_class: type[BaseParameters]
+    _default_name: str
 
     def __init__(self, parameters: BaseParameters | InputFile):
         if isinstance(parameters, InputFile):
@@ -40,10 +44,37 @@ class BaseCurveDriver(BaseDriver):
         # TODO need to re-type params in base class
         super().__init__(parameters)
 
-    @abstractmethod
     def run(self):
         """
         Run method of the driver.
+        """
+        with self.workspace.open(mode="r+") as workspace:
+            parent = None
+            if self.params.output.out_group is not None:
+                parent = ContainerGroup.create(
+                    workspace=workspace,
+                    name=self.params.output.ga_group_name,
+                )
+
+            name = self.params.output.export_as
+            if name is None:
+                name = self._default_name
+
+            logger.info("Begin process.")
+            output = self.create_output(name, parent=parent)
+            logger.info("Process completed.")
+
+            if output is not None:
+                self.update_monitoring_directory(
+                    parent if parent is not None else output
+                )
+
+            logger.info("Curve object '%s' saved to '%s'.", name, str(workspace.h5file))
+
+    @abstractmethod
+    def create_output(self, name: str, parent: ContainerGroup | None = None):
+        """
+        Create output.
         """
 
     @property
@@ -57,7 +88,7 @@ class BaseCurveDriver(BaseDriver):
             raise TypeError("Parameters must be of type Parameters.")
         self._params = val
 
-    def add_ui_json(self, entity: ObjectBase | Group):
+    def add_ui_json(self, entity: ObjectBase | ContainerGroup):
         """
         Add ui.json file to entity.
 
