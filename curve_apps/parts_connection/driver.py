@@ -24,8 +24,8 @@ from geoh5py.objects import Curve
 from geoh5py.ui_json import InputFile
 from tqdm import tqdm
 
-from ..driver import BaseCurveDriver
-from .params import Parameters
+from curve_apps.driver import BaseCurveDriver
+from curve_apps.parts_connection.params import Parameters
 
 logger = logging.getLogger(__name__)
 
@@ -140,8 +140,16 @@ class PartsConnectionDriver(BaseCurveDriver):
 
         if any(path_list):
             path = np.vstack(path_list)
-            uni_ind, inv_ind = np.unique(path.flatten(), return_inverse=True)
-            path = uni_ind[inv_ind.reshape((-1, 2))]
+
+            # Truncate vertices and renumber
+            verts_bool = np.zeros(self.vertices.shape[0], dtype=bool)
+
+            uni_ind = np.unique(path.flatten())
+
+            verts_bool[uni_ind] = True
+            new_indices = np.ones_like(verts_bool, dtype="int32")
+            new_indices[verts_bool] = np.arange(uni_ind.shape[0])
+            path = new_indices[path]
 
             return (
                 self.vertices[uni_ind, :],
@@ -192,6 +200,7 @@ class PartsConnectionDriver(BaseCurveDriver):
 
 if __name__ == "__main__":
     file = sys.argv[1]
+    # file = r"C:\Users\dominiquef\Desktop\parts.ui.json"
     ifile = InputFile.read_ui_json(file)
 
     driver = PartsConnectionDriver(ifile)
