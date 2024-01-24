@@ -30,8 +30,10 @@ class BaseParameters(BaseModel, ABC):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
+    _input_file: InputFile
+    _name: str = "base"
+
     conda_environment: Optional[str] = "curve-apps"
-    input_file: Optional[InputFile] = None
     geoh5: Workspace
     monitoring_directory: Optional[Union[str, Path]] = None
     output: OutputParameters
@@ -47,7 +49,7 @@ class BaseParameters(BaseModel, ABC):
         """
 
     @classmethod
-    def _parse_input(cls, input_data: InputFile | dict) -> tuple:
+    def _parse_input(cls, input_data: InputFile | dict) -> dict:
         """
         Parse input parameter and values from ui.json data.
 
@@ -55,16 +57,15 @@ class BaseParameters(BaseModel, ABC):
 
         :return: Dataclass of application parameters.
         """
-        input_file = None
         if isinstance(input_data, InputFile) and input_data.data is not None:
-            input_file = input_data
             data = input_data.data
+            data["_input_file"] = input_data
         elif isinstance(input_data, dict):
             data = input_data
         else:
             raise TypeError("Input data must be a dictionary or InputFile.")
 
-        return input_file, data
+        return data
 
     def flatten(self) -> dict:
         """
@@ -80,8 +81,17 @@ class BaseParameters(BaseModel, ABC):
             else:
                 out_dict.update({key: value})
 
-        out_dict.pop("input_file")
         return out_dict
+
+    @property
+    def input_file(self):
+        """Application input file."""
+        return self._input_file
+
+    @property
+    def name(self) -> str:
+        """Application name."""
+        return self._name
 
 
 class OutputParameters(BaseModel):

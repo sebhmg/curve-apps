@@ -13,6 +13,7 @@
 
 from __future__ import annotations
 
+import tempfile
 from abc import abstractmethod
 
 from geoapps_utils.driver.driver import BaseDriver
@@ -62,10 +63,11 @@ class BaseCurveDriver(BaseDriver):
 
         :param entity: Object to add ui.json file to.
         """
-        if self.params.input_file is None:
-            return
-
         param_dict = self.params.flatten()
         self.params.input_file.update_ui_values(param_dict)
-        file_path = self.params.input_file.write_ui_json()
-        entity.add_file(str(file_path))
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            file_path = self.params.input_file.write_ui_json(
+                path=temp_dir, name=self.params.name + ".ui.json"
+            )
+            entity.add_file(str(file_path))

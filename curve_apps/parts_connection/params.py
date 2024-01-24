@@ -18,9 +18,15 @@ from typing import Optional, Union
 
 from geoh5py.data import Data, ReferencedData
 from geoh5py.objects import Curve, Points
+from geoh5py.ui_json import InputFile
 from pydantic import BaseModel, ConfigDict
 
+from curve_apps import assets_path
+
 from ..params import BaseParameters, OutputParameters
+
+NAME = "parts_connection"
+DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
 
 class Parameters(BaseParameters):
@@ -34,19 +40,21 @@ class Parameters(BaseParameters):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     detection: DetectionParameters
-    run_command: str = "curve_apps.parts_connection.driver"
+    run_command: str = f"curve_apps.{NAME}.driver"
     source: SourceParameters
-    title: str = "Parts Connection"
+    title: str = NAME.capitalize().replace("_", " ")
+
+    _input_file: InputFile = InputFile.read_ui_json(DEFAULT_UI_JSON, validate=False)
+    _name: str = NAME
 
     @classmethod
     def instantiate(cls, input_file) -> BaseParameters:
         """
         Instantiate the application.
         """
-        input_file, data = cls._parse_input(input_file)
+        data = cls._parse_input(input_file)
         parameters = cls(
             **data,
-            input_file=input_file,
             detection=DetectionParameters(**data),
             output=OutputParameters(**data),
             source=SourceParameters(**data),
