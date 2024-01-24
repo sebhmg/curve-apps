@@ -1,9 +1,9 @@
 {
     "version": "0.1.0",
-    "title": "Parts Connection",
+    "title": "Trend Lines",
     "geoh5": "",
     "workspace_geoh5": "",
-    "run_command": "curve_apps.parts_connection.driver",
+    "run_command": "curve_apps.trend_lines.driver",
     "monitoring_directory": "",
     "conda_environment": "curve_apps",
     "conda_environment_boolean": false,
