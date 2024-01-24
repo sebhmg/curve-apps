@@ -11,7 +11,7 @@ from pathlib import Path
 
 import numpy as np
 from geoh5py import Workspace
-from geoh5py.data import FilenameData
+from geoh5py.data import FilenameData, ReferencedData
 from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
 
@@ -56,7 +56,7 @@ def setup_example(workspace: Workspace):
 
 
 def test_driver_curve(tmp_path: Path):
-    workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
+    workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
 
     curve, data = setup_example(workspace)
     params = Parameters.instantiate(
@@ -78,7 +78,7 @@ def test_driver_curve(tmp_path: Path):
 
 
 def test_driver_points(tmp_path: Path):
-    workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
+    workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
 
     curve, data = setup_example(workspace)
 
@@ -111,9 +111,15 @@ def test_driver_points(tmp_path: Path):
 
         assert len(edges.cells) == 27
 
+        values = edges.get_data("values")[0]
+
+        assert isinstance(values, ReferencedData)
+        assert values.values is not None
+        assert values.value_map.map == {1: "A", 2: "B", 3: "C", 4: "D"}
+
 
 def test_driver_points_no_parts(tmp_path: Path):
-    workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
+    workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
 
     curve, data = setup_example(workspace)
 
@@ -138,11 +144,15 @@ def test_driver_points_no_parts(tmp_path: Path):
 
         assert len(edges.cells) == 27
 
-    # Repeat with different window size
+        values = edges.get_data("values")[0]
+
+        assert isinstance(values, ReferencedData)
+        assert values.values is not None
+        assert values.value_map.map == {1: "A", 2: "B", 3: "C", 4: "D"}
 
 
 def test_input_file(tmp_path: Path):
-    workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
+    workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
 
     curve, data = setup_example(workspace)
     ifile = InputFile.read_ui_json(
@@ -158,7 +168,7 @@ def test_input_file(tmp_path: Path):
     for key, value in changes.items():
         ifile.set_data_value(key, value)
 
-    ifile.write_ui_json(str(tmp_path / "test_parts_connection"))
+    ifile.write_ui_json(str(tmp_path / "test_trend_lines"))
     driver = TrendLinesDriver(ifile)
     driver.run()
 
