@@ -4,6 +4,9 @@
 #
 #  All rights reserved.
 #
+
+# pylint: disable=duplicate-code
+
 from pathlib import Path
 
 import numpy as np
@@ -12,7 +15,7 @@ from geoh5py.data import FilenameData
 from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
 
-from curve_apps.parts_connection.constants import default_ui_json
+from curve_apps import assets_path
 from curve_apps.parts_connection.driver import PartsConnectionDriver
 from curve_apps.parts_connection.params import Parameters
 
@@ -142,16 +145,19 @@ def test_input_file(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_parts_connection.geoh5")
 
     curve, data = setup_example(workspace)
-    ifile = InputFile(ui_json=default_ui_json)
-
-    ifile.update_ui_values(
-        {
-            "geoh5": workspace,
-            "entity": curve,
-            "data": data,
-            "export_as": "square",
-        }
+    ifile = InputFile.read_ui_json(
+        assets_path() / "uijson/parts_connection.ui.json", validate=False
     )
+
+    changes = {
+        "geoh5": workspace,
+        "entity": curve,
+        "data": data,
+        "export_as": "square",
+    }
+    for key, value in changes.items():
+        ifile.set_data_value(key, value)
+
     ifile.write_ui_json(str(tmp_path / "test_parts_connection"))
     driver = PartsConnectionDriver(ifile)
     driver.run()
