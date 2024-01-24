@@ -10,6 +10,8 @@
 #  geoapps is distributed under the terms and conditions of the MIT License
 #  (see LICENSE file at the root of this source code package).
 
+# pylint: disable=duplicate-code
+
 from __future__ import annotations
 
 from typing import Optional, Union
@@ -32,9 +34,9 @@ class Parameters(BaseParameters):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     detection: DetectionParameters
-    run_command: str = "geomodpy.model_from_surfaces"
+    run_command: str = "curve_apps.parts_connection.driver"
     source: SourceParameters
-    title: str = "Model from surfaces"
+    title: str = "Parts Connection"
 
     @classmethod
     def instantiate(cls, input_file) -> BaseParameters:

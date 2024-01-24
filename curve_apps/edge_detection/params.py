@@ -23,7 +23,7 @@ from ..params import BaseParameters, OutputParameters
 
 class Parameters(BaseParameters):
     """
-    Model surface input parameters.
+    Edge detection input parameters.
 
     :param detection: Detection parameters expected for the edge detection.
     :param source: Parameters for the source object and data.
@@ -32,9 +32,9 @@ class Parameters(BaseParameters):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     detection: DetectionParameters
-    run_command: str = "geomodpy.model_from_surfaces"
+    run_command: str = "curve_apps.edge_detection.driver"
     source: SourceParameters
-    title: str = "Model from surfaces"
+    title: str = "Edge Detection"
 
     @classmethod
     def instantiate(cls, input_file) -> BaseParameters:
