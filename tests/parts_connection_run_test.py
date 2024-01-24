@@ -84,7 +84,7 @@ def test_driver_points(tmp_path: Path):
         parts = points.add_data(
             {
                 "parts": {
-                    "values": curve.parts + 1,
+                    "values": (curve.parts + 1).astype(np.int32),
                 },
             }
         )
