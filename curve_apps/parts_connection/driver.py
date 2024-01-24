@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 class PartsConnectionDriver(BaseCurveDriver):
     """
-    Driver for the edge detection application.
+    Driver for the detection of curves across an object parts.
 
     :param parameters: Application parameters.
     """
@@ -41,9 +41,7 @@ class PartsConnectionDriver(BaseCurveDriver):
 
     def run(self):
         """
-        Driver for Grid2D entity for the automated detection of line features.
-        The application relies on the Canny and Hough transforms from the
-        Scikit-Image library.
+        Run the application for the detection of curves across an object parts.
         """
         with self.workspace.open(mode="r+") as workspace:
             parent = None
