@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: a75a04a65a29afc0e01a68f7f161069f5c76a832136633d0e2a4381d3a6130a6
-    linux-64: ef093ac8a093f6b357e8f6d668b0be02fb7d55a4209de124ca5dc4a7f0045ae9
+    win-64: 760b2103125232f09d7276305f62199896db3841a00c1da3c6d9ca3d3c2eeb9a
+    linux-64: 1d15a40d5c9859bde42b00136c38a753cc060fe15453d8d8e138f3394a3bef2e
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -773,7 +773,7 @@ package:
   category: main
   optional: false
 - name: c-blosc2
-  version: 2.12.0
+  version: 2.13.0
   manager: conda
   platform: linux-64
   dependencies:
@@ -782,10 +782,10 @@ package:
     lz4-c: '>=1.9.3,<1.10.0a0'
     zlib-ng: '>=2.0.7,<2.1.0a0'
     zstd: '>=1.5.5,<1.6.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/c-blosc2-2.12.0-hb4ffafa_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/c-blosc2-2.13.0-hb4ffafa_0.conda
   hash:
-    md5: 1a9b16afb84d734a1bb2d196c308d477
-    sha256: 68ae377f7baeb616e5a24facadebd8bf7a9cd48a297124be9d814ba92ff5e40f
+    md5: 4ce3903d24459fce6b2b33109b25deb4
+    sha256: 721958bed13263e56f34bf6aa68376967a3d697f196803f39314ab47eb7d44bf
   category: main
   optional: false
 - name: freetype
@@ -980,8 +980,8 @@ package:
   hash:
     md5: 3faab06a954c2a04039983f2c4a50d99
     sha256: 2c1b2e9755ce3102bca8d69e8f26e4f087ece73f50418186aee7c74bef8e1698
-  category: dev
-  optional: true
+  category: main
+  optional: false
 - name: dill
   version: 0.3.7
   manager: conda
@@ -1504,6 +1504,19 @@ package:
     sha256: 8979721b7f86b183d21103f3ec2734783847d317c1b754f462f407efc7c60886
   category: dev
   optional: true
+- name: tqdm
+  version: 4.66.1
+  manager: conda
+  platform: linux-64
+  dependencies:
+    colorama: ''
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/tqdm-4.66.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 03c97908b976498dcae97eb4e4f3149c
+    sha256: b61c9222af05e8c5ff27e4a4d2eb81870c21ffd7478346be3ef644b7a3759cc4
+  category: main
+  optional: false
 - name: typing-extensions
   version: 4.9.0
   manager: conda
@@ -1874,12 +1887,12 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
-    numpy: '>=1.23.5,<1.24.0'
     geoh5py: '>=0.8.0rc1,<0.9.0'
-    h5py: '>=3.2.1,<4.0.0'
     pydantic: '>=2.5.2,<2.6.0'
-    scipy: '>=1.10.1,<1.11.0'
+    h5py: '>=3.2.1,<4.0.0'
     pillow: '>=10.0.1,<11.0.0'
+    scipy: '>=1.10.1,<1.11.0'
+    numpy: '>=1.23.5,<1.24.0'
   url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/develop.zip
   hash:
     sha256: ''
@@ -2625,7 +2638,7 @@ package:
   category: main
   optional: false
 - name: c-blosc2
-  version: 2.12.0
+  version: 2.13.0
   manager: conda
   platform: win-64
   dependencies:
@@ -2635,10 +2648,10 @@ package:
     vc14_runtime: '>=14.29.30139'
     zlib-ng: '>=2.0.7,<2.1.0a0'
     zstd: '>=1.5.5,<1.6.0a0'
-  url: https://conda.anaconda.org/conda-forge/win-64/c-blosc2-2.12.0-h183a6f4_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/c-blosc2-2.13.0-h183a6f4_0.conda
   hash:
-    md5: 8d11feddc57240e433ad7c222fb934f1
-    sha256: a45391d61c15b27150d59607079a00b5547edcfdbe1cc2d4c409aa36888ef799
+    md5: d38575a75ef3da4d273978e94f8260ed
+    sha256: 8a02190a11fb8aee3a366ca6addb8786574efa91ece041503eb30f8e64337f49
   category: main
   optional: false
 - name: cached_property
@@ -3305,6 +3318,19 @@ package:
     sha256: aca5b239ed784161ba98809bcf06f67cc46773a09f5b94da8246d982f8d65a49
   category: main
   optional: false
+- name: tqdm
+  version: 4.66.1
+  manager: conda
+  platform: win-64
+  dependencies:
+    colorama: ''
+    python: '>=3.7'
+  url: https://conda.anaconda.org/conda-forge/noarch/tqdm-4.66.1-pyhd8ed1ab_0.conda
+  hash:
+    md5: 03c97908b976498dcae97eb4e4f3149c
+    sha256: b61c9222af05e8c5ff27e4a4d2eb81870c21ffd7478346be3ef644b7a3759cc4
+  category: main
+  optional: false
 - name: typing-extensions
   version: 4.9.0
   manager: conda
@@ -3753,28 +3779,17 @@ package:
     sha256: 40736dd6e0db984e5d659a159ed834117f3c1e2366f9ad26d080763745d008dc
   category: main
   optional: false
-- name: tqdm
-  version: 4.66.1
-  manager: pip
-  platform: win-64
-  dependencies:
-    colorama: '*'
-  url: https://files.pythonhosted.org/packages/00/e5/f12a80907d0884e6dff9c16d0c0114d81b8cd07dc3ae54c5e962cc83037e/tqdm-4.66.1-py3-none-any.whl
-  hash:
-    sha256: d302b3c5b53d47bce91fea46679d9c3c6508cf6332229aa1e7d8653723793386
-  category: main
-  optional: false
 - name: geoapps-utils
   version: 0.3.0-alpha
   manager: pip
   platform: win-64
   dependencies:
-    numpy: '>=1.23.5,<1.24.0'
     geoh5py: '>=0.8.0rc1,<0.9.0'
-    h5py: '>=3.2.1,<4.0.0'
     pydantic: '>=2.5.2,<2.6.0'
-    scipy: '>=1.10.1,<1.11.0'
+    h5py: '>=3.2.1,<4.0.0'
     pillow: '>=10.0.1,<11.0.0'
+    scipy: '>=1.10.1,<1.11.0'
+    numpy: '>=1.23.5,<1.24.0'
   url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/develop.zip
   hash:
     sha256: ''
