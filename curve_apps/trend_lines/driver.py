@@ -98,7 +98,7 @@ class TrendLinesDriver(BaseCurveDriver):
         path_list = []
         out_labels = np.zeros_like(self.labels).astype("int32")
 
-        for value in tqdm(np.unique(self.labels)):
+        for value in tqdm(np.unique(self.labels), desc="Looping over data labels"):
             if value == 0:
                 continue
 
