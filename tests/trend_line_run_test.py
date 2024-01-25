@@ -76,6 +76,12 @@ def test_driver_curve(tmp_path: Path):
 
         assert len(edges.cells) == 27
 
+        values = edges.get_data("values")[0]
+
+        assert isinstance(values, ReferencedData)
+        assert values.values is not None
+        assert values.value_map.map == {1: "A", 2: "B", 3: "C", 4: "D"}
+
 
 def test_driver_points(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
