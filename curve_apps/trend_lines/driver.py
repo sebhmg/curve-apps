@@ -25,7 +25,7 @@ from geoh5py.ui_json import InputFile, utils
 from tqdm import tqdm
 
 from curve_apps.driver import BaseCurveDriver
-from curve_apps.trend_lines.params import Parameters
+from curve_apps.trend_lines.params import NAME, Parameters
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +38,7 @@ class TrendLinesDriver(BaseCurveDriver):
     """
 
     _parameter_class = Parameters
+    _default_name = NAME
 
     def __init__(self, parameters: Parameters | InputFile):
         super().__init__(parameters)
