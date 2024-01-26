@@ -99,7 +99,7 @@ class OutputParameters(BaseModel):
     Output parameters expected by the ui.json file format.
 
     :param export_as: Name of the output entity.
-    :param ga_group_name: Name of the output group.
+    :param out_group: Name of the output group.
     """
 
     export_as: Optional[str] = None

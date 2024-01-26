@@ -15,8 +15,7 @@
         ],
         "main": true,
         "label": "Object",
-        "value": "",
-        "enabled": true
+        "value": ""
     },
     "parts": {
         "group": "Data Selection",
@@ -54,7 +53,6 @@
         "main": true,
         "label": "Minimum edges",
         "min": 1,
-        "max": 100,
         "value": 1,
         "enabled": true
     },
@@ -65,7 +63,6 @@
         "enabled": false,
         "label": "Maximum distance:",
         "min": 1,
-        "max": 100,
         "value": 1
     },
     "damping": {
@@ -74,9 +71,9 @@
         "label": "Damping factor:",
         "value": 1.0,
         "min": 0.0,
-        "precision": 1,
+        "precision": 2,
         "lineEdit": true,
-        "max": 1.0,
+        "max": 0.99,
         "enabled": true
     },
     "export_as": {
