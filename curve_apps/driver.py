@@ -53,7 +53,7 @@ class BaseCurveDriver(BaseDriver):
             if self.params.output.out_group is not None:
                 parent = ContainerGroup.create(
                     workspace=workspace,
-                    name=self.params.output.ga_group_name,
+                    name=self.params.output.out_group,
                 )
 
             name = self.params.output.export_as
