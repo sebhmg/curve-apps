@@ -10,12 +10,14 @@
 #  geoapps is distributed under the terms and conditions of the MIT License
 #  (see LICENSE file at the root of this source code package).
 
+# pylint: disable=duplicate-code
+
 from __future__ import annotations
 
-from typing import Optional
+from typing import Optional, Union
 
-from geoh5py.data import FloatData
-from geoh5py.objects import Grid2D
+from geoh5py.data import Data, ReferencedData
+from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
 from pydantic import BaseModel, ConfigDict
 
@@ -23,16 +25,16 @@ from curve_apps import assets_path
 
 from ..params import BaseParameters, OutputParameters
 
-NAME = "edge_detection"
+NAME = "trend_lines"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
 
 class Parameters(BaseParameters):
     """
-    Edge detection input parameters.
+    Parts connection input parameters.
 
-    :param detection: Detection parameters expected for the edge detection.
-    :param source: Parameters for the source object and data.
+    :param detection: Detection parameters expected for the parts connection.
+    :param source: Parameters for the source object and data parameters.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -65,29 +67,27 @@ class SourceParameters(BaseModel):
     """
     Source parameters expected by the ui.json file format.
 
-    :param objects: A Grid2D source object.
+    :param entity: A Curve or Points source object.
     :param data: Data values to find edges on.
+    :param parts: Optional parts to connect.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    objects: Grid2D
-    data: FloatData
+    entity: Union[Curve, Points]
+    data: Optional[ReferencedData] = None
+    parts: Optional[Data] = None
 
 
 class DetectionParameters(BaseModel):
     """
     Detection parameters expected by the ui.json file format.
 
-    :param line_length: Minimum accepted pixel length of detected lines. (Hough)
-    :param line_gap: Maximum gap between pixels to still form a line. (Hough)
-    :param sigma: Standard deviation of the Gaussian filter. (Canny)
-    :param threshold: Value threshold. (Hough)
-    :param window_size: Size of the window to search for lines.
+    :param min_edges: Minimum number of points in a curve.
+    :param max_distance: Maximum distance between points in a curve.
+    :param damping: Damping factor between [0, 1] for the path roughness.
     """
 
-    line_length: int = 1
-    line_gap: int = 1
-    sigma: float = 10
-    threshold: int = 1
-    window_size: Optional[int] = None
+    min_edges: int = 1
+    max_distance: Optional[float] = None
+    damping: float = 0

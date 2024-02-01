@@ -12,7 +12,7 @@ from geoh5py.data import FilenameData
 from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
 
-from curve_apps.edge_detection.constants import default_ui_json
+from curve_apps import assets_path
 from curve_apps.edge_detection.driver import EdgeDetectionDriver
 from curve_apps.edge_detection.params import Parameters
 
@@ -43,7 +43,7 @@ def test_driver(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
 
     grid, data = setup_example(workspace)
-    params = Parameters.parse_input(
+    params = Parameters.instantiate(
         {
             "geoh5": workspace,
             "objects": grid,
@@ -81,19 +81,22 @@ def test_input_file(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
 
     grid, data = setup_example(workspace)
-    ifile = InputFile(ui_json=default_ui_json)
-
-    ifile.update_ui_values(
-        {
-            "geoh5": workspace,
-            "objects": grid,
-            "data": data,
-            "line_length": 12,
-            "line_gap": 1,
-            "sigma": 1.0,
-            "export_as": "square",
-        }
+    ifile = InputFile.read_ui_json(
+        assets_path() / "uijson/edge_detection.ui.json", validate=False
     )
+
+    changes = {
+        "geoh5": workspace,
+        "objects": grid,
+        "data": data,
+        "line_length": 12,
+        "line_gap": 1,
+        "sigma": 1.0,
+        "export_as": "square",
+    }
+    for key, value in changes.items():
+        ifile.set_data_value(key, value)
+
     ifile.write_ui_json(str(tmp_path / "test_edge_detection"))
     driver = EdgeDetectionDriver(ifile)
     driver.run()
