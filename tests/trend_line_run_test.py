@@ -157,6 +157,35 @@ def test_driver_points_no_parts(tmp_path: Path):
         assert values.value_map.map == {1: "A", 2: "B", 3: "C", 4: "D"}
 
 
+def test_azimuth_filter(tmp_path: Path):
+    workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
+
+    curve, data = setup_example(workspace)
+
+    with workspace.open():
+        points = Points.create(workspace, vertices=curve.vertices)
+        new_data = data.copy(parent=points)
+
+    params = Parameters.instantiate(
+        {
+            "geoh5": workspace,
+            "entity": points,
+            "data": new_data,
+            "azimuth": 35,
+            "azimuth_tol": 1,
+            "export_as": "test",
+        }
+    )
+
+    driver = TrendLinesDriver(params)
+    driver.run()
+
+    with workspace.open():
+        edges = workspace.get_entity("test")[0]
+
+        assert len(edges.cells) == 9
+
+
 def test_input_file(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
 

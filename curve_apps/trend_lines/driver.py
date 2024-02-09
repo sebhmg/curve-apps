@@ -108,12 +108,14 @@ class TrendLinesDriver(BaseCurveDriver):
             if len(ind) < 2:
                 continue
 
+            detection_params = dict(self.params.detection)
+            if detection_params["max_distance"] is None:
+                detection_params["max_distance"] = np.inf
+
             segments = find_curves(
                 self.vertices[ind, :2],
                 self.parts[ind],
-                self.params.detection.min_edges,
-                max_distance,
-                self.params.detection.damping,
+                **detection_params,
             )
 
             if any(segments):

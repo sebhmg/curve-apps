@@ -83,11 +83,15 @@ class DetectionParameters(BaseModel):
     """
     Detection parameters expected by the ui.json file format.
 
+    :param azimuth: Azimuth of the path.
+    :param azimuth_tol: Tolerance for the azimuth of the path.
+    :param damping: Damping factor between [0, 1] for the path roughness.
     :param min_edges: Minimum number of points in a curve.
     :param max_distance: Maximum distance between points in a curve.
-    :param damping: Damping factor between [0, 1] for the path roughness.
     """
 
+    azimuth: Optional[float] = None
+    azimuth_tol: Optional[float] = None
+    damping: float = 0
     min_edges: int = 1
     max_distance: Optional[float] = None
-    damping: float = 0
