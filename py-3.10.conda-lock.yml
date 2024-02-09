@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 97b300dedc07114511da2b438210cf46205f60431327beff1fc476b2bf08df51
-    linux-64: 2d18539a4b9ec4bbe19d80fa1241a2438f28a948bf5f31e54755b0c4f11bf12f
+    win-64: 638990058495a0ec3b527fe038ab9630c22c99c1dfe5236da4f18188afab918a
+    linux-64: 8cede59f8de712983afb778ba148fb7148cc6173fb5a812f8a40d05700f9a16a
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -563,7 +563,7 @@ package:
   category: main
   optional: false
 - name: libavif16
-  version: 1.0.3
+  version: 1.0.4
   manager: conda
   platform: linux-64
   dependencies:
@@ -572,10 +572,10 @@ package:
     libgcc-ng: '>=12'
     rav1e: '>=0.6.6,<1.0a0'
     svt-av1: '>=1.8.0,<1.8.1.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libavif16-1.0.3-h1dcd450_3.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/libavif16-1.0.4-h1dcd450_0.conda
   hash:
-    md5: e913bb5582509db5c8378e647fa267c9
-    sha256: 46bfeccf83b901ab369d7e652b6ff83e36ff1c8586af1c0fd0b980dc54de82d9
+    md5: 6e4fda04c7493700b4173e971eca4dd6
+    sha256: f57edcb0ac9f1f9665369c833620497c6c2347f339f767b9d922d74c35bc3193
   category: main
   optional: false
 - name: libbrotlidec
@@ -1883,20 +1883,23 @@ package:
   category: main
   optional: false
 - name: geoapps-utils
-  version: 0.3.0a1
+  version: 0.3.0-alpha.1
   manager: pip
   platform: linux-64
   dependencies:
+    pydantic: '>=2.5.2,<2.6.0'
+    h5py: '>=3.2.1,<4.0.0'
     pillow: '>=10.0.1,<11.0.0'
     geoh5py: '>=0.9.0a1,<0.10.0'
-    h5py: '>=3.2.1,<4.0.0'
-    numpy: '>=1.23.5,<1.24.0'
-    pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/9f/15/171933d05c210970f3364b885eeac31637006a8c6d93b1f685d9a337d13f/geoapps_utils-0.3.0a1-py3-none-any.whl
+    numpy: '>=1.23.5,<1.24.0'
+  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-1348.zip
   hash:
-    sha256: 91e4746d916dad8439c97a5f7a32236216f3037e7690f3095318f7d12b70f762
+    sha256: ''
   category: main
+  source:
+    type: url
+    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-1348.zip#sha256=
   optional: false
 - name: ca-certificates
   version: 2024.2.2
@@ -3777,18 +3780,21 @@ package:
   category: main
   optional: false
 - name: geoapps-utils
-  version: 0.3.0a1
+  version: 0.3.0-alpha.1
   manager: pip
   platform: win-64
   dependencies:
+    pydantic: '>=2.5.2,<2.6.0'
+    h5py: '>=3.2.1,<4.0.0'
     pillow: '>=10.0.1,<11.0.0'
     geoh5py: '>=0.9.0a1,<0.10.0'
-    h5py: '>=3.2.1,<4.0.0'
-    numpy: '>=1.23.5,<1.24.0'
-    pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/9f/15/171933d05c210970f3364b885eeac31637006a8c6d93b1f685d9a337d13f/geoapps_utils-0.3.0a1-py3-none-any.whl
+    numpy: '>=1.23.5,<1.24.0'
+  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-1348.zip
   hash:
-    sha256: 91e4746d916dad8439c97a5f7a32236216f3037e7690f3095318f7d12b70f762
+    sha256: ''
   category: main
+  source:
+    type: url
+    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-1348.zip#sha256=
   optional: false
