@@ -16,6 +16,8 @@ from __future__ import annotations
 
 from typing import Optional, Union
 
+from geoapps_utils.driver.data import BaseData
+from geoapps_utils.numerical import DetectionParameters
 from geoh5py.data import Data, ReferencedData
 from geoh5py.objects import Curve, Points
 from geoh5py.ui_json import InputFile
@@ -23,13 +25,13 @@ from pydantic import BaseModel, ConfigDict
 
 from curve_apps import assets_path
 
-from ..params import BaseParameters, OutputParameters
+from ..params import OutputParameters
 
 NAME = "trend_lines"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
 
-class Parameters(BaseParameters):
+class Parameters(BaseData):
     """
     Parts connection input parameters.
 
@@ -40,6 +42,7 @@ class Parameters(BaseParameters):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     detection: DetectionParameters
+    output: OutputParameters
     run_command: str = f"curve_apps.{NAME}.driver"
     source: SourceParameters
     title: str = NAME.capitalize().replace("_", " ")
@@ -48,7 +51,7 @@ class Parameters(BaseParameters):
     _name: str = NAME
 
     @classmethod
-    def instantiate(cls, input_file) -> BaseParameters:
+    def instantiate(cls, input_file) -> Parameters:
         """
         Instantiate the application.
         """
@@ -77,21 +80,3 @@ class SourceParameters(BaseModel):
     entity: Union[Curve, Points]
     data: Optional[ReferencedData] = None
     parts: Optional[Data] = None
-
-
-class DetectionParameters(BaseModel):
-    """
-    Detection parameters expected by the ui.json file format.
-
-    :param azimuth: Azimuth of the path.
-    :param azimuth_tol: Tolerance for the azimuth of the path.
-    :param damping: Damping factor between [0, 1] for the path roughness.
-    :param min_edges: Minimum number of points in a curve.
-    :param max_distance: Maximum distance between points in a curve.
-    """
-
-    azimuth: Optional[float] = None
-    azimuth_tol: Optional[float] = None
-    damping: float = 0
-    min_edges: int = 1
-    max_distance: Optional[float] = None

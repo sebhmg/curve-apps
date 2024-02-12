@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from typing import Optional
 
+from geoapps_utils.driver.data import BaseData
 from geoh5py.data import FloatData
 from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
@@ -21,13 +22,13 @@ from pydantic import BaseModel, ConfigDict
 
 from curve_apps import assets_path
 
-from ..params import BaseParameters, OutputParameters
+from ..params import OutputParameters
 
 NAME = "edge_detection"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
 
-class Parameters(BaseParameters):
+class Parameters(BaseData):
     """
     Edge detection input parameters.
 
@@ -38,6 +39,7 @@ class Parameters(BaseParameters):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     detection: DetectionParameters
+    output: OutputParameters
     run_command: str = f"curve_apps.{NAME}.driver"
     source: SourceParameters
     title: str = NAME.capitalize().replace("_", " ")
@@ -46,7 +48,7 @@ class Parameters(BaseParameters):
     _name: str = NAME
 
     @classmethod
-    def instantiate(cls, input_file) -> BaseParameters:
+    def instantiate(cls, input_file) -> Parameters:
         """
         Instantiate the application.
         """
