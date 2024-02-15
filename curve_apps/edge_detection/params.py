@@ -28,41 +28,6 @@ NAME = "edge_detection"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
 
-class Parameters(BaseData):
-    """
-    Edge detection input parameters.
-
-    :param detection: Detection parameters expected for the edge detection.
-    :param source: Parameters for the source object and data.
-    """
-
-    model_config = ConfigDict(arbitrary_types_allowed=True)
-
-    detection: DetectionParameters
-    output: OutputParameters
-    run_command: str = f"curve_apps.{NAME}.driver"
-    source: SourceParameters
-    title: str = NAME.capitalize().replace("_", " ")
-
-    _input_file: InputFile = InputFile.read_ui_json(DEFAULT_UI_JSON, validate=False)
-    _name: str = NAME
-
-    @classmethod
-    def instantiate(cls, input_file) -> Parameters:
-        """
-        Instantiate the application.
-        """
-        data = cls._parse_input(input_file)
-        parameters = cls(
-            **data,
-            detection=DetectionParameters(**data),
-            output=OutputParameters(**data),
-            source=SourceParameters(**data),
-        )
-
-        return parameters
-
-
 class SourceParameters(BaseModel):
     """
     Source parameters expected by the ui.json file format.
@@ -93,3 +58,25 @@ class DetectionParameters(BaseModel):
     sigma: float = 10
     threshold: int = 1
     window_size: Optional[int] = None
+
+
+class Parameters(BaseData):
+    """
+    Edge detection input parameters.
+
+    :param detection: Detection parameters expected for the edge detection.
+    :param source: Parameters for the source object and data.
+    """
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    _name: str = NAME
+
+    input_file: Optional[InputFile] = InputFile.read_ui_json(
+        DEFAULT_UI_JSON, validate=False
+    )
+    detection: DetectionParameters
+    output: OutputParameters
+    run_command: str = f"curve_apps.{NAME}.driver"
+    source: SourceParameters
+    title: str = NAME.capitalize().replace("_", " ")

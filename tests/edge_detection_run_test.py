@@ -43,7 +43,7 @@ def test_driver(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
 
     grid, data = setup_example(workspace)
-    params = Parameters.instantiate(
+    params = Parameters.build(
         {
             "geoh5": workspace,
             "objects": grid,
