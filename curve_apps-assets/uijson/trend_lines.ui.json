@@ -76,6 +76,31 @@
         "max": 0.99,
         "enabled": true
     },
+    "azimuth": {
+        "group": "Direction filter",
+        "main": true,
+        "label": "Azimuth (dd.dd)",
+        "value": 0.0,
+        "min": 0.0,
+        "precision": 2,
+        "lineEdit": true,
+        "groupOptional": true,
+        "max": 360,
+        "optional": true,
+        "enabled": false
+    },
+    "azimuth_tol": {
+        "group": "Direction filter",
+        "main": true,
+        "label": "Tolerance (dd.dd)",
+        "value": 30.0,
+        "min": 1.0,
+        "precision": 2,
+        "lineEdit": true,
+        "max": 360,
+        "optional": true,
+        "enabled": false
+    },
     "export_as": {
         "main": true,
         "optional": true,

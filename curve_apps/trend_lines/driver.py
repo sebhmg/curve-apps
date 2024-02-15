@@ -111,9 +111,7 @@ class TrendLinesDriver(BaseCurveDriver):
             segments = find_curves(
                 self.vertices[ind, :2],
                 self.parts[ind],
-                self.params.detection.min_edges,
-                max_distance,
-                self.params.detection.damping,
+                self.params.detection,
             )
 
             if any(segments):

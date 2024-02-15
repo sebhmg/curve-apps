@@ -17,12 +17,11 @@ import logging
 import tempfile
 from abc import abstractmethod
 
+from geoapps_utils.driver.data import BaseData
 from geoapps_utils.driver.driver import BaseDriver
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import ObjectBase
 from geoh5py.ui_json import InputFile
-
-from .params import BaseParameters
 
 logger = logging.getLogger(__name__)
 
@@ -34,12 +33,12 @@ class BaseCurveDriver(BaseDriver):
     :param parameters: Application parameters.
     """
 
-    _parameter_class: type[BaseParameters]
+    _parameter_class: type[BaseData]
     _default_name: str
 
-    def __init__(self, parameters: BaseParameters | InputFile):
+    def __init__(self, parameters: BaseData | InputFile):
         if isinstance(parameters, InputFile):
-            parameters = self._parameter_class.instantiate(parameters)
+            parameters = self._parameter_class.build(parameters)
 
         # TODO need to re-type params in base class
         super().__init__(parameters)
@@ -78,13 +77,13 @@ class BaseCurveDriver(BaseDriver):
         """
 
     @property
-    def params(self) -> BaseParameters:
+    def params(self) -> BaseData:
         """Application parameters."""
         return self._params
 
     @params.setter
-    def params(self, val: BaseParameters):
-        if not isinstance(val, BaseParameters):
+    def params(self, val: BaseData):
+        if not isinstance(val, BaseData):
             raise TypeError("Parameters must be of type Parameters.")
         self._params = val
 

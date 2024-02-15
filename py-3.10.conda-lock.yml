@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 97b300dedc07114511da2b438210cf46205f60431327beff1fc476b2bf08df51
-    linux-64: 2d18539a4b9ec4bbe19d80fa1241a2438f28a948bf5f31e54755b0c4f11bf12f
+    win-64: 917db42c475ddc85d83b6bd8a2fff6ee24f92172aadbff852c41caee484295ca
+    linux-64: 625d787dfc543e721a2cf654eb79369e33a4f3269f67362d41193a7b602ace6f
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -563,7 +563,7 @@ package:
   category: main
   optional: false
 - name: libavif16
-  version: 1.0.3
+  version: 1.0.4
   manager: conda
   platform: linux-64
   dependencies:
@@ -572,10 +572,10 @@ package:
     libgcc-ng: '>=12'
     rav1e: '>=0.6.6,<1.0a0'
     svt-av1: '>=1.8.0,<1.8.1.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libavif16-1.0.3-h1dcd450_3.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/libavif16-1.0.4-h1dcd450_0.conda
   hash:
-    md5: e913bb5582509db5c8378e647fa267c9
-    sha256: 46bfeccf83b901ab369d7e652b6ff83e36ff1c8586af1c0fd0b980dc54de82d9
+    md5: 6e4fda04c7493700b4173e971eca4dd6
+    sha256: f57edcb0ac9f1f9665369c833620497c6c2347f339f767b9d922d74c35bc3193
   category: main
   optional: false
 - name: libbrotlidec
@@ -660,16 +660,16 @@ package:
   category: main
   optional: false
 - name: libsqlite
-  version: 3.44.2
+  version: 3.45.1
   manager: conda
   platform: linux-64
   dependencies:
     libgcc-ng: '>=12'
     libzlib: '>=1.2.13,<1.3.0a0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/libsqlite-3.44.2-h2797004_0.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/libsqlite-3.45.1-h2797004_0.conda
   hash:
-    md5: 3b6a9f225c3dbe0d24f4fedd4625c5bf
-    sha256: ee2c4d724a3ed60d5b458864d66122fb84c6ce1df62f735f90d8db17b66cd88a
+    md5: fc4ccadfbf6d4784de88c41704792562
+    sha256: 1b379d1c652b25d0540251d422ef767472e768fd36b77261045e97f9ba6d3faa
   category: main
   optional: false
 - name: libssh2
@@ -1505,16 +1505,16 @@ package:
   category: dev
   optional: true
 - name: tqdm
-  version: 4.66.1
+  version: 4.66.2
   manager: conda
   platform: linux-64
   dependencies:
     colorama: ''
     python: '>=3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/tqdm-4.66.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/tqdm-4.66.2-pyhd8ed1ab_0.conda
   hash:
-    md5: 03c97908b976498dcae97eb4e4f3149c
-    sha256: b61c9222af05e8c5ff27e4a4d2eb81870c21ffd7478346be3ef644b7a3759cc4
+    md5: 2b8dfb969f984497f3f98409a9545776
+    sha256: 416d1d9318f3267325ad7e2b8a575df20ff9031197b30c0222c3d3b023877260
   category: main
   optional: false
 - name: typing-extensions
@@ -1647,7 +1647,7 @@ package:
   category: main
   optional: false
 - name: dask-core
-  version: 2024.1.1
+  version: 2024.2.0
   manager: conda
   platform: linux-64
   dependencies:
@@ -1660,10 +1660,10 @@ package:
     python: '>=3.9'
     pyyaml: '>=5.3.1'
     toolz: '>=0.10.0'
-  url: https://conda.anaconda.org/conda-forge/noarch/dask-core-2024.1.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/dask-core-2024.2.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 1a92a5bd77b2430796696e25c3d8dbcb
-    sha256: b9521f5fe75ec73b2be9227abd6d27e51d7d2698c614f46d4977e7135b003bef
+    md5: 5973bc565e2aea620c3a431cafdde032
+    sha256: 01e44a1d6d9ce227a9b513193f96e4cb07b950dd8365fbe105e5daf6224d25e8
   category: main
   optional: false
 - name: h5py
@@ -1727,17 +1727,17 @@ package:
   category: main
   optional: false
 - name: imageio
-  version: 2.33.1
+  version: 2.34.0
   manager: conda
   platform: linux-64
   dependencies:
     numpy: ''
     pillow: '>=8.3.2'
     python: '>=3'
-  url: https://conda.anaconda.org/conda-forge/noarch/imageio-2.33.1-pyh8c1a49c_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/imageio-2.34.0-pyh4b66e23_0.conda
   hash:
-    md5: 1c34d58ac469a34e7e96832861368bce
-    sha256: 0565f3666de4d02a83c5c8e14b7d878c382720f84318d6ce1ff83b66603c01d7
+    md5: b8853659d596f967c661f544dd89ede7
+    sha256: be0eecc8b3ee49ffe3c38dedc4d3c121e18627624926f7d1d998e8027bce4266
   category: main
   optional: false
 - name: pooch
@@ -1829,17 +1829,17 @@ package:
   category: main
   optional: false
 - name: tifffile
-  version: 2024.1.30
+  version: 2024.2.12
   manager: conda
   platform: linux-64
   dependencies:
     imagecodecs: '>=2023.8.12'
     numpy: '>=1.19.2'
     python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.1.30-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.2.12-pyhd8ed1ab_0.conda
   hash:
-    md5: 9ae618ad19f5b39955c9f2e43b8d03c3
-    sha256: 5315865837d628477bb6f7f3ec5f48d708ad5b4df79ace29e9934e82e13d55ce
+    md5: d5c8bef52be4e70c48b1400eec3eecc8
+    sha256: 5b629ab2eae0508ad554cc831fed72950d74909d6bcf2aebdfd01e0c0afca60b
   category: main
   optional: false
 - name: scikit-image
@@ -1883,7 +1883,7 @@ package:
   category: main
   optional: false
 - name: geoapps-utils
-  version: 0.3.0a1
+  version: 0.3.0a2
   manager: pip
   platform: linux-64
   dependencies:
@@ -1893,9 +1893,9 @@ package:
     numpy: '>=1.23.5,<1.24.0'
     pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/9f/15/171933d05c210970f3364b885eeac31637006a8c6d93b1f685d9a337d13f/geoapps_utils-0.3.0a1-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/8e/9c/8a8341f4c0614dcd7c4dfc1e86995b7cd42f9e1c9d4faf648aaadb769329/geoapps_utils-0.3.0a2-py3-none-any.whl
   hash:
-    sha256: 91e4746d916dad8439c97a5f7a32236216f3037e7690f3095318f7d12b70f762
+    sha256: cf9d091d7f86c860f24369ddd2fbc6f6670369ca56dd35038c1093bd62ef957d
   category: main
   optional: false
 - name: ca-certificates
@@ -2219,17 +2219,17 @@ package:
   category: main
   optional: false
 - name: libsqlite
-  version: 3.44.2
+  version: 3.45.1
   manager: conda
   platform: win-64
   dependencies:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/libsqlite-3.44.2-hcfcfb64_0.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/libsqlite-3.45.1-hcfcfb64_0.conda
   hash:
-    md5: 4a5f5ab56cbf3ccd08d71a1168061213
-    sha256: 25bfcf79ec863c2c0f0b3599981e2eac57efc5302faf2bb84f68c3f0faa55d1c
+    md5: c583c1d6999b7aa148eff3089e13c44b
+    sha256: e1010f4ac7b056d85d91e6cb6137ef118f920eba88059261689e543780b230df
   category: main
   optional: false
 - name: libwebp-base
@@ -3316,16 +3316,16 @@ package:
   category: main
   optional: false
 - name: tqdm
-  version: 4.66.1
+  version: 4.66.2
   manager: conda
   platform: win-64
   dependencies:
     colorama: ''
     python: '>=3.7'
-  url: https://conda.anaconda.org/conda-forge/noarch/tqdm-4.66.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/tqdm-4.66.2-pyhd8ed1ab_0.conda
   hash:
-    md5: 03c97908b976498dcae97eb4e4f3149c
-    sha256: b61c9222af05e8c5ff27e4a4d2eb81870c21ffd7478346be3ef644b7a3759cc4
+    md5: 2b8dfb969f984497f3f98409a9545776
+    sha256: 416d1d9318f3267325ad7e2b8a575df20ff9031197b30c0222c3d3b023877260
   category: main
   optional: false
 - name: typing-extensions
@@ -3464,7 +3464,7 @@ package:
   category: main
   optional: false
 - name: dask-core
-  version: 2024.1.1
+  version: 2024.2.0
   manager: conda
   platform: win-64
   dependencies:
@@ -3477,10 +3477,10 @@ package:
     importlib_metadata: '>=4.13.0'
     fsspec: '>=2021.09.0'
     click: '>=8.1'
-  url: https://conda.anaconda.org/conda-forge/noarch/dask-core-2024.1.1-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/dask-core-2024.2.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 1a92a5bd77b2430796696e25c3d8dbcb
-    sha256: b9521f5fe75ec73b2be9227abd6d27e51d7d2698c614f46d4977e7135b003bef
+    md5: 5973bc565e2aea620c3a431cafdde032
+    sha256: 01e44a1d6d9ce227a9b513193f96e4cb07b950dd8365fbe105e5daf6224d25e8
   category: main
   optional: false
 - name: libblas
@@ -3668,17 +3668,17 @@ package:
   category: main
   optional: false
 - name: imageio
-  version: 2.33.1
+  version: 2.34.0
   manager: conda
   platform: win-64
   dependencies:
     numpy: ''
     python: '>=3'
     pillow: '>=8.3.2'
-  url: https://conda.anaconda.org/conda-forge/noarch/imageio-2.33.1-pyh8c1a49c_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/imageio-2.34.0-pyh4b66e23_0.conda
   hash:
-    md5: 1c34d58ac469a34e7e96832861368bce
-    sha256: 0565f3666de4d02a83c5c8e14b7d878c382720f84318d6ce1ff83b66603c01d7
+    md5: b8853659d596f967c661f544dd89ede7
+    sha256: be0eecc8b3ee49ffe3c38dedc4d3c121e18627624926f7d1d998e8027bce4266
   category: main
   optional: false
 - name: pywavelets
@@ -3722,17 +3722,17 @@ package:
   category: main
   optional: false
 - name: tifffile
-  version: 2024.1.30
+  version: 2024.2.12
   manager: conda
   platform: win-64
   dependencies:
     python: '>=3.9'
     numpy: '>=1.19.2'
     imagecodecs: '>=2023.8.12'
-  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.1.30-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.2.12-pyhd8ed1ab_0.conda
   hash:
-    md5: 9ae618ad19f5b39955c9f2e43b8d03c3
-    sha256: 5315865837d628477bb6f7f3ec5f48d708ad5b4df79ace29e9934e82e13d55ce
+    md5: d5c8bef52be4e70c48b1400eec3eecc8
+    sha256: 5b629ab2eae0508ad554cc831fed72950d74909d6bcf2aebdfd01e0c0afca60b
   category: main
   optional: false
 - name: scikit-image
@@ -3777,7 +3777,7 @@ package:
   category: main
   optional: false
 - name: geoapps-utils
-  version: 0.3.0a1
+  version: 0.3.0a2
   manager: pip
   platform: win-64
   dependencies:
@@ -3787,8 +3787,8 @@ package:
     numpy: '>=1.23.5,<1.24.0'
     pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://files.pythonhosted.org/packages/9f/15/171933d05c210970f3364b885eeac31637006a8c6d93b1f685d9a337d13f/geoapps_utils-0.3.0a1-py3-none-any.whl
+  url: https://files.pythonhosted.org/packages/8e/9c/8a8341f4c0614dcd7c4dfc1e86995b7cd42f9e1c9d4faf648aaadb769329/geoapps_utils-0.3.0a2-py3-none-any.whl
   hash:
-    sha256: 91e4746d916dad8439c97a5f7a32236216f3037e7690f3095318f7d12b70f762
+    sha256: cf9d091d7f86c860f24369ddd2fbc6f6670369ca56dd35038c1093bd62ef957d
   category: main
   optional: false
