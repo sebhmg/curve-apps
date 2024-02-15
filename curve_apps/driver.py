@@ -38,7 +38,7 @@ class BaseCurveDriver(BaseDriver):
 
     def __init__(self, parameters: BaseData | InputFile):
         if isinstance(parameters, InputFile):
-            parameters = self._parameter_class.instantiate(parameters)
+            parameters = self._parameter_class.build(parameters)
 
         # TODO need to re-type params in base class
         super().__init__(parameters)
