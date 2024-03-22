@@ -10,26 +10,32 @@ machine vision algorithms from the
 -  Edges can be exported to `Geoscience
    ANALYST <https://mirageoscience.com/mining-industry-software/geoscience-analyst/>`__
    for viewing and editing.
--  See the `Methodology <#Methodology>`__ section for algorithmic
+-  See the `Methodology <edge_methodology>`_ section for algorithmic
    details
 
-`Video tutorial available on Youtube <https://youtu.be/Lpn3xA7xlBs>`__
 
-New user? Visit the `Getting Started <../installation.rst>`__ page.
+New user? Visit the `Getting Started <getting_started>`_ page.
 
 Application
 -----------
 
-The following sections provide details on the different parameters
-controlling the application. Interactive widgets shown below are for
-demonstration purposes only.
+.. figure:: ./images/edge_detection/edge_detection_ui.png
+            :align: center
+            :width: 300
+
+The following sections provide details on the different parameters exposed in the ``ui.json``.
+
+ - **Object**: Select the target ``Grid2D`` object from the dropdown list.
+ - **Data**: Select the data attribute to use for edge detection.
+ - **Line length**: Filter for the minimum length (pixels) of detected lines.
+
+Filter for the minimum length (pixels) of detected lines.
 
 
-Input Data
-----------
+Line Gap
+~~~~~~~~
 
-Object and Data Selection
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Maximum gap between pixels to still form a line.
 
 List of ``Grid2D`` objects available in the target ``geoh5`` project.
 
@@ -64,20 +70,12 @@ Threshold
 Detection threshold
 
 
-Line Length
-~~~~~~~~~~~
-
-Filter for the minimum length (pixels) of detected lines.
-
-
-Line Gap
-~~~~~~~~
-
-Maximum gap between pixels to still form a line.
 
 
 See the `Output Panel <base_application.ipynb#Output-Panel>`__ page for
 more details.
+
+.. _edge_methodology:
 
 Methodology
 -----------
@@ -95,7 +93,28 @@ main processing steps.
    up computations and reduce skews in the Hough line parametrization
    observed on grids with small aspect ratios.
 
+.. automethod:: curve_apps.edge_detection.driver.EdgeDetectionDriver.get_line_indices
+
 4. For each tile, edges are converted to a line parametric form using
    the `Hough Line Transform <#Hough-Line-Parameters>`__.
+
+
+Example
+-------
+
+
+.. list-table::
+   :widths: 25 25
+   :header-rows: 1
+
+   * - No merge
+     - With 75 m merge length
+   * - .. figure:: ./images/edge_detection/no_merge_length.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/merge_length.png
+            :align: center
+            :width: 300
+
 
 Need help? Contact us at support@mirageoscience.com
