@@ -51,6 +51,7 @@ class DetectionParameters(BaseModel):
     :param sigma: Standard deviation of the Gaussian filter. (Canny)
     :param threshold: Value threshold. (Hough)
     :param window_size: Size of the window to search for lines.
+    :param merge_length: Minimum length between nodes that should be merged.
     """
 
     line_length: int = 1
@@ -58,6 +59,7 @@ class DetectionParameters(BaseModel):
     sigma: float = 10
     threshold: int = 1
     window_size: Optional[int] = None
+    merge_length: Optional[int] = None
 
 
 class Parameters(BaseData):

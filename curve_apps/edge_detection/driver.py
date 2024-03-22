@@ -21,6 +21,7 @@ from geoh5py.data import FloatData
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
+from scipy.spatial import cKDTree
 from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
@@ -137,8 +138,17 @@ class EdgeDetectionDriver(BaseCurveDriver):
         if len(indices) == 0:
             return None, None
 
-        u_ind, r_ind = np.unique(np.vstack(indices), axis=0, return_inverse=True)
+        pixel_coordinates = np.vstack(indices)
+
+        if detection.merge_length is not None:
+            vertices = map_indices_to_coordinates(grid, pixel_coordinates)
+            tree = cKDTree(vertices)
+            merge = tree.query_pairs(detection.merge_length, output_type="ndarray")
+            pixel_coordinates[merge[:, 0], :] = pixel_coordinates[merge[:, 1], :]
+
+        u_ind, r_ind = np.unique(pixel_coordinates, axis=0, return_inverse=True)
         vertices = map_indices_to_coordinates(grid, u_ind)
+
         cells = r_ind.reshape((-1, 2))
         return vertices, cells
 
@@ -159,6 +169,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
         :param line_length: Minimum accepted pixel length of detected lines. (Hough)
         :param line_gap: Maximum gap between pixels to still form a line. (Hough)
         :param threshold: Value threshold. (Hough)
+        :param window_size: Size of the window to search for lines.
 
         :returns: List of indices.
         """
