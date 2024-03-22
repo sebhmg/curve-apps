@@ -30,18 +30,20 @@
     "line_length": {
         "group": "Parameters",
         "main": true,
-        "label": "Line Length",
+        "label": "Line Length (pixels)",
         "min": 1,
         "max": 100,
-        "value": 12
+        "value": 12,
+        "tooltip": "The minimum length of a line segment."
     },
     "line_gap": {
         "group": "Parameters",
         "main": true,
-        "label": "Line Gap",
+        "label": "Line Gap (pixels)",
         "min": 1,
         "max": 100,
-        "value": 1
+        "value": 1,
+        "tooltip": "The maximum gap between two nodes to be considered connected."
     },
     "sigma": {
         "group": "Parameters",
@@ -51,7 +53,8 @@
         "min": 0.0,
         "precision": 1,
         "lineEdit": true,
-        "max": 10.0
+        "max": 10.0,
+        "tooltip": "Standard deviation of the Gaussian filter used to smooth the data."
     },
     "threshold": {
         "group": "Parameters",
@@ -61,17 +64,29 @@
         "max": 100,
         "precision": 1,
         "lineEdit": true,
-        "value": 1.0
+        "value": 1.0,
+        "tooltip": "Threshold value for edge detection."
     },
     "window_size": {
         "group": "Parameters",
         "main": true,
         "optional": true,
         "enabled": false,
-        "label": "Window Size",
+        "label": "Window Size (pixels)",
         "min": 16,
         "max": 512,
-        "value": 64
+        "value": 64,
+        "tooltip": "The size of the moving window used to compute edges. Smaller values will result in more detailed edges, but may be more sensitive to noise."
+    },
+    "merge_length": {
+        "group": "Parameters",
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Merge Length (m)",
+        "min": 0,
+        "value": 100.0,
+        "tooltip": "If the distance between two nodes is less than this value, the nodes will be merged."
     },
     "export_as": {
         "main": true,
