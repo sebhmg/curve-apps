@@ -64,6 +64,31 @@ class EdgeDetectionDriver(BaseCurveDriver):
                 parent=parent,
             )
 
+            # Compute azimuth of edges
+            delta = np.c_[
+                vertices[cells[:, 1], 1] - vertices[cells[:, 0], 1],
+                vertices[cells[:, 1], 0] - vertices[cells[:, 0], 0],
+            ]
+            amp = np.linalg.norm(delta, axis=1)
+            orientation = np.abs(np.arcsin(delta[:, 1] / amp))
+
+            # TODO: Assign values to vertices until better handling of cell data by GA
+            vert_azimuth = np.zeros(edges.n_vertices) * np.nan
+            vert_azimuth[cells.flatten()] = np.repeat(orientation, 2)
+            edges.add_data(
+                {
+                    "azimuth": {"values": np.degrees(vert_azimuth)},
+                }
+            )
+
+            vert_lengths = np.zeros(edges.n_vertices) * np.nan
+            vert_lengths[cells.flatten()] = np.repeat(amp, 2)
+            edges.add_data(
+                {
+                    "lengths": {"values": vert_lengths},
+                }
+            )
+
         return edges
 
     @staticmethod
