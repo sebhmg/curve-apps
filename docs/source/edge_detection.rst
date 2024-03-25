@@ -4,14 +4,8 @@ Edge Detection
 With this application, users can create lines along edges (lineaments)
 from gridded data in a semi-automated fashion. The application uses
 machine vision algorithms from the
-`Scikit-Image <https://scikit-image.org/>`__ open-source package.
-
--  Currently available for Grid2D objects.
--  Edges can be exported to `Geoscience
-   ANALYST <https://mirageoscience.com/mining-industry-software/geoscience-analyst/>`__
-   for viewing and editing.
--  See the `Methodology <edge_methodology>`_ section for algorithmic
-   details
+`Scikit-Image <https://scikit-image.org/>`__ open-source package. Edges are exported to `Geoscience ANALYST <https://mirageoscience.com/mining-industry-software/geoscience-analyst/>`__
+for viewing and editing.
 
 
 New user? Visit the `Getting Started <getting_started>`_ page.
@@ -19,61 +13,46 @@ New user? Visit the `Getting Started <getting_started>`_ page.
 Application
 -----------
 
+The following sections provide details on the different parameters exposed in the ``ui.json``.
+
 .. figure:: ./images/edge_detection/edge_detection_ui.png
             :align: center
             :width: 300
 
-The following sections provide details on the different parameters exposed in the ``ui.json``.
+Data Selection
+^^^^^^^^^^^^^^
 
  - **Object**: Select the target ``Grid2D`` object from the dropdown list.
  - **Data**: Select the data attribute to use for edge detection.
- - **Line length**: Filter for the minimum length (pixels) of detected lines.
-
-Filter for the minimum length (pixels) of detected lines.
 
 
-Line Gap
-~~~~~~~~
+Detection Parameters
+^^^^^^^^^^^^^^^^^^^^
 
-Maximum gap between pixels to still form a line.
-
-List of ``Grid2D`` objects available in the target ``geoh5`` project.
-
-
-Window selection
-~~~~~~~~~~~~~~~~
-
-
-Canny Edge Parameters
----------------------
-
-Parameters controlling the
 `Scikit-Image.feature.Canny <https://scikit-image.org/docs/dev/auto_examples/edges/plot_canny.html#sphx-glr-auto-examples-edges-plot-canny-py>`__
-edge detection routine.
+ - **Sigma**: Standard deviation of the Gaussian filter used to smooth the input data. Increase the parameter to detect fewer edges in noisy data.
 
-Sigma
-~~~~~
-
-Standard deviation of the Gaussian filter used in the Canny algorithm.
-
-
-Hough Line Parameters
----------------------
-
-Parameters controlling the
 `Scikit-Image.transform.probabilistic_hough_line <https://scikit-image.org/docs/dev/api/skimage.transform.html#probabilistic-hough-line>`__
-routine.
-
-Threshold
-~~~~~~~~~
-
-Detection threshold
+ - **Line length**: Filter for the minimum length (pixels) of detected lines. Increase the parameter to extract longer lines.
+ - **Line gap**: Maximum gap between pixels to still form a line. Increase the parameter to merge broken lines more aggressively.
+ - **Threshold**: Threshold parameter used in the Hough Line Transform.
 
 
+**[Optionals]**
+
+ - **Window size**: Size of the square window used to sub-divide the grid for processing. By default, the window size
+    is set to the shortest side of the input grid. Smaller window sizes can be used to speed up computations but may result in
+    more fragmented lines. Larger window sizes can be used to improve line continuity but may slow down computations.
+ - **Merge length**: Merge lines within a specified distance (in meters) of each other. This parameter is useful for
+    merging fragmented lines that are close to each other but not connected.
 
 
-See the `Output Panel <base_application.ipynb#Output-Panel>`__ page for
-more details.
+Output preferences
+^^^^^^^^^^^^^^^^^^
+
+ - **Save as**: Assign a specific name to the resulting ``Curve`` object.
+ - **Group**: Create a ``Container Group`` entity to store the results.
+
 
 .. _edge_methodology:
 
@@ -83,20 +62,24 @@ Methodology
 The conversion from raster data to lines involves the following four
 main processing steps.
 
+.. figure:: ./images/edge_detection/edge_detection_algo.png
+            :align: center
+            :width: 500
+
 1. The selected gridded data are normalized between [0, 1]
 
 2. Normalized values are processed with the
-   `Canny <#Canny-Edge-Parameters>`__ edge detection algorithm.
+   `Canny <#Canny-Edge-Parameters>`__ detection algorithm to extract a binary edge map.
 
-3. The full grid is sub-divided into overlapping square tiles defined by
+3. The full grid is sub-divided into overlapping **square tiles** defined by
    the `window size <#Window-size>`__ parameter. Tiling is used to speed
-   up computations and reduce skews in the Hough line parametrization
-   observed on grids with small aspect ratios.
-
-.. automethod:: curve_apps.edge_detection.driver.EdgeDetectionDriver.get_line_indices
+   up computations but to also avoid skewing the detection of lines along the longest axis of the input grid.
 
 4. For each tile, edges are converted to a line parametric form using
    the `Hough Line Transform <#Hough-Line-Parameters>`__.
+
+[Optional] The resulting vertices defining the segments can be filtered to reduce the number of unique lines. Collocated
+vertices are merged if they are within a specified distance of each other. This is controlled by the `merge length <#Merge-Length>`__ parameter.
 
 
 Example
