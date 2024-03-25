@@ -34,7 +34,8 @@ Detection Parameters
 
 `Scikit-Image.transform.probabilistic_hough_line <https://scikit-image.org/docs/dev/api/skimage.transform.html#probabilistic-hough-line>`__
  - **Line length**: Filter for the minimum length (pixels) of detected lines. Increase the parameter to extract longer lines.
- - **Line gap**: Maximum gap between pixels to still form a line. Increase the parameter to merge broken lines more aggressively.
+ - **Line gap**: Maximum gap between pixels to still form a line.
+    Increase the parameter to create the number of segments that can be detected from disconnected edges.
  - **Threshold**: Threshold parameter used in the Hough Line Transform.
 
 
@@ -47,7 +48,7 @@ Detection Parameters
     merging fragmented lines that are close to each other but not connected.
 
 
-Output preferences
+Output Preferences
 ^^^^^^^^^^^^^^^^^^
 
  - **Save as**: Assign a specific name to the resulting ``Curve`` object.
@@ -81,10 +82,142 @@ main processing steps.
 [Optional] The resulting vertices defining the segments can be filtered to reduce the number of unique lines. Collocated
 vertices are merged if they are within a specified distance of each other. This is controlled by the `merge length <#Merge-Length>`__ parameter.
 
+The final output is a ``Curve`` object containing the detected lineaments.
+The orientation of the lines, in absolute degree from North [0, 90], and line length are stored as attributes of the ``Curve`` object.
 
 Example
 -------
 
+This section demonstrates the effect of various detection parameters on a training grid provided `here <https://github.com/MiraGeoscience/curve-apps/tree/main/edge_detection-assets>`__.
+The goal is to extract the lineaments from gridded magnetic field data. We begin with default parameters and then explore the effect of changing each parameter independently.
+
+.. list-table::
+   :widths: 25 25
+   :header-rows: 1
+
+   * - Gridded magnetic data
+     - Default parameters
+
+   * - .. figure:: ./images/edge_detection/example_grid.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/example_ui_default.png
+            :align: center
+            :width: 300
+
+
+Running the application with default parameters results in the following output.
+
+
+.. list-table::
+   :widths: 25 25
+   :header-rows: 1
+
+   * - Canny edges
+     - Hough Lines
+
+   * - .. figure:: ./images/edge_detection/example_canny_default.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/example_result_default.png
+            :align: center
+            :width: 300
+
+Sigma
+^^^^^
+
+The following figure shows the effect of increasing the ``sigma`` parameter in the Canny edge detection algorithm. For ``sigma=3`` we obtain:
+
+.. list-table::
+   :widths: 25 25
+   :header-rows: 1
+
+   * - Canny edges
+     - Hough Lines
+
+   * - .. figure:: ./images/edge_detection/example_canny_sigma3.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/example_result_sigma3.png
+            :align: center
+            :width: 300
+
+Note that fewer small edges were recovered by the Canny algorithm, resulting in fewer lines in the final output.
+
+Line Length
+^^^^^^^^^^^
+
+Next, we explore the effect of increasing the ``line length`` parameter in the Hough Line Transform. For ``line length=24`` we obtain:
+
+.. list-table::
+   :widths: 25 25
+   :header-rows: 1
+
+   * - With 12 pixels line length
+     - With 24 pixels line length
+
+   * - .. figure:: ./images/edge_detection/example_result_default.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/example_result_line24.png
+            :align: center
+            :width: 300
+
+Note that longer lines are extracted when increasing the ``line length`` parameter.
+
+Line Gap
+^^^^^^^^
+
+The following figure shows the effect of increasing the ``line gap`` parameter in the Hough Line Transform. For ``line gap=10`` we obtain:
+
+.. list-table::
+   :widths: 25 25
+   :header-rows: 1
+
+   * - With 1 pixels line gap
+     - With 4 pixels line gap
+
+   * - .. figure:: ./images/edge_detection/example_result_default.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/example_result_gap4.png
+            :align: center
+            :width: 300
+
+Note that increasing the ``line gap`` parameter results in increasing the number of detected lines.
+
+Threshold
+^^^^^^^^^
+
+To demonstrate the effect of the ``threshold`` parameter, we will change the detection parameters to increase the number small segments.
+The table below presents the parameters and comparative results for ``threshold=1`` and ``threshold=8``.
+
+.. list-table::
+   :widths: 25 25 25
+   :header-rows: 1
+
+   * - Detection parameters
+     - With ``threshold=1``
+     - With ``threshold=8``
+
+   * - .. figure:: ./images/edge_detection/edge_detection_threshold.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/example_result_threshold1.png
+            :align: center
+            :width: 300
+     - .. figure:: ./images/edge_detection/example_result_threshold8.png
+            :align: center
+            :width: 300
+
+
+Note that increasing the ``threshold`` parameter results in fewer output lines.
+
+
+Merge Length
+^^^^^^^^^^^^
+
+The following figure shows the effect of increasing the ``merge length`` parameter. For ``merge length=75`` we obtain:
 
 .. list-table::
    :widths: 25 25
@@ -98,6 +231,10 @@ Example
      - .. figure:: ./images/edge_detection/merge_length.png
             :align: center
             :width: 300
+
+
+Note that increasing the ``merge length`` parameter results in fewer output lines, and the segments are generally more continuous
+as more vertices are shared between lines.
 
 
 Need help? Contact us at support@mirageoscience.com
