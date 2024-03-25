@@ -65,7 +65,8 @@ class EdgeDetectionDriver(BaseCurveDriver):
                 parent=parent,
             )
 
-            # Compute azimuth of edges
+            # Compute absolute acute angle from North
+            # TODO: Move to geoapps-utils
             delta = np.c_[
                 vertices[cells[:, 1], 1] - vertices[cells[:, 0], 1],
                 vertices[cells[:, 1], 0] - vertices[cells[:, 0], 0],
