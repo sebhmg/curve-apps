@@ -7,13 +7,16 @@ machine vision algorithms from the
 `Scikit-Image <https://scikit-image.org/>`__ open-source package. Edges are exported to `Geoscience ANALYST <https://mirageoscience.com/mining-industry-software/geoscience-analyst/>`__
 for viewing and editing.
 
+.. figure:: ./images/edge_detection/edge_detection_landing.png
+            :align: center
+            :width: 100%
 
 New user? Visit the `Getting Started <getting_started>`_ page.
 
 Application
 -----------
 
-The following sections provide details on the different parameters exposed in the ``ui.json``.
+The following sections provide details on the different parameters exposed in the user-interface (``edge_detection.ui.json``).
 
 .. figure:: ./images/edge_detection/edge_detection_ui.png
             :align: center
