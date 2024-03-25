@@ -65,13 +65,15 @@ class EdgeDetectionDriver(BaseCurveDriver):
                 parent=parent,
             )
 
-            # Compute azimuth of edges
+            # Compute positive angle from North
+            # TODO: Move to geoapps-utils
             delta = np.c_[
-                vertices[cells[:, 1], 1] - vertices[cells[:, 0], 1],
                 vertices[cells[:, 1], 0] - vertices[cells[:, 0], 0],
+                vertices[cells[:, 1], 1] - vertices[cells[:, 0], 1],
             ]
+            delta[delta[:, 0] < 0, :] *= -1
             amp = np.linalg.norm(delta, axis=1)
-            orientation = np.abs(np.arcsin(delta[:, 1] / amp))
+            orientation = np.arccos(delta[:, 1] / amp)
 
             # TODO: Assign values to vertices until better handling of cell data by GA
             vert_azimuth = np.zeros(edges.n_vertices) * np.nan

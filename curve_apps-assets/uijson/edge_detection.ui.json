@@ -30,7 +30,7 @@
     "line_length": {
         "group": "Detection Parameters",
         "main": true,
-        "label": "Line Length (pixels)",
+        "label": "Line length (pixels)",
         "min": 1,
         "max": 100,
         "value": 12,
@@ -39,11 +39,11 @@
     "line_gap": {
         "group": "Detection Parameters",
         "main": true,
-        "label": "Line Gap (pixels)",
+        "label": "Line gap (pixels)",
         "min": 1,
         "max": 100,
         "value": 1,
-        "tooltip": "The maximum gap between two nodes to be considered connected."
+        "tooltip": "The maximum gap between two pixels to be considered connected."
     },
     "sigma": {
         "group": "Detection Parameters",
