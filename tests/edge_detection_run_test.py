@@ -77,6 +77,32 @@ def test_driver(tmp_path: Path):
         assert len(edges.cells) == 22
 
 
+def test_merge_length(tmp_path: Path):
+    workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
+
+    grid, data = setup_example(workspace)
+    params = Parameters.build(
+        {
+            "geoh5": workspace,
+            "objects": grid,
+            "data": data,
+            "line_length": 12,
+            "line_gap": 1,
+            "sigma": 1,
+            "export_as": "square",
+            "merge_length": 10,
+        }
+    )
+
+    driver = EdgeDetectionDriver(params)
+    driver.run()
+
+    with workspace.open():
+        edges = workspace.get_entity("square")[0]
+
+        assert len(np.unique(edges.parts)) == 2
+
+
 def test_input_file(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
 
