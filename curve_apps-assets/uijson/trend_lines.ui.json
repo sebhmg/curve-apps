@@ -77,7 +77,7 @@
         "enabled": true
     },
     "azimuth": {
-        "group": "Direction filter",
+        "group": "Orientation filter",
         "main": true,
         "label": "Azimuth (dd.dd)",
         "value": 0.0,
@@ -90,7 +90,7 @@
         "enabled": false
     },
     "azimuth_tol": {
-        "group": "Direction filter",
+        "group": "Orientation filter",
         "main": true,
         "label": "Tolerance (dd.dd)",
         "value": 30.0,
