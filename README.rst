@@ -133,11 +133,23 @@ To configure the development environment and tools, please see `README-dev.rst`_
 
 License
 ^^^^^^^
-# TODO: ADD LICENSE TERMS
+curve-apps is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+curve-apps is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with curve-apps.  If not, see <https://www.gnu.org/licenses/>.
+
 
 Third Party Software
 ^^^^^^^^^^^^^^^^^^^^
-The edge-detection Software may provide links to third party libraries or code (collectively “Third Party Software”)
+The curve-apps Software may provide links to third party libraries or code (collectively “Third Party Software”)
 to implement various functions. Third Party Software does not comprise part of the Software.
 The use of Third Party Software is governed by the terms of such software license(s).
 Third Party Software notices and/or additional terms and conditions are located in the
@@ -147,4 +159,4 @@ Third Party Software notices and/or additional terms and conditions are located 
 
 Copyright
 ^^^^^^^^^
-Copyright (c) 2023 Mira Geoscience Ltd.
+Copyright (c) 2024 Mira Geoscience Ltd.
