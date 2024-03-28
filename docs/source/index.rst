@@ -14,7 +14,7 @@ open storage format.
             :target: #Edge Detection
 
  - `Trend lines <trend_lines>`__.
-    .. figure:: ./images/trend_lines/trend_intro.png
+    .. figure:: ./images/trend_lines/example_filtered_azimuth.png
             :align: center
             :width: 40%
             :target: #Trend Lines

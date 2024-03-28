@@ -5,7 +5,7 @@ Trend Lines
 
 With this application, users can create trend lines from vertices and data.
 
-.. figure:: ./images/trend_lines/trend_intro.png
+.. figure:: ./images/trend_lines/example_filtered_azimuth.png
             :align: center
             :width: 100%
 
@@ -95,45 +95,50 @@ This section demonstrates the effect of various detection parameters on a traini
 
 .. figure:: ./images/trend_lines/example_data.png
     :align: center
-    :width: 300
+    :width: 500
 
 
 The goal is to extract trend lines from anomaly picks assigned to a ``Curve`` object.
-We begin with default parameters and then explore the effect of changing each parameter independently. We know that the
-trend lines should connect across the flight lines and not change direction too rapidly.
+We begin with default parameters and then explore the effect of changing each parameter independently.
+
+.. figure:: ./images/trend_lines/trend_lines_ui.png
+            :align: center
+            :width: 300
+
+We know that the trend lines should connect across the flight lines and not change direction too rapidly.
 We can use the ``Line ID`` as the ``Parts`` data to filter out connections that should not be considered.
 
-.. list-table::
-   :widths: 25 25
-   :header-rows: 1
-
-   * - Default parameters
-     - Result
-
-   * - .. figure:: ./images/trend_lines/trend_lines_ui.png
+.. figure:: ./images/trend_lines/example_no_filter.png
             :align: center
-            :width: 300
-     - .. figure:: ./images/trend_lines/example_no_filter.png
-            :align: center
-            :width: 300
+            :width: 500
 
 Note the we have recovered line paths that connect our input data, but many of those segments are not desirable. They are either
 connecting points that are too far apart or allowed to change direction rapidly.
 
 We can improve the results by adjusting the ``Maximum distance`` and ``Damping factor`` parameters.
 
-.. list-table::
-   :widths: 25 25
-   :header-rows: 1
-
-   * - Detection parameters
-     - Result
-
-   * - .. figure:: ./images/trend_lines/example_filtered_ui.png
+.. figure:: ./images/trend_lines/example_filtered_ui.png
             :align: center
             :width: 300
-     - .. figure:: ./images/trend_lines/example_filtered.png
+
+Re-running the application yields the following result:
+
+.. figure:: ./images/trend_lines/example_filtered.png
             :align: center
-            :width: 300
+            :width: 500
 
 By filtering out connections based on rapid changes in direction and maximum length, we can obtain trend lines that would better fit a manual picking.
+There are still a few segments that are not oriented along the main North-South trend.
+We can further filter out these segments by setting ``Orientation filter`` with the ``Azimuth`` and ``Tolerance`` parameters.
+
+.. figure:: ./images/trend_lines/example_filtered_azimuth_ui.png
+            :align: center
+            :width: 300
+
+Re-running the application yields the following result:
+
+.. figure:: ./images/trend_lines/example_filtered_azimuth.png
+            :align: center
+            :width: 500
+
+Note that the trend lines now follow the main North-South trend of the data.
