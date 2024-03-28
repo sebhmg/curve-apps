@@ -35,10 +35,10 @@ Preferably uncheck that box if you already have Python 3 installed on your syste
     it also installs packages from the conda-forge repository by default,
     which has no restriction for commercial use, while both Miniconda and Anaconda distributions use
     the Anaconda repository by default: see `Anaconda Terms of Service <https://www.anaconda.com/terms-of-service>`_ for details.
-    In any case, the installation of **octree-creation** forces the usage of the conda-forge repository,
+    In any case, the installation of **curve-apps** forces the usage of the conda-forge repository,
     and is thus not affected by the Anaconda Terms of Service.
 
-Download the latest octree-creation
+Download the latest curve-apps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Follow this link to `download from the GitHub repository <https://github.com/MiraGeoscience/curve-apps/archive/refs/heads/main.zip>`_.
@@ -56,7 +56,7 @@ Extract the package to your drive, preferably an SSD if available.
 Run ``Install_or_Update.bat``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The same batch file can be used to install or update **octree-creation**.
+The same batch file can be used to install or update **curve-apps**.
 A conda environment named ``curve_apps`` will be created to prevent conflicts with other software that may rely on Python.
 
 .. figure:: /images/getting_started/install_or_update.png
