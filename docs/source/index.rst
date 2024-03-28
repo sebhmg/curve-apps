@@ -7,15 +7,15 @@ in a semi-automated fashion. The applications are designed with a user-interface
 `geoh5 format <https://mirageoscience-geoh5py.readthedocs-hosted.com/en/stable/content/geoh5_format/index.html>`_,
 open storage format.
 
- - `Edge detection <#Edge Detection>`__.
+ - `Edge detection <edge_detection>`__.
     .. figure:: ./images/edge_detection/edge_detection_landing.png
-            :align: left
+            :align: center
             :width: 50%
             :target: #Edge Detection
 
- - `Trend lines <#Trend Lines>`__.
+ - `Trend lines <trend_lines>`__.
     .. figure:: ./images/trend_lines/trend_intro.png
-            :align: left
+            :align: center
             :width: 40%
             :target: #Trend Lines
 
@@ -45,8 +45,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
-You should have received a copy of the GNU Lesser General Public License
-along with curve-apps.  If not, see <https://www.gnu.org/licenses/>.
+A copy of the GNU Lesser General Public License can be accessed from <https://www.gnu.org/licenses/>.
 
 
 Third Party Software

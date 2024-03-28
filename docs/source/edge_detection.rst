@@ -34,23 +34,19 @@ Data Selection
 Detection Parameters
 ^^^^^^^^^^^^^^^^^^^^
 
-`Scikit-Image.feature.Canny <https://scikit-image.org/docs/dev/auto_examples/edges/plot_canny.html#sphx-glr-auto-examples-edges-plot-canny-py>`__
- - **Sigma**: Standard deviation of the Gaussian filter used to smooth the input data. Increase the parameter to detect fewer edges in noisy data.
+List of parameters controlling the detection and filtering of lineaments.
 
-`Scikit-Image.transform.probabilistic_hough_line <https://scikit-image.org/docs/dev/api/skimage.transform.html#probabilistic-hough-line>`__
- - **Line length**: Filter for the minimum length (pixels) of detected lines. Increase the parameter to extract longer lines.
- - **Line gap**: Maximum gap between pixels to still form a line.
-    Increase the parameter to create the number of segments that can be detected from disconnected edges.
- - **Threshold**: Threshold parameter used in the Hough Line Transform.
+ - `Scikit-Image.feature.Canny <https://scikit-image.org/docs/dev/auto_examples/edges/plot_canny.html#sphx-glr-auto-examples-edges-plot-canny-py>`__
+    - **Sigma**: Standard deviation of the Gaussian filter used to smooth the input data. Increase the parameter to detect fewer edges in noisy data.
 
+ - `Scikit-Image.transform.probabilistic_hough_line <https://scikit-image.org/docs/dev/api/skimage.transform.html#probabilistic-hough-line>`__
+    - **Line length**: Filter for the minimum length (pixels) of detected lines. Increase the parameter to extract longer lines.
+    - **Line gap**: Maximum gap between pixels to still form a line. Increase the parameter to create the number of segments that can be detected from disconnected edges.
+    - **Threshold**: Threshold parameter used in the Hough Line Transform.
 
-**[Optionals]**
-
- - **Window size**: Size of the square window used to sub-divide the grid for processing. By default, the window size
-    is set to the shortest side of the input grid. Smaller window sizes can be used to speed up computations but may result in
-    more fragmented lines. Larger window sizes can be used to improve line continuity but may slow down computations.
- - **Merge length**: Merge lines within a specified distance (in meters) of each other. This parameter is useful for
-    merging fragmented lines that are close to each other but not connected.
+ - Optionals
+    - **Window size**: Size of the square window used to sub-divide the grid for processing. By default, the window size is set to the shortest side of the input grid. Smaller window sizes can be used to speed up computations but may result in more fragmented lines. Larger window sizes can be used to improve line continuity but may slow down computations.
+    - **Merge length**: Merge lines within a specified distance (in meters) of each other. This parameter is useful for merging fragmented lines that are close to each other but not connected.
 
 
 Output Preferences
