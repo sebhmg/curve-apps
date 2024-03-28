@@ -150,7 +150,7 @@ Note that fewer small edges were recovered by the Canny algorithm, resulting in 
 Line Length
 ^^^^^^^^^^^
 
-Next, we explore the effect of increasing the ``line length`` parameter in the Hough Line Transform. For ``line length=24`` we obtain:
+Next, we explore the effect of increasing the ``line length`` parameter in the Hough Line Transform.
 
 .. list-table::
    :widths: 25 25
@@ -166,12 +166,12 @@ Next, we explore the effect of increasing the ``line length`` parameter in the H
             :align: center
             :width: 300
 
-Note that longer lines are extracted when increasing the ``line length`` parameter.
+Note that shorter lines are filtered when increasing the ``line length`` parameter.
 
 Line Gap
 ^^^^^^^^
 
-The following figure shows the effect of increasing the ``line gap`` parameter in the Hough Line Transform. For ``line gap=10`` we obtain:
+The following figure shows the effect of increasing the ``line gap`` parameter in the Hough Line Transform.
 
 .. list-table::
    :widths: 25 25
@@ -193,20 +193,20 @@ Threshold
 ^^^^^^^^^
 
 To demonstrate the effect of the ``threshold`` parameter, we will change the detection parameters to increase the number small segments.
+
+.. figure:: ./images/edge_detection/edge_detection_threshold.png
+    :align: center
+    :width: 300
+
 The table below presents the parameters and comparative results for ``threshold=1`` and ``threshold=8``.
 
 .. list-table::
-   :widths: 25 25 25
+   :widths: 25 25
    :header-rows: 1
 
-   * - Detection parameters
-     - With ``threshold=1``
+   * - With ``threshold=1``
      - With ``threshold=8``
-
-   * - .. figure:: ./images/edge_detection/edge_detection_threshold.png
-            :align: center
-            :width: 300
-     - .. figure:: ./images/edge_detection/example_result_threshold1.png
+   * - .. figure:: ./images/edge_detection/example_result_threshold1.png
             :align: center
             :width: 300
      - .. figure:: ./images/edge_detection/example_result_threshold8.png
@@ -220,7 +220,7 @@ Note that increasing the ``threshold`` parameter results in fewer output lines.
 Merge Length
 ^^^^^^^^^^^^
 
-The following figure shows the effect of increasing the ``merge length`` parameter. For ``merge length=75`` we obtain:
+The following figure shows the effect of increasing the ``merge length`` parameter.
 
 .. list-table::
    :widths: 25 25
