@@ -2,34 +2,27 @@ The curve-apps repository and source distributions bundle several libraries that
 compatibly licensed.  We list these here.
 
 .. list-table::
-   :widths: 10 10 50 50
+   :widths: 30 30 60
    :header-rows: 1
 
    * - Name
      - License
-     - URL
      - Description
-   * - geoh5py
+   * - `geoh5py <https://github.com/MiraGeoscience/geoh5py>`_
      - LGPL-3.0-or-later
-     - https://github.com/MiraGeoscience/geoh5py
      - Python API for geoh5, an open file format for geoscientific data
-   * - numpy
+   * - `numpy <https://github.com/numpy/numpy>`_
      - BSD-3-Clause
-     - https://github.com/numpy/numpy
      - Fundamental package for array computing in Python
-   * - pydantic
+   * - `pydantic <https://docs.pydantic.dev/latest/>`_
      - MIT
-     - https://docs.pydantic.dev/latest/
      - Data validation using Python type hints.
-   * - scikit-image
+   * - `scikit-image <https://github.com/scikit-image/scikit-image>`_
      - BSD-3-Clause
-     - https://github.com/scikit-image/scikit-image
      - Image processing in Python
-   * - scipy
+   * - `scipy <https://github.com/scipy/scipy>`_
      - BSD-3-Clause
-     - https://github.com/scipy/scipy
      - Fundamental algorithms for scientific computing in Python
-   * - tqdm
+   * - `tqdm <https://github.com/tqdm>`_
      - MPL-2.0 or MIT
-     - https://github.com/tqdm
      - A Fast, Extensible Progress Bar for Python and CLI
