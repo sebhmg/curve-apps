@@ -14,7 +14,7 @@ packages = [
 
 # TODO: adjust classifiers
 classifiers = [
-    "Development Status :: 1 - Pre-Alpha",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
     "Programming Language :: Python",
     "Topic :: Scientific/Engineering",
