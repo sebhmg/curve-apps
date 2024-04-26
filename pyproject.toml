@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "curve_apps"
+name = "curve-apps"
 version = "0.1.0-alpha.1"
 license = "MIT"
 description = "Find edges on 2D grids or vertices."
