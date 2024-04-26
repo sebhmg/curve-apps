@@ -12,6 +12,14 @@ packages = [
      { include = "curve_apps-assets" },
 ]
 
+include = [
+    "COPYING",
+    "COPYING.LESSER",
+    "LICENSE",
+    "README.rst",
+    "THIRD_PARTY_SOFTWARE.rst",
+]
+
 # TODO: adjust classifiers
 classifiers = [
     "Development Status :: 3 - Alpha",
