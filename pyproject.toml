@@ -33,10 +33,10 @@ classifiers = [
 python = "^3.9, <3.11"
 
 numpy = "~1.23.5"  # also in geoh5py
-pydantic = "~2.5"
+pydantic = "~2.5.2"
 scikit-image = "~0.20.0"
 scipy = "~1.10.1"
-tqdm = "~4.66.0"
+tqdm = "~4.66.1"
 
 ## pip dependencies from Git repositories
 #----------------------------------------
