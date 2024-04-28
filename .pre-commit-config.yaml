@@ -20,6 +20,11 @@ repos:
     hooks:
     -   id: isort
         additional_dependencies: [tomli] # to read config from pyproject.toml
+- repo: https://github.com/hadialqattan/pycln
+  rev: v2.4.0
+  hooks:
+      - id: pycln
+        args: [ --config=pyproject.toml ]
 -   repo: https://github.com/PyCQA/flake8
     rev: 7.0.0
     hooks:

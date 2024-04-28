@@ -14,7 +14,6 @@
 
 from __future__ import annotations
 
-from typing import Optional, Union
 
 from geoapps_utils.driver.data import BaseData
 from geoapps_utils.numerical import DetectionParameters

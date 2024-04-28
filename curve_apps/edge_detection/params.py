@@ -12,7 +12,6 @@
 
 from __future__ import annotations
 
-from typing import Optional
 
 from geoapps_utils.driver.data import BaseData
 from geoh5py.data import FloatData
