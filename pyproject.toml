@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "curve_apps"
-version = "0.1.0-alpha.1"
+name = "curve-apps"
+version = "0.1.0-rc.1"
 license = "MIT"
 description = "Find edges on 2D grids or vertices."
 authors = ["Mira Geoscience <support@mirageoscience.com>"]
@@ -10,6 +10,14 @@ readme = "README.rst"
 packages = [
      { include = "curve_apps" },
      { include = "curve_apps-assets" },
+]
+
+include = [
+    "COPYING",
+    "COPYING.LESSER",
+    "LICENSE",
+    "README.rst",
+    "THIRD_PARTY_SOFTWARE.rst",
 ]
 
 # TODO: adjust classifiers
@@ -30,21 +38,28 @@ classifiers = [
 [tool.poetry.scripts]
 
 [tool.poetry.dependencies]
-pydantic = {version = "~2.5"}
 python = "^3.9, <3.11"
-numpy = "~1.23.5"  # also geoh5py
-scipy = "~1.10.1"
-scikit-image = "~0.19.0"
-tqdm = "~4.66.0"
 
-## pip dependencies
-geoh5py = {version = "~0.9.0-alpha.3", source = "pypi", allow-prereleases = true}
-geoapps-utils = {version = "~0.3.0a2", source = "pypi", allow-prereleases = true}
-#geoapps-utils = { url = "https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-1348.zip#sha256=" }
+numpy = "~1.23.5"  # also in geoh5py
+pydantic = "~2.5.2"
+scikit-image = "~0.20.0"
+scipy = "~1.10.1"
+tqdm = "~4.66.1"
+
+## pip dependencies from Git repositories
+#----------------------------------------
+geoh5py = {version = "~0.9.0rc1", source = "pypi", allow-prereleases = true}
+#geoh5py = {url = "https://github.com/MiraGeoscience/geoh5py/archive/refs/heads/release/0.9.0.zip#sha256="}
+#geoh5py = {url = "http://localhost:8888/geoh5py.tar.gz#sha256="}
+
+geoapps-utils = {version = "~0.3.0rc1", source = "pypi", allow-prereleases = true}
+#geoapps-utils = {url = "https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/release/0.3.0.zip#sha256="}
+#geoapps-utils = {url = "http://localhost:8888/geoapps-utils.tar.gz#sha256="}
 
 ## indirect dependencies, forcing them here for installation through Conda not pip
-h5py = "*" # from geoh5py
-Pillow = "*" # from geoh5py
+#---------------------------------------------------------------------------------
+h5py = "^3.2.1"  # from geoh5py
+Pillow = "~10.1.0"  # from geoh5py
 
 ## about pip dependencies
 # to be specified to work with conda-lock
@@ -55,7 +70,7 @@ Pillow = "*" # from geoh5py
 # Note - conda-lock does not support the syntax: my_package = { git = ... }
 #        while poetry2conda supports only { git = "...", tag = "..." }, and not { url = ... }
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 Pygments = "*"
 pylint = "*"
 pytest = "*"
@@ -89,7 +104,8 @@ show_column_numbers = true
 check_untyped_defs = true
 
 plugins = [
-    "numpy.typing.mypy_plugin"
+    "numpy.typing.mypy_plugin",
+    "pydantic.mypy"
 ]
 
 [tool.pytest.ini_options]
