@@ -14,7 +14,6 @@
 
 from __future__ import annotations
 
-
 from geoapps_utils.driver.data import BaseData
 from geoapps_utils.numerical import DetectionParameters
 from geoh5py.data import Data, ReferencedData
