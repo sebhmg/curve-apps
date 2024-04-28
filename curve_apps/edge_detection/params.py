@@ -58,8 +58,8 @@ class DetectionParameters(BaseModel):
     line_gap: int = 1
     sigma: float = 10
     threshold: int = 1
-    window_size: Optional[int] = None
-    merge_length: Optional[int] = None
+    window_size: int | None = None
+    merge_length: int | None = None
 
 
 class Parameters(BaseData):
@@ -74,7 +74,7 @@ class Parameters(BaseData):
 
     _name: str = NAME
 
-    input_file: Optional[InputFile] = InputFile.read_ui_json(
+    input_file: InputFile | None = InputFile.read_ui_json(
         DEFAULT_UI_JSON, validate=False
     )
     detection: DetectionParameters

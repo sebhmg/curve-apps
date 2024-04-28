@@ -25,5 +25,5 @@ class OutputParameters(BaseModel):
     :param out_group: Name of the output group.
     """
 
-    export_as: Optional[str] = None
-    out_group: Optional[str] = None
+    export_as: str | None = None
+    out_group: str | None = None

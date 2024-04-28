@@ -42,9 +42,9 @@ class SourceParameters(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    entity: Union[Curve, Points]
-    data: Optional[ReferencedData] = None
-    parts: Optional[Data] = None
+    entity: Curve | Points
+    data: ReferencedData | None = None
+    parts: Data | None = None
 
 
 class Parameters(BaseData):
@@ -60,7 +60,7 @@ class Parameters(BaseData):
     _name: str = NAME
 
     detection: DetectionParameters
-    input_file: Optional[InputFile] = InputFile.read_ui_json(
+    input_file: InputFile | None = InputFile.read_ui_json(
         DEFAULT_UI_JSON, validate=False
     )
     output: OutputParameters
