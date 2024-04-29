@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 8bf9ea0d033218019c197c0056d8162f8fa0c47b4ac0aef93ba5d9a490109ee1
-    linux-64: 8cc1da71df602ba3fd10a79c14102d34fb38546b63b6cb30c7ddf151fc7694f6
+    win-64: cd90ef0c9f0823d09fd7afcea07006d9b8bc9b449907f23b697bca27fddb9560
+    linux-64: 38bde742f3e37f4293238c74d19466649898a2ac642cd85148b3263f6015fb83
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -2880,8 +2880,8 @@ package:
     python: '>=3.8.0'
     tomli: '>=1.1.0'
     typing_extensions: '>=3.10.0'
-    tomlkit: '>=0.10.1'
     platformdirs: '>=2.2.0'
+    tomlkit: '>=0.10.1'
     colorama: '>=0.4.5'
     mccabe: '>=0.6,<0.8'
     dill: '>=0.3.7'
@@ -2921,7 +2921,7 @@ package:
   category: main
   optional: false
 - name: pytest
-  version: 8.1.2
+  version: 8.2.0
   manager: conda
   platform: linux-64
   dependencies:
@@ -2929,17 +2929,17 @@ package:
     exceptiongroup: '>=1.0.0rc8'
     iniconfig: ''
     packaging: ''
-    pluggy: <2.0,>=1.4
+    pluggy: <2.0,>=1.5
     python: '>=3.8'
     tomli: '>=1'
-  url: https://conda.anaconda.org/conda-forge/noarch/pytest-8.1.2-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-8.2.0-pyhd8ed1ab_0.conda
   hash:
-    md5: bd376c5806a6ba58c1375aa4d7dd6e51
-    sha256: 52915f1439934397a1d775af669b79670527d8db463e03acdf0365cdb4aed1b3
+    md5: 088ff7e08f4f10a06190468048c2a353
+    sha256: 02227fea7b50132a75fb223c2d796306ffebd4dc6324897455f17cb54d16683d
   category: dev
   optional: true
 - name: pytest
-  version: 8.1.2
+  version: 8.2.0
   manager: conda
   platform: win-64
   dependencies:
@@ -2949,11 +2949,11 @@ package:
     python: '>=3.8'
     exceptiongroup: '>=1.0.0rc8'
     tomli: '>=1'
-    pluggy: <2.0,>=1.4
-  url: https://conda.anaconda.org/conda-forge/noarch/pytest-8.1.2-pyhd8ed1ab_0.conda
+    pluggy: <2.0,>=1.5
+  url: https://conda.anaconda.org/conda-forge/noarch/pytest-8.2.0-pyhd8ed1ab_0.conda
   hash:
-    md5: bd376c5806a6ba58c1375aa4d7dd6e51
-    sha256: 52915f1439934397a1d775af669b79670527d8db463e03acdf0365cdb4aed1b3
+    md5: 088ff7e08f4f10a06190468048c2a353
+    sha256: 02227fea7b50132a75fb223c2d796306ffebd4dc6324897455f17cb54d16683d
   category: dev
   optional: true
 - name: pytest-cov
@@ -3756,31 +3756,31 @@ package:
   category: main
   optional: false
 - name: tifffile
-  version: 2024.4.18
+  version: 2024.2.12
   manager: conda
   platform: linux-64
   dependencies:
     imagecodecs: '>=2023.8.12'
     numpy: '>=1.19.2'
     python: '>=3.9'
-  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.4.18-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.2.12-pyhd8ed1ab_0.conda
   hash:
-    md5: 9640ec921dce12e87e589ac634c7bd8a
-    sha256: f82fecb3daceb55a4dd856edd9c40c0d68a08b4b8ebb94dac24bf16b13f67e16
+    md5: d5c8bef52be4e70c48b1400eec3eecc8
+    sha256: 5b629ab2eae0508ad554cc831fed72950d74909d6bcf2aebdfd01e0c0afca60b
   category: main
   optional: false
 - name: tifffile
-  version: 2024.4.18
+  version: 2024.2.12
   manager: conda
   platform: win-64
   dependencies:
     python: '>=3.9'
     numpy: '>=1.19.2'
     imagecodecs: '>=2023.8.12'
-  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.4.18-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/tifffile-2024.2.12-pyhd8ed1ab_0.conda
   hash:
-    md5: 9640ec921dce12e87e589ac634c7bd8a
-    sha256: f82fecb3daceb55a4dd856edd9c40c0d68a08b4b8ebb94dac24bf16b13f67e16
+    md5: d5c8bef52be4e70c48b1400eec3eecc8
+    sha256: 5b629ab2eae0508ad554cc831fed72950d74909d6bcf2aebdfd01e0c0afca60b
   category: main
   optional: false
 - name: tk
@@ -4325,13 +4325,13 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
+    pillow: '>=10.1.0,<10.2.0'
+    geoh5py: '>=0.9.0rc1,<0.10.0'
+    h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
     pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-    geoh5py: '>=0.9.0rc1,<0.10.0'
-    h5py: '>=3.2.1,<4.0.0'
-    pillow: '>=10.1.0,<10.2.0'
-  url: https://files.pythonhosted.org/packages/94/0e/eff5c95ca2754778620f156477262ba20b7059dc3f91ba6b1effe1bd912f/geoapps_utils-0.3.0rc1-py3-none-any.whl
+  url: https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/analyst-pypi-local/geoapps-utils/0.3.0rc1/geoapps_utils-0.3.0rc1-py3-none-any.whl
   hash:
     sha256: fd3a07c8cc9197647f017325e24bc8946d9e2ca65cff3c110f96983f20a39f25
   category: main
@@ -4341,13 +4341,13 @@ package:
   manager: pip
   platform: win-64
   dependencies:
+    pillow: '>=10.1.0,<10.2.0'
+    geoh5py: '>=0.9.0rc1,<0.10.0'
+    h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
     pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-    geoh5py: '>=0.9.0rc1,<0.10.0'
-    h5py: '>=3.2.1,<4.0.0'
-    pillow: '>=10.1.0,<10.2.0'
-  url: https://files.pythonhosted.org/packages/94/0e/eff5c95ca2754778620f156477262ba20b7059dc3f91ba6b1effe1bd912f/geoapps_utils-0.3.0rc1-py3-none-any.whl
+  url: https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/analyst-pypi-local/geoapps-utils/0.3.0rc1/geoapps_utils-0.3.0rc1-py3-none-any.whl
   hash:
     sha256: fd3a07c8cc9197647f017325e24bc8946d9e2ca65cff3c110f96983f20a39f25
   category: main
@@ -4357,10 +4357,10 @@ package:
   manager: pip
   platform: linux-64
   dependencies:
+    pillow: '>=10.1.0,<10.2.0'
     h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
-    pillow: '>=10.1.0,<10.2.0'
-  url: https://files.pythonhosted.org/packages/6c/ba/e976f0b7cdf4e07eea1538c201a51120800930b3968636be05873b01904d/geoh5py-0.9.0rc1-py3-none-any.whl
+  url: https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/analyst-pypi-local/geoh5py/0.9.0rc1/geoh5py-0.9.0rc1-py3-none-any.whl
   hash:
     sha256: eaab844632c242c8f60716fc6d274750398b59d5de5264c3e85366918f37a293
   category: main
@@ -4370,10 +4370,10 @@ package:
   manager: pip
   platform: win-64
   dependencies:
+    pillow: '>=10.1.0,<10.2.0'
     h5py: '>=3.2.1,<4.0.0'
     numpy: '>=1.23.5,<1.24.0'
-    pillow: '>=10.1.0,<10.2.0'
-  url: https://files.pythonhosted.org/packages/6c/ba/e976f0b7cdf4e07eea1538c201a51120800930b3968636be05873b01904d/geoh5py-0.9.0rc1-py3-none-any.whl
+  url: https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/analyst-pypi-local/geoh5py/0.9.0rc1/geoh5py-0.9.0rc1-py3-none-any.whl
   hash:
     sha256: eaab844632c242c8f60716fc6d274750398b59d5de5264c3e85366918f37a293
   category: main

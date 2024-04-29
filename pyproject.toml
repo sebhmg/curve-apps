@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "curve-apps"
-version = "0.1.0-rc.1"
+version = "0.1.0-rc.2"
 license = "MIT"
 description = "Find edges on 2D grids or vertices."
 authors = ["Mira Geoscience <support@mirageoscience.com>"]
@@ -62,6 +62,11 @@ geoapps-utils = {version = "~0.3.0rc1", source = "pypi", allow-prereleases = tru
 #---------------------------------------------------------------------------------
 h5py = "^3.2.1"  # from geoh5py
 Pillow = "~10.1.0"  # from geoh5py
+
+# pin down package versions when Conda is behind PyPI
+#----------------------------------------------------
+pywavelets = "~1.4.1"  # from scikit-image
+tifffile = "2024.2.12"  # from scikit-image
 
 ## about pip dependencies
 # to be specified to work with conda-lock
