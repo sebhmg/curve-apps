@@ -63,6 +63,11 @@ geoapps-utils = {version = "~0.3.0rc1", source = "pypi", allow-prereleases = tru
 h5py = "^3.2.1"  # from geoh5py
 Pillow = "~10.1.0"  # from geoh5py
 
+# pin down package versions when Conda is behind PyPI
+#----------------------------------------------------
+pywavelets = "~1.4.1"  # from scikit-image
+tifffile = "2024.2.12"  # from scikit-image
+
 ## about pip dependencies
 # to be specified to work with conda-lock
 # - from PyPI: my_package = { version = "1.2.3", source = "pypi" }
