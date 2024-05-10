@@ -5,16 +5,14 @@
 #  All rights reserved.
 #
 #
-#  This file is part of geoapps.
+#  This file is part of curve-apps.
 #
-#  geoapps is distributed under the terms and conditions of the MIT License
+#  curve-apps is distributed under the terms and conditions of the MIT License
 #  (see LICENSE file at the root of this source code package).
 
 # pylint: disable=duplicate-code
 
 from __future__ import annotations
-
-from typing import Optional, Union
 
 from geoapps_utils.driver.data import BaseData
 from geoapps_utils.numerical import DetectionParameters
@@ -42,9 +40,9 @@ class SourceParameters(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    entity: Union[Curve, Points]
-    data: Optional[ReferencedData] = None
-    parts: Optional[Data] = None
+    entity: Curve | Points
+    data: ReferencedData | None = None
+    parts: Data | None = None
 
 
 class Parameters(BaseData):
@@ -60,7 +58,7 @@ class Parameters(BaseData):
     _name: str = NAME
 
     detection: DetectionParameters
-    input_file: Optional[InputFile] = InputFile.read_ui_json(
+    input_file: InputFile | None = InputFile.read_ui_json(
         DEFAULT_UI_JSON, validate=False
     )
     output: OutputParameters
