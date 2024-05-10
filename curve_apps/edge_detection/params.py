@@ -18,7 +18,8 @@ from geoapps_utils.driver.data import BaseData
 from geoh5py.data import FloatData
 from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
-from pydantic import BaseModel, ConfigDict
+from geoh5py.ui_json.utils import flatten
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from curve_apps import assets_path
 
@@ -80,3 +81,14 @@ class Parameters(BaseData):
     run_command: str = f"curve_apps.{NAME}.driver"
     source: SourceParameters
     title: str = NAME.capitalize().replace("_", " ")
+
+    @model_validator(mode="after")
+    def update_input_file(self):
+        if self.input_file is None or not self.input_file.validate:
+            params_data = self.flatten()
+            data = flatten(self.input_file.ui_json)
+            data.update(params_data)
+            self.input_file = InputFile(data=data, ui_json=self.input_file.ui_json)
+
+
+
