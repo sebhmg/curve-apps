@@ -21,11 +21,21 @@ from pydantic import BaseModel, ConfigDict, model_validator
 
 from curve_apps import assets_path
 
-from ..params import OutputParameters
+# from ..params import OutputParameters
 
 NAME = "edge_detection"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
+class OutputParameters(BaseModel):
+    """
+    Output parameters expected by the ui.json file format.
+
+    :param export_as: Name of the output entity.
+    :param out_group: Name of the output group.
+    """
+
+    export_as: str = "Edges"
+    out_group: str | None = None
 
 class SourceParameters(BaseModel):
     """
