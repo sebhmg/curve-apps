@@ -5,9 +5,9 @@
 #  All rights reserved.
 #
 #
-#  This file is part of geoapps.
+#  This file is part of curve-apps.
 #
-#  geoapps is distributed under the terms and conditions of the MIT License
+#  curve-apps is distributed under the terms and conditions of the MIT License
 #  (see LICENSE file at the root of this source code package).
 
 
@@ -21,6 +21,7 @@ from geoh5py.data import FloatData
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
+from scipy.spatial import cKDTree
 from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
@@ -64,6 +65,33 @@ class EdgeDetectionDriver(BaseCurveDriver):
                 parent=parent,
             )
 
+            # Compute positive angle from North
+            # TODO: Move to geoapps-utils
+            delta = np.c_[
+                vertices[cells[:, 1], 0] - vertices[cells[:, 0], 0],
+                vertices[cells[:, 1], 1] - vertices[cells[:, 0], 1],
+            ]
+            delta[delta[:, 0] < 0, :] *= -1
+            amp = np.linalg.norm(delta, axis=1)
+            orientation = np.arccos(delta[:, 1] / amp)
+
+            # TODO: Assign values to vertices until better handling of cell data by GA
+            vert_azimuth = np.zeros(edges.n_vertices) * np.nan
+            vert_azimuth[cells.flatten()] = np.repeat(orientation, 2)
+            edges.add_data(
+                {
+                    "azimuth": {"values": np.degrees(vert_azimuth)},
+                }
+            )
+
+            vert_lengths = np.zeros(edges.n_vertices) * np.nan
+            vert_lengths[cells.flatten()] = np.repeat(amp, 2)
+            edges.add_data(
+                {
+                    "lengths": {"values": vert_lengths},
+                }
+            )
+
         return edges
 
     @staticmethod
@@ -80,9 +108,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
         :params detection: Detection parameters.
 
         :returns : n x 3 array. Vertices of edges.
-        :returns : list
-            n x 2 float array. Cells of edges.
-
+        :returns : n x 2 float array. Cells of edges.
         """
         if grid.shape is None or data.values is None:
             return None, None
@@ -114,8 +140,17 @@ class EdgeDetectionDriver(BaseCurveDriver):
         if len(indices) == 0:
             return None, None
 
-        u_ind, r_ind = np.unique(np.vstack(indices), axis=0, return_inverse=True)
+        pixel_coordinates = np.vstack(indices)
+
+        if detection.merge_length is not None:
+            vertices = map_indices_to_coordinates(grid, pixel_coordinates)
+            tree = cKDTree(vertices)
+            merge = tree.query_pairs(detection.merge_length, output_type="ndarray")
+            pixel_coordinates[merge[:, 0], :] = pixel_coordinates[merge[:, 1], :]
+
+        u_ind, r_ind = np.unique(pixel_coordinates, axis=0, return_inverse=True)
         vertices = map_indices_to_coordinates(grid, u_ind)
+
         cells = r_ind.reshape((-1, 2))
         return vertices, cells
 
@@ -136,6 +171,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
         :param line_length: Minimum accepted pixel length of detected lines. (Hough)
         :param line_gap: Maximum gap between pixels to still form a line. (Hough)
         :param threshold: Value threshold. (Hough)
+        :param window_size: Size of the window to search for lines.
 
         :returns: List of indices.
         """
