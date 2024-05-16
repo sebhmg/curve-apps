@@ -16,14 +16,24 @@ from geoapps_utils.driver.data import BaseData
 from geoh5py.data import FloatData
 from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from curve_apps import assets_path
 
-from ..params import OutputParameters
-
 NAME = "edge_detection"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
+
+
+class OutputParameters(BaseModel):
+    """
+    Output parameters expected by the ui.json file format.
+
+    :param export_as: Name of the output entity.
+    :param out_group: Name of the output group.
+    """
+
+    export_as: str = "Edges"
+    out_group: str | None = None
 
 
 class SourceParameters(BaseModel):
@@ -57,7 +67,7 @@ class DetectionParameters(BaseModel):
     sigma: float = 10
     threshold: int = 1
     window_size: int | None = None
-    merge_length: int | None = None
+    merge_length: float | None = None
 
 
 class Parameters(BaseData):
@@ -72,11 +82,17 @@ class Parameters(BaseData):
 
     _name: str = NAME
 
-    input_file: InputFile | None = InputFile.read_ui_json(
-        DEFAULT_UI_JSON, validate=False
-    )
+    input_file: InputFile = InputFile.read_ui_json(DEFAULT_UI_JSON, validate=False)
     detection: DetectionParameters
     output: OutputParameters
     run_command: str = f"curve_apps.{NAME}.driver"
     source: SourceParameters
     title: str = NAME.capitalize().replace("_", " ")
+
+    @model_validator(mode="after")
+    def update_input_file(self):
+        if not self.input_file.validate:
+            params_data = self.flatten()
+            if self.input_file.data is None:
+                raise ValueError("Input file data is None.")
+            self.input_file.data.update(params_data)
