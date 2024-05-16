@@ -70,7 +70,7 @@ class DetectionParameters(BaseModel):
     sigma: float = 10
     threshold: int = 1
     window_size: int | None = None
-    merge_length: int | None = None
+    merge_length: float | None = None
 
 
 class Parameters(BaseData):
