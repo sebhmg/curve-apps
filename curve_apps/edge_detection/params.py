@@ -26,6 +26,7 @@ from curve_apps import assets_path
 NAME = "edge_detection"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
+
 class OutputParameters(BaseModel):
     """
     Output parameters expected by the ui.json file format.
@@ -36,6 +37,7 @@ class OutputParameters(BaseModel):
 
     export_as: str = "Edges"
     out_group: str | None = None
+
 
 class SourceParameters(BaseModel):
     """
@@ -99,6 +101,3 @@ class Parameters(BaseData):
             data = flatten(self.input_file.ui_json)
             data.update(params_data)
             self.input_file = InputFile(data=data, ui_json=self.input_file.ui_json)
-
-
-
