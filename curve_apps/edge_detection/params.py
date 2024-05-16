@@ -16,7 +16,6 @@ from geoapps_utils.driver.data import BaseData
 from geoh5py.data import FloatData
 from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
-from geoh5py.ui_json.utils import flatten
 from pydantic import BaseModel, ConfigDict, model_validator
 
 from curve_apps import assets_path
@@ -94,8 +93,6 @@ class Parameters(BaseData):
     def update_input_file(self):
         if not self.input_file.validate:
             params_data = self.flatten()
-            if self.input_file.ui_json is None:
-                raise ValueError("Input file should have a ui_json set.")
-            data = flatten(self.input_file.ui_json)
-            data.update(params_data)
-            self.input_file = InputFile(data=data, ui_json=self.input_file.ui_json)
+            if self.input_file.data is None:
+                raise ValueError("Input file data is None.")
+            self.input_file.data.update(params_data)
