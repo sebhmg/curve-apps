@@ -26,6 +26,7 @@ from curve_apps import assets_path
 NAME = "edge_detection"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
+
 class OutputParameters(BaseModel):
     """
     Output parameters expected by the ui.json file format.
@@ -36,6 +37,7 @@ class OutputParameters(BaseModel):
 
     export_as: str = "Edges"
     out_group: str | None = None
+
 
 class SourceParameters(BaseModel):
     """
@@ -83,9 +85,7 @@ class Parameters(BaseData):
 
     _name: str = NAME
 
-    input_file: InputFile | None = InputFile.read_ui_json(
-        DEFAULT_UI_JSON, validate=False
-    )
+    input_file: InputFile = InputFile.read_ui_json(DEFAULT_UI_JSON, validate=False)
     detection: DetectionParameters
     output: OutputParameters
     run_command: str = f"curve_apps.{NAME}.driver"
@@ -96,9 +96,8 @@ class Parameters(BaseData):
     def update_input_file(self):
         if self.input_file is None or not self.input_file.validate:
             params_data = self.flatten()
+            if self.input_file.ui_json is None:
+                raise ValueError("Input file should have a ui_json set.")
             data = flatten(self.input_file.ui_json)
             data.update(params_data)
             self.input_file = InputFile(data=data, ui_json=self.input_file.ui_json)
-
-
-
