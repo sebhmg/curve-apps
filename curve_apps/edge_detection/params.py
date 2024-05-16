@@ -92,7 +92,7 @@ class Parameters(BaseData):
 
     @model_validator(mode="after")
     def update_input_file(self):
-        if self.input_file is None or not self.input_file.validate:
+        if not self.input_file.validate:
             params_data = self.flatten()
             if self.input_file.ui_json is None:
                 raise ValueError("Input file should have a ui_json set.")
