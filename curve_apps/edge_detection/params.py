@@ -21,8 +21,6 @@ from pydantic import BaseModel, ConfigDict, model_validator
 
 from curve_apps import assets_path
 
-# from ..params import OutputParameters
-
 NAME = "edge_detection"
 DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
 
