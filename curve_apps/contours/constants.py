@@ -12,10 +12,10 @@ from __future__ import annotations
 from copy import deepcopy
 from uuid import UUID
 
+from geoapps import assets_path
 from geoh5py.ui_json.constants import default_ui_json as base_ui_json
 
 import curve_apps
-from geoapps import assets_path
 
 defaults = {
     "version": curve_apps.__version__,
