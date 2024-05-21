@@ -71,7 +71,7 @@
         "label": "Assign Z from values",
         "value": false
     },
-    "window_azimuth": {
+    "azimuth": {
         "group": "Window",
         "groupOptional": true,
         "enabled": false,
@@ -80,26 +80,26 @@
         "max": 90.0,
         "value": 0.0
     },
-    "window_center_x": {
+    "center_x": {
         "group": "Window",
         "enabled": false,
         "label": "Easting",
         "value": 0.0
     },
-    "window_center_y": {
+    "center_y": {
         "group": "Window",
         "enabled": false,
         "label": "Northing",
         "value": 0.0
     },
-    "window_width": {
+    "width": {
         "group": "Window",
         "enabled": false,
         "label": "Width",
         "min": 0.0,
         "value": 0.0
     },
-    "window_height": {
+    "height": {
         "group": "Window",
         "enabled": false,
         "label": "Height",
@@ -109,13 +109,17 @@
     "export_as": {
         "group": "Output",
         "main": true,
+        "optional": true,
+        "enabled": false,
         "label": "Save as",
-        "value": "contours"
+        "value": "Contours"
     },
-    "ga_group_name": {
+    "out_group": {
         "group": "Output",
         "main": true,
+        "optional": true,
+        "enabled": false,
         "label": "Group",
-        "value": "Contours"
+        "value": ""
     }
 }

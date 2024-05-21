@@ -76,6 +76,7 @@ class Parameters(BaseData):
 
     :param detection: Detection parameters expected for the edge detection.
     :param source: Parameters for the source object and data.
+    :param output: Output parameters.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
@@ -91,8 +92,7 @@ class Parameters(BaseData):
 
     @model_validator(mode="after")
     def update_input_file(self):
-        if not self.input_file.validate:
-            params_data = self.flatten()
-            if self.input_file.data is None:
-                raise ValueError("Input file data is None.")
-            self.input_file.data.update(params_data)
+        params_data = self.flatten()
+        if self.input_file.data is None:
+            raise ValueError("Input file data is None.")
+        self.input_file.data = dict(self.input_file.data, **params_data)

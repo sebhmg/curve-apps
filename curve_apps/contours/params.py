@@ -13,9 +13,110 @@ from copy import deepcopy
 
 import numpy as np
 from geoapps.contours.constants import default_ui_json, defaults, validations
+from geoapps_utils.driver.data import BaseData
 from geoapps_utils.driver.params import BaseParams
 from geoh5py.data import Data
 from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
+from geoh5py.ui_json import InputFile
+from pydantic import BaseModel, ConfigDict, model_validator
+
+from curve_apps import assets_path
+
+NAME = "contours"
+DEFAULT_UI_JSON = assets_path() / f"uijson/{NAME}.ui.json"
+
+
+class SourceParameters(BaseModel):
+    """
+    Source parameters providing input data to the driver.
+
+    :param objects: A Grid2D, Points, Curve or Surface source object.
+    :param data: Data values to contour.
+    """
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    objects: Grid2D | Points | Curve | Surface
+    data: Data
+
+
+class ContourParameters(BaseModel):
+    """
+    Contouring parameters expected by the ui.json file format.
+
+    :param interval_min: Minimum value for contours.
+    :param interval_max: Maximum value for contours.
+    :param interval_spacing: Step size for contours.
+    :param fixed_contours: String defining list of fixed contours.
+    """
+
+    interval_min: float | None = None
+    interval_max: float | None = None
+    interval_spacing: float | None = None
+    fixed_contours: list[float] | None = None
+
+
+class WindowParameters(BaseModel):
+    """
+    Window parameters expected by the ui.json file format.
+
+    :param azimuth: Rotation angle of the selection box.
+    :param center_x: Easting position of the selection box.
+    :param center_y: Northing position of the selection box.
+    :param width: Width (m) of the selection box.
+    :param height: Height (m) of the selection box.
+    :param resolution: Minimum data separation (m).
+    """
+
+    azimuth: float | None = None
+    center_x: float | None = None
+    center_y: float | None = None
+    width: float | None = None
+    height: float | None = None
+
+    # Todo add a validation here to check that if any parameters
+    # are not None, all are not None.
+
+
+class OutputParameters(BaseModel):
+    """
+    Output parameters expected by the ui.json file format.
+
+    :param export_as: Name of the output entity.
+    :param out_group: Name of the output group.
+    """
+
+    export_as: str = "Contours"
+    out_group: str | None = None
+
+
+class Parameters(BaseData):
+    """
+    Contour parameters.
+
+    :param contours: Contouring parameters.
+    :param source: Parameters for the source object and data.
+    :param output: Output
+    """
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    _name: str = NAME
+
+    source: SourceParameters
+    contours: ContourParameters
+    window: WindowParameters = WindowParameters()
+    output: OutputParameters = OutputParameters()
+    input_file: InputFile = InputFile.read_ui_json(DEFAULT_UI_JSON, validate=False)
+    run_command: str = f"curve_apps.{NAME}.driver"
+    title: str = NAME.capitalize().replace("_", " ")
+
+    @model_validator(mode="after")
+    def update_input_file(self):
+        params_data = self.flatten()
+        if self.input_file.data is None:
+            raise ValueError("Input file data is None.")
+        self.input_file.data = dict(self.input_file.data, **params_data)
 
 
 class ContoursParams(BaseParams):

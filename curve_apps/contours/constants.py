@@ -57,7 +57,6 @@ default_ui_json.update(
                 "{202C5DB1-A56D-4004-9CAD-BAAFD8899406}",
                 "{6A057FDC-B355-11E3-95BE-FD84A7FFCB88}",
                 "{F26FEBA3-ADED-494B-B9E9-B2BBCBE298E1}",
-                "{4EA87376-3ECE-438B-BF12-3479733DED46}",
                 "{48f5054a-1c5c-4ca4-9048-80f36dc60a06}",
             ],
             "main": True,
