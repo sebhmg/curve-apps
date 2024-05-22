@@ -18,14 +18,14 @@ import logging
 import sys
 
 import numpy as np
-from geoapps_utils.numerical import find_curves
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve
 from geoh5py.ui_json import InputFile, utils
 from tqdm import tqdm
 
 from curve_apps.driver import BaseCurveDriver
-from curve_apps.trend_lines.params import NAME, Parameters
+from curve_apps.trend_lines.params import Parameters
+from curve_apps.utils import find_curves
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ class TrendLinesDriver(BaseCurveDriver):
     """
 
     _parameter_class = Parameters
-    _default_name = NAME
+    _default_name = "Trendlines"
 
     def __init__(self, parameters: Parameters | InputFile):
         super().__init__(parameters)
@@ -90,11 +90,6 @@ class TrendLinesDriver(BaseCurveDriver):
         :returns : n x 2 float array. Cells of edges.
         :returns : n x 1 array. Labels of vertices.
         """
-        max_distance = self.params.detection.max_distance
-
-        if max_distance is None:
-            max_distance = np.inf
-
         path_list = []
         out_labels = np.zeros_like(self.labels).astype("int32")
 

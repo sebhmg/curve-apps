@@ -93,7 +93,7 @@
         "optional": true,
         "enabled": false,
         "label": "Save as",
-        "value": "",
+        "value": "edges",
         "group": "Output Preferences"
     },
     "out_group": {
@@ -101,7 +101,7 @@
         "optional": true,
         "enabled": false,
         "label": "Group",
-        "value": "",
+        "value": "detections",
         "group": "Output Preferences"
     }
 }
