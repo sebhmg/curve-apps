@@ -59,7 +59,7 @@ class DetectionParameters(BaseModel):
 
 class OutputParameters(BaseModel):
     """
-    Output parameters expected by the ui.json file format.
+    Output parameters.
 
     :param export_as: Name of the output entity.
     :param out_group: Name of the output group.
@@ -71,7 +71,7 @@ class OutputParameters(BaseModel):
 
 class Parameters(BaseData):
     """
-    Parts connection input parameters.
+    Trend lines parameters for use with `trend_lines.driver`.
 
     :param source: Source data parameters.
     :param detection: Trend line detection parameters.

@@ -39,7 +39,7 @@ class SourceParameters(BaseModel):
 
 class DetectionParameters(BaseModel):
     """
-    Detection parameters expected by the ui.json file format.
+    Edge detection parameters.
 
     :param line_length: Minimum accepted pixel length of detected lines. (Hough)
     :param line_gap: Maximum gap between pixels to still form a line. (Hough)
@@ -59,7 +59,7 @@ class DetectionParameters(BaseModel):
 
 class OutputParameters(BaseModel):
     """
-    Output parameters expected by the ui.json file format.
+    Output parameters.
 
     :param export_as: Name of the output entity.
     :param out_group: Name of the output group.
@@ -71,7 +71,7 @@ class OutputParameters(BaseModel):
 
 class Parameters(BaseData):
     """
-    Edge detection input parameters.
+    Edge detection parameters for use with `edge_detection.driver`.
 
     :param detection: Detection parameters expected for the edge detection.
     :param source: Parameters for the source object and data.

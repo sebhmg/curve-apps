@@ -23,7 +23,112 @@ from geoh5py.objects import Curve, Points, Surface
 from matplotlib.pyplot import axes
 from scipy.interpolate import LinearNDInterpolator
 
+import logging
 
+from geoh5py.ui_json import InputFile, utils
+
+from curve_apps.driver import BaseCurveDriver
+from curve_apps.contours.params import Parameters
+
+logger = logging.getLogger(__name__)
+
+class ContoursDriver(BaseCurveDriver):
+    """
+    Driver for the detection of contours withing geoh5py objects.
+
+    :param parameters: Application parameters.
+    """
+
+    _parameter_class = Parameters
+    _default_name = "Contours"
+
+    def __init__(self, parameters: Parameters | InputFile):
+        super().__init__(parameters)
+
+    def create_output(self, name, parent: ContainerGroup | None = None):
+        """
+        Run the application for extracting and creating contours from input object.
+
+        :param name: Name of the output object.
+        :param parent: Optional parent group.
+        """
+
+        with utils.fetch_active_workspace(self.workspace) as workspace:
+            entity = self.params.source.objects
+            data = self.params.source.data
+
+            contours = get_contours(self.params.detection)
+                self.params.detectioninterval_min,
+                self.params.detectioninterval_max,
+                self.params.detectioninterval_spacing,
+                self.params.detectionfixed_contours,
+            )
+
+            print("Generating contours . . .")
+            _, _, _, _, contour_set = plot_plan_data_selection(
+                entity,
+                data,
+                axis=axes(),
+                resolution=self.params.resolution,
+                window=self.params.window,
+                contours=contours,
+            )
+
+            if contour_set is not None:
+                vertices, cells, values = [], [], []
+                count = 0
+                for segs, level in zip(contour_set.allsegs, contour_set.levels):
+                    for poly in segs:
+                        n_v = len(poly)
+                        vertices.append(poly)
+                        cells.append(
+                            np.c_[
+                                np.arange(count, count + n_v - 1),
+                                np.arange(count + 1, count + n_v),
+                            ]
+                        )
+                        values.append(np.ones(n_v) * level)
+                        count += n_v
+                if vertices:
+                    vertices = np.vstack(vertices)
+                    if self.params.z_value:
+                        vertices = np.c_[vertices, np.hstack(values)]
+                    else:
+                        if isinstance(entity, (Points, Curve, Surface)):
+                            z_interp = LinearNDInterpolator(
+                                entity.vertices[:, :2], entity.vertices[:, 2]
+                            )
+                            vertices = np.c_[vertices, z_interp(vertices)]
+                        else:
+                            vertices = np.c_[
+                                vertices,
+                                np.ones(vertices.shape[0]) * entity.origin["z"],
+                            ]
+
+                curve = Curve.create(
+                    workspace,
+                    name=string_name(self.params.export_as),
+                    vertices=vertices,
+                    cells=np.vstack(cells).astype("uint32"),
+                )
+                out_entity = curve
+                if len(self.params.ga_group_name) > 0:
+                    out_entity = ContainerGroup.create(
+                        workspace, name=string_name(self.params.ga_group_name)
+                    )
+                    curve.parent = out_entity
+
+                curve.add_data(
+                    {
+                        self.get_contour_string(
+                            self.params.interval_min,
+                            self.params.interval_max,
+                            self.params.interval_spacing,
+                            self.params.fixed_contours,
+                        ): {"values": np.hstack(values)}
+                    }
+                )
+                self.update_monitoring_directory(out_entity)
 class ContoursDriver(BaseDriver):
     _params_class = ContoursParams
     _validations = validations

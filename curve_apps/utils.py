@@ -7,11 +7,40 @@
 
 from __future__ import annotations
 
+import re
 import numpy as np
 from scipy.spatial import Delaunay
 
 from curve_apps.trend_lines.params import DetectionParameters
 
+def get_contour_list(params: DetectionParameters) -> list[float]:
+    """
+    Compute contours requested by input parameters.
+
+    :returns: Corresponding list of values in float format.
+    """
+
+    if (
+        None not in [params.interval_min, params.interval_max, params.interval_spacing]
+        and params.interval_spacing != 0
+    ):
+        interval_contours = np.arange(
+            params.interval_min, params.interval_max + params.interval_spacing, params.interval_spacing
+        ).tolist()
+    else:
+        interval_contours = []
+
+    if params.fixed_contours != "" and params.fixed_contours is not None:
+        if type(params.fixed_contours) is str:
+            fixed_contours = re.split(",", params.fixed_contours.replace(" ", ""))
+            fixed_contours = [float(c) for c in fixed_contours]
+        elif type(params.fixed_contours) is float:
+            fixed_contours = [params.fixed_contours]
+    else:
+        fixed_contours = []
+
+    contours = np.unique(np.sort(interval_contours + fixed_contours))
+    return contours
 
 def find_curves(
     vertices: np.ndarray,
