@@ -9,9 +9,96 @@ from __future__ import annotations
 
 import re
 import numpy as np
+from typing import Sequence
+from scipy.interpolate import LinearNDInterpolator
 from scipy.spatial import Delaunay
+from matplotlib.contour import ContourSet
 
-from curve_apps.trend_lines.params import DetectionParameters
+from geoh5py import Workspace
+from geoh5py.objects import ObjectBase, Curve, Points, Surface
+from geoapps.utils.formatters import string_name
+
+from curve_apps.trend_lines.params import DetectionParameters, OutputParameters
+
+
+def extract_data(contours: ContourSet) -> Sequence[np.ndarray]:
+    """
+    Return vertices, cells, values array representations of the contour set.
+
+    :param contours: Object returned from matplotlib.axes.contour.
+
+    :returns: Tuple of vertices, cells, values.
+    """
+    vertices, cells, values = [], [], []
+    count = 0
+    for segs, level in zip(contours.allsegs, contours.levels):
+        for poly in segs:
+            n_v = len(poly)
+            vertices.append(poly)
+            cells.append(
+                np.c_[
+                    np.arange(count, count + n_v - 1),
+                    np.arange(count + 1, count + n_v),
+                ]
+            )
+            values.append(np.ones(n_v) * level)
+            count += n_v
+
+    return vertices, cells, values
+
+def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
+    """
+    Uses entity z values to add height column to an Nx2 vertices array.
+
+    :param vertices: Nx2 array of vertices.
+    :param entity: geoh5py entity with vertices property.
+
+    returns: Nx3 array of vertices.
+    """
+    if isinstance(entity, (Points, Curve, Surface)):
+        z_interp = LinearNDInterpolator(
+            entity.vertices[:, :2], entity.vertices[:, 2]
+        )
+        vertices = np.c_[vertices, z_interp(vertices)]
+    else:
+        vertices = np.c_[
+            vertices,
+            np.ones(vertices.shape[0]) * entity.origin["z"],
+        ]
+
+    return vertices
+def contours_to_curve(
+    workspace: Workspace,
+    entity: ObjectBase,
+    contours: ContourSet,
+    output_params: OutputParameters,
+) -> Curve:
+    """
+    Extract vertices, cells, values from matploltlib.ContourSet object.
+
+    :param workspace: Workspace object.
+    :param entity: Contoured object.
+    :param contours: Object returned from matplotlib.axes.contour.
+    :param output_params: Output parameters.
+
+    :returns: Curve object representation of the contour set.
+    """
+    vertices, cells, values = extract_data(contours)
+    if vertices:
+        vertices = np.vstack(vertices)
+        if output_params.z_value:
+            vertices = np.c_[vertices, np.hstack(values)]
+        else:
+            vertices = set_vertices_height(vertices, entity)
+
+    curve = Curve.create(
+        workspace,
+        name=string_name(output_params.export_as),
+        vertices=vertices,
+        cells=np.vstack(cells).astype("uint32"),
+    )
+
+    return curve, values
 
 def get_contour_list(params: DetectionParameters) -> list[float]:
     """

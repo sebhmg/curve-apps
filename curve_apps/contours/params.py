@@ -90,7 +90,7 @@ class DetectionParameters(BaseModel):
         if self.has_intervals:
             intervals = np.arange(
                 self.interval_min,
-                self.interval_max + 1,
+                self.interval_max + self.interval_spacing/2,
                 self.interval_spacing
             ).tolist()
         else:
@@ -98,11 +98,29 @@ class DetectionParameters(BaseModel):
 
         return intervals
 
+    @property
     def contours(self) -> list[float]:
         """
         Returns a list of requested contours merging interval and fixed values.
         """
         return self.intervals + self.fixed_contours
+
+    @property
+    def contour_string(self) -> str:
+        """
+        Return a string representation of the merged interval and fixed contours.
+
+        :returns: A string of comma separated contour values.
+        """
+
+        fixed_contours = str(self.fixed_contours).replace("[", "").replace("]", "")
+        if self.has_intervals:
+            contour_string = f"{self.interval_min}:{self.interval_max}:{self.interval_spacing}"
+        if fixed_contours is not None:
+            contour_string += f",{fixed_contours.replace(' ', '')}"
+
+        return contour_string
+
 
 class WindowParameters(BaseModel):
     """
@@ -130,10 +148,12 @@ class OutputParameters(BaseModel):
     """
     Output parameters.
 
+    :param z_value: Use data values for curve height (z) channel
     :param export_as: Name of the output entity.
     :param out_group: Name of the output group.
     """
 
+    z_value: bool = False
     export_as: str | None = "Contours"
     out_group: str | None = None
 

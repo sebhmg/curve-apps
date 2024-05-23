@@ -140,3 +140,5 @@ def test_filter_segments_orientation():
 
     ind = filter_segments_orientation(points, segments, 5, 1)
     assert ~np.all(ind)
+
+
