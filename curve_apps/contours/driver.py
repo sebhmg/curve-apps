@@ -57,13 +57,6 @@ class ContoursDriver(BaseCurveDriver):
             entity = self.params.source.objects
             data = self.params.source.data
 
-            contours = get_contours(self.params.detection)
-                self.params.detectioninterval_min,
-                self.params.detectioninterval_max,
-                self.params.detectioninterval_spacing,
-                self.params.detectionfixed_contours,
-            )
-
             print("Generating contours . . .")
             _, _, _, _, contour_set = plot_plan_data_selection(
                 entity,
@@ -71,7 +64,7 @@ class ContoursDriver(BaseCurveDriver):
                 axis=axes(),
                 resolution=self.params.resolution,
                 window=self.params.window,
-                contours=contours,
+                contours=self.contours,
             )
 
             if contour_set is not None:
@@ -129,6 +122,7 @@ class ContoursDriver(BaseCurveDriver):
                     }
                 )
                 self.update_monitoring_directory(out_entity)
+
 class ContoursDriver(BaseDriver):
     _params_class = ContoursParams
     _validations = validations
