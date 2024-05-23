@@ -9,6 +9,7 @@
 
 from __future__ import annotations
 
+import logging
 import sys
 
 import numpy as np
@@ -20,17 +21,15 @@ from geoapps.utils.plotting import plot_plan_data_selection
 from geoapps_utils.driver.driver import BaseDriver
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve, Points, Surface
+from geoh5py.ui_json import InputFile, utils
 from matplotlib.pyplot import axes
 from scipy.interpolate import LinearNDInterpolator
 
-import logging
-
-from geoh5py.ui_json import InputFile, utils
-
-from curve_apps.driver import BaseCurveDriver
 from curve_apps.contours.params import Parameters
+from curve_apps.driver import BaseCurveDriver
 
 logger = logging.getLogger(__name__)
+
 
 class ContoursDriver(BaseCurveDriver):
     """
@@ -122,6 +121,7 @@ class ContoursDriver(BaseCurveDriver):
                     }
                 )
                 self.update_monitoring_directory(out_entity)
+
 
 class ContoursDriver(BaseDriver):
     _params_class = ContoursParams
