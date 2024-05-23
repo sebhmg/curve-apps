@@ -62,6 +62,10 @@ class EdgeDetectionDriver(BaseCurveDriver):
                 canny_grid,
                 self.params.detection,
             )
+
+            if vertices is None or cells is None:
+                return None
+
             self.params.source.objects.add_data(
                 {"canny filter": {"values": canny_grid.flatten(order="F")}}
             )
@@ -139,7 +143,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
         grid: Grid2D,
         edges: np.ndarray,
         detection: DetectionParameters,
-    ) -> tuple:
+    ) -> tuple[np.ndarray, np.ndarray] | tuple[None, None]:
         """
         Find edges in gridded data.
 
@@ -183,7 +187,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
         line_gap: int = 1,
         threshold: int = 1,
         window_size: int | None = None,
-    ) -> list:
+    ) -> list[np.ndarray]:
         """
         Get indices forming lines on a canny image.
 
