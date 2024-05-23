@@ -16,6 +16,7 @@ from __future__ import annotations
 import logging
 import tempfile
 from abc import abstractmethod
+from pathlib import Path
 
 from geoapps_utils.driver.data import BaseData
 from geoapps_utils.driver.driver import BaseDriver
@@ -55,9 +56,7 @@ class BaseCurveDriver(BaseDriver):
                     name=self.params.output.out_group,
                 )
 
-            name = self.params.output.export_as
-            if name is None:
-                name = self._default_name
+            name = self.params.output.export_as or self._default_name
 
             logger.info("Begin process.")
             output = self.create_output(name, parent=parent)
@@ -87,17 +86,15 @@ class BaseCurveDriver(BaseDriver):
             raise TypeError("Parameters must be of type Parameters.")
         self._params = val
 
-    def add_ui_json(self, entity: ObjectBase | ContainerGroup):
+    def add_ui_json(self, entity: ObjectBase | ContainerGroup) -> None:
         """
         Add ui.json file to entity.
 
         :param entity: Object to add ui.json file to.
         """
-        param_dict = self.params.flatten()
-        self.params.input_file.update_ui_values(param_dict)
 
         with tempfile.TemporaryDirectory() as temp_dir:
-            file_path = self.params.input_file.write_ui_json(
-                path=temp_dir, name=self.params.name + ".ui.json"
-            )
-            entity.add_file(str(file_path))
+            filepath = Path(temp_dir) / f"{self.params.name}.ui.json"
+            self.params.write_ui_json(filepath)
+
+            entity.add_file(str(filepath))
