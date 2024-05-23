@@ -26,7 +26,7 @@ from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
 from ..driver import BaseCurveDriver
-from .params import NAME, DetectionParameters, Parameters
+from .params import DetectionParameters, Parameters
 
 
 class EdgeDetectionDriver(BaseCurveDriver):
@@ -37,7 +37,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
     """
 
     _parameter_class = Parameters
-    _default_name = NAME
+    _default_name = "Edges"
 
     def __init__(self, parameters: Parameters | InputFile):
         super().__init__(parameters)
