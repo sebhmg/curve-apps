@@ -12,14 +12,12 @@ from __future__ import annotations
 import logging
 import sys
 
+import matplotlib.pyplot as plt
 import numpy as np
 from geoapps.utils.formatters import string_name
-from geoapps.utils.plotting import plot_plan_data_selection
 from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile, utils
-from matplotlib.pyplot import axes
-import matplotlib.pyplot as plt
 
 from curve_apps.contours.params import Parameters
 from curve_apps.driver import BaseCurveDriver
@@ -46,19 +44,19 @@ class ContoursDriver(BaseCurveDriver):
 
         entity = params.source.objects
         data = params.source.data
-        locations = getattr(entity, "vertices", None) or entity.centroids
+        locations = entity.locations
         x, y = locations[:, :2].T
         axis = plt.axes()
         if isinstance(entity, Grid2D):
-            contours = axis.contour(
-                x, y, data.values, levels=params.detection.contours
-            )
+            contours = axis.contour(x, y, data.values, levels=params.detection.contours)
         else:
             contours = axis.tricontour(
-                x, y, data.values,levels=params.detection.contours,
+                x,
+                y,
+                data.values,
+                levels=params.detection.contours,
             )
         return contours
-
 
     def create_output(self, name, parent: ContainerGroup | None = None):
         """
@@ -69,24 +67,21 @@ class ContoursDriver(BaseCurveDriver):
         """
 
         with utils.fetch_active_workspace(self.workspace) as workspace:
-            entity = self.params.source.objects
 
             print("Generating contours . . .")
             contours = ContoursDriver.get_contours(self.params)
-
-            if contours is not None:
-                curve, values = contours_to_curve(entity, contours, self.params.output)
-                out_entity = curve
-                if len(self.params.ga_group_name) > 0:
-                    out_entity = ContainerGroup.create(
-                        workspace, name=string_name(self.params.ga_group_name)
-                    )
-                    curve.parent = out_entity
-
-                curve.add_data(
-                    {self.params.detection.contour_string: {"values": np.hstack(values)}}
+            curve = contours_to_curve(contours, self.params)
+            out_entity = curve
+            if len(self.params.ga_group_name) > 0:
+                out_entity = ContainerGroup.create(
+                    workspace, name=string_name(self.params.ga_group_name)
                 )
-                self.update_monitoring_directory(out_entity)
+                curve.parent = out_entity
+
+            curve.add_data(
+                {self.params.detection.contour_string: {"values": np.hstack(values)}}
+            )
+            self.update_monitoring_directory(out_entity)
 
 
 # class ContoursDriver(BaseDriver):

@@ -14,11 +14,10 @@ from scipy.interpolate import LinearNDInterpolator
 from scipy.spatial import Delaunay
 from matplotlib.contour import ContourSet
 
-from geoh5py import Workspace
 from geoh5py.objects import ObjectBase, Curve, Points, Surface
 from geoapps.utils.formatters import string_name
 
-from curve_apps.trend_lines.params import DetectionParameters, OutputParameters
+from curve_apps.trend_lines.params import DetectionParameters, Parameters
 
 
 def extract_data(contours: ContourSet) -> Sequence[np.ndarray]:
@@ -68,32 +67,32 @@ def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
 
     return vertices
 def contours_to_curve(
-    entity: ObjectBase,
     contours: ContourSet,
-    output_params: OutputParameters,
+    params: Parameters,
 ) -> Curve:
     """
     Extract vertices, cells, values from matploltlib.ContourSet object.
 
-    :param entity: Contoured object.
     :param contours: Object returned from matplotlib.axes.contour.
-    :param output_params: Output parameters.
 
     :returns: Curve object representation of the contour set.
     """
     vertices, cells, values = extract_data(contours)
     if vertices:
         vertices = np.vstack(vertices)
-        if output_params.z_value:
+        if params.output.z_value:
             vertices = np.c_[vertices, np.hstack(values)]
         else:
-            vertices = set_vertices_height(vertices, entity)
+            vertices = set_vertices_height(vertices, params.source.objects)
 
     curve = Curve.create(
-        entity.workspace,
-        name=string_name(output_params.export_as),
+        params.geoh5,
+        name=string_name(params.output.export_as),
         vertices=vertices,
         cells=np.vstack(cells).astype("uint32"),
+    )
+    curve.add_data(
+        {params.detection.contour_string: {"values": np.hstack(values)}}
     )
 
     return curve, values
