@@ -45,7 +45,7 @@ This expose commands to the execution ``PATH``:
 Create the Conda environment lock files
 ---------------------------------------
 First, create the Conda environment lock files (``*.conda.lock.yml``) for the dependencies defined
-in `pyproject.toml`_. From te root of the project, run the command::
+in `pyproject.toml`_. From the root of the project, run the command::
 
     $ deps-lock
 
@@ -124,7 +124,7 @@ Configure the pre-commit hooks
 The list of tools to execute upon commit is configured in the file `.pre-commit-config.yaml`_.
 
 pre-commit can be installed using a Python installation on the system, or one from a Conda environment,
-or trough `pipx`_.
+or through `pipx`_.
 
 - To install ``pre-commit`` using ``pipx`` (recommended)::
 
