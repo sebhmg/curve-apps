@@ -13,17 +13,13 @@ import logging
 import sys
 
 import numpy as np
-from geoapps.contours.constants import validations
-from geoapps.contours.params import ContoursParams
-from geoapps.shared_utils.utils import get_contours
 from geoapps.utils.formatters import string_name
 from geoapps.utils.plotting import plot_plan_data_selection
-from geoapps_utils.driver.driver import BaseDriver
 from geoh5py.groups import ContainerGroup
-from geoh5py.objects import Curve, Points, Surface
+from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile, utils
 from matplotlib.pyplot import axes
-from scipy.interpolate import LinearNDInterpolator
+import matplotlib.pyplot as plt
 
 from curve_apps.contours.params import Parameters
 from curve_apps.driver import BaseCurveDriver
@@ -45,6 +41,25 @@ class ContoursDriver(BaseCurveDriver):
     def __init__(self, parameters: Parameters | InputFile):
         super().__init__(parameters)
 
+    @staticmethod
+    def get_contours(params: Parameters):
+
+        entity = params.source.objects
+        data = params.source.data
+        locations = getattr(entity, "vertices", None) or entity.centroids
+        x, y = locations[:, :2].T
+        axis = plt.axes()
+        if isinstance(entity, Grid2D):
+            contours = axis.contour(
+                x, y, data.values, levels=params.detection.contours
+            )
+        else:
+            contours = axis.tricontour(
+                x, y, data.values,levels=params.detection.contours,
+            )
+        return contours
+
+
     def create_output(self, name, parent: ContainerGroup | None = None):
         """
         Run the application for extracting and creating contours from input object.
@@ -55,20 +70,12 @@ class ContoursDriver(BaseCurveDriver):
 
         with utils.fetch_active_workspace(self.workspace) as workspace:
             entity = self.params.source.objects
-            data = self.params.source.data
 
             print("Generating contours . . .")
-            _, _, _, _, contour_set = plot_plan_data_selection(
-                entity,
-                data,
-                axis=axes(),
-                resolution=self.params.resolution,
-                window=self.params.window,
-                contours=self.params.detection.contours,
-            )
+            contours = ContoursDriver.get_contours(self.params)
 
-            if contour_set is not None:
-                curve, values = contours_to_curve(workspace, entity, contour_set, self.params.output)
+            if contours is not None:
+                curve, values = contours_to_curve(entity, contours, self.params.output)
                 out_entity = curve
                 if len(self.params.ga_group_name) > 0:
                     out_entity = ContainerGroup.create(

@@ -8,9 +8,45 @@
 import numpy as np
 import pytest
 
+from matplotlib.axes import Axes
+import matplotlib.pyplot as plt
+from geoh5py.workspace import Workspace
+from geoh5py.objects import Points, Curve, Grid2D
 from curve_apps.trend_lines.params import DetectionParameters
-from curve_apps.utils import filter_segments_orientation, find_curves
+from curve_apps.utils import (
+    filter_segments_orientation, find_curves, set_vertices_height, extract_data
+)
 
+
+def test_contours_to_curve(tmp_path):
+    ws = Workspace(tmp_path / "test.geoh5")
+    x = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
+    y = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
+    X, Y = np.meshgrid(x, y)
+
+
+def test_extract_data(tmp_path):
+    ws = Workspace(tmp_path / "test.geoh5")
+    x = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
+    y = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
+    X, Y = np.meshgrid(x, y)
+    Z = np.cos(X) * np.cos(Y)
+    fig, ax = plt.subplots()
+    contour = ax.contour(X, Y, Z, levels=1)
+    vertices, cells, values = extract_data(contour)
+    vertices = np.c_[np.vstack(vertices), np.zeros(len(vertices[0]))]
+    crv = Curve.create(ws, vertices=vertices, cells=cells, name="my curve")
+    assert all(values[0] == 0.5)
+
+def test_set_vertices_height(tmp_path):
+    ws = Workspace(tmp_path / "test.geoh5")
+    vertices = np.c_[np.random.randn(10), np.random.randn(10), np.ones(10)]
+    pts = Points.create(ws, vertices=vertices, name="my points")
+    new_vertices = set_vertices_height(vertices[:, :2], pts)
+    assert np.allclose(vertices, new_vertices)
+    grd = Grid2D.create(ws, origin=[0, 0, 1])
+    new_vertices = set_vertices_height(vertices[:, :2], grd)
+    assert np.allclose(vertices, new_vertices)
 
 @pytest.fixture(name="curves_data")
 def curves_data_fixture() -> list:
@@ -140,5 +176,6 @@ def test_filter_segments_orientation():
 
     ind = filter_segments_orientation(points, segments, 5, 1)
     assert ~np.all(ind)
+
 
 

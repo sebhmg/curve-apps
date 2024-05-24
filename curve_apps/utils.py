@@ -68,7 +68,6 @@ def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
 
     return vertices
 def contours_to_curve(
-    workspace: Workspace,
     entity: ObjectBase,
     contours: ContourSet,
     output_params: OutputParameters,
@@ -76,7 +75,6 @@ def contours_to_curve(
     """
     Extract vertices, cells, values from matploltlib.ContourSet object.
 
-    :param workspace: Workspace object.
     :param entity: Contoured object.
     :param contours: Object returned from matplotlib.axes.contour.
     :param output_params: Output parameters.
@@ -92,7 +90,7 @@ def contours_to_curve(
             vertices = set_vertices_height(vertices, entity)
 
     curve = Curve.create(
-        workspace,
+        entity.workspace,
         name=string_name(output_params.export_as),
         vertices=vertices,
         cells=np.vstack(cells).astype("uint32"),

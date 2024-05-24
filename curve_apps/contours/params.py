@@ -122,28 +122,6 @@ class DetectionParameters(BaseModel):
         return contour_string
 
 
-class WindowParameters(BaseModel):
-    """
-    Window parameters for limiting generated countour extents.
-
-    :param azimuth: Rotation angle of the selection box.
-    :param center_x: Easting position of the selection box.
-    :param center_y: Northing position of the selection box.
-    :param width: Width (m) of the selection box.
-    :param height: Height (m) of the selection box.
-    :param resolution: Minimum data separation (m).
-    """
-
-    azimuth: float | None = None
-    center_x: float | None = None
-    center_y: float | None = None
-    width: float | None = None
-    height: float | None = None
-
-    # Todo add a validation here to check that if any parameters
-    # are not None, all are not None.
-
-
 class OutputParameters(BaseModel):
     """
     Output parameters.
@@ -174,7 +152,6 @@ class Parameters(BaseData):
 
     source: SourceParameters
     detection: DetectionParameters
-    window: WindowParameters = WindowParameters()
     output: OutputParameters = OutputParameters()
 
 
