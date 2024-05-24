@@ -21,6 +21,7 @@ After you have cloned the Git repository, you will need to:
 .. _Poetry: https://python-poetry.org/
 .. _pipx: https://pipxproject.github.io/pipx/
 .. _pre-commit: https://pre-commit.com/
+.. _py-deps-lock: https://github.com/MiraGeoscience/py-deps-lock
 
 
 Create the Conda lock files and environment
