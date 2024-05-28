@@ -83,7 +83,7 @@ class BaseCurveDriver(BaseDriver):
     @params.setter
     def params(self, val: BaseData):
         if not isinstance(val, BaseData):
-            raise TypeError("Parameters must be of type Parameters.")
+            raise TypeError("Parameters must be a BaseData subclass.")
         self._params = val
 
     def add_ui_json(self, entity: ObjectBase | ContainerGroup) -> None:

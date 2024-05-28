@@ -14,7 +14,7 @@ from geoh5py.ui_json import InputFile
 
 from curve_apps import assets_path
 from curve_apps.edge_detection.driver import EdgeDetectionDriver
-from curve_apps.edge_detection.params import Parameters
+from curve_apps.edge_detection.params import EdgeParameters
 
 
 def setup_example(workspace: Workspace):
@@ -43,7 +43,7 @@ def test_driver(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
 
     grid, data = setup_example(workspace)
-    params = Parameters.build(
+    params = EdgeParameters.build(
         {
             "geoh5": workspace,
             "objects": grid,
@@ -81,7 +81,7 @@ def test_merge_length(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_edge_detection.geoh5")
 
     grid, data = setup_example(workspace)
-    params = Parameters.build(
+    params = EdgeParameters.build(
         {
             "geoh5": workspace,
             "objects": grid,
@@ -108,7 +108,7 @@ def test_input_file(tmp_path: Path):
 
     grid, data = setup_example(workspace)
     ifile = InputFile.read_ui_json(
-        assets_path() / "uijson/edge_detection.ui.json", validate=False
+        assets_path() / "uijson/edges.ui.json", validate=False
     )
 
     changes = {

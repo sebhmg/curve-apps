@@ -5,38 +5,43 @@
 #  All rights reserved.
 #
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pytest
-
-from matplotlib.axes import Axes
-import matplotlib.pyplot as plt
+from geoh5py.objects import Curve, Grid2D, Points
 from geoh5py.workspace import Workspace
-from geoh5py.objects import Points, Curve, Grid2D
-from curve_apps.trend_lines.params import DetectionParameters
+
+from curve_apps.trend_lines.params import TrendLineDetectionParameters
 from curve_apps.utils import (
-    filter_segments_orientation, find_curves, set_vertices_height, extract_data
+    contours_to_curve,
+    extract_data,
+    filter_segments_orientation,
+    find_curves,
+    set_vertices_height,
 )
+from tests.contour_test import get_contour_data
 
 
 def test_contours_to_curve(tmp_path):
-    ws = Workspace(tmp_path / "test.geoh5")
-    x = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
-    y = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
-    X, Y = np.meshgrid(x, y)
+    contours, params = get_contour_data(tmp_path)
+    curve = contours_to_curve(contours, params)
+    assert curve.vertices is not None
+    assert np.all(curve.vertices[:, 0] > 5)
 
 
 def test_extract_data(tmp_path):
     ws = Workspace(tmp_path / "test.geoh5")
     x = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
     y = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
-    X, Y = np.meshgrid(x, y)
-    Z = np.cos(X) * np.cos(Y)
-    fig, ax = plt.subplots()
-    contour = ax.contour(X, Y, Z, levels=1)
+    x_grid, y_grid = np.meshgrid(x, y)
+    z_grid = np.cos(x_grid) * np.cos(y_grid)
+    _, ax = plt.subplots()
+    contour = ax.contour(x_grid, y_grid, z_grid, levels=1)
     vertices, cells, values = extract_data(contour)
     vertices = np.c_[np.vstack(vertices), np.zeros(len(vertices[0]))]
-    crv = Curve.create(ws, vertices=vertices, cells=cells, name="my curve")
+    Curve.create(ws, vertices=vertices, cells=cells, name="my curve")
     assert all(values[0] == 0.5)
+
 
 def test_set_vertices_height(tmp_path):
     ws = Workspace(tmp_path / "test.geoh5")
@@ -47,6 +52,7 @@ def test_set_vertices_height(tmp_path):
     grd = Grid2D.create(ws, origin=[0, 0, 1])
     new_vertices = set_vertices_height(vertices[:, :2], grd)
     assert np.allclose(vertices, new_vertices)
+
 
 @pytest.fixture(name="curves_data")
 def curves_data_fixture() -> list:
@@ -84,7 +90,7 @@ def test_find_curves(curves_data: list):
     channel_groups = data[:, 3]
 
     result_curves = []
-    parameters = DetectionParameters(
+    parameters = TrendLineDetectionParameters(
         min_edges=3,
         max_distance=15,
         damping=0.75,
@@ -105,7 +111,7 @@ def test_find_curves(curves_data: list):
 
     # Test with different angle to get zig-zag line
     result_curves = []
-    parameters = DetectionParameters(
+    parameters = TrendLineDetectionParameters(
         min_edges=3,
         max_distance=50,
         damping=1,
@@ -131,7 +137,7 @@ def test_find_curve_orientation(curves_data: list):
 
     result_curves = []
 
-    parameters = DetectionParameters(
+    parameters = TrendLineDetectionParameters(
         min_edges=3,
         max_distance=15,
         damping=0.75,
@@ -176,6 +182,3 @@ def test_filter_segments_orientation():
 
     ind = filter_segments_orientation(points, segments, 5, 1)
     assert ~np.all(ind)
-
-
-

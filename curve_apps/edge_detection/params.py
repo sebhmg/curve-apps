@@ -23,7 +23,7 @@ from pydantic import BaseModel, ConfigDict
 from curve_apps import assets_path
 
 
-class SourceParameters(BaseModel):
+class EdgeSourceParameters(BaseModel):
     """
     Source parameters expected by the ui.json file format.
 
@@ -37,7 +37,7 @@ class SourceParameters(BaseModel):
     data: FloatData
 
 
-class DetectionParameters(BaseModel):
+class EdgeDetectionParameters(BaseModel):
     """
     Edge detection parameters.
 
@@ -57,7 +57,7 @@ class DetectionParameters(BaseModel):
     merge_length: float | None = None
 
 
-class OutputParameters(BaseModel):
+class EdgeOutputParameters(BaseModel):
     """
     Output parameters.
 
@@ -69,7 +69,7 @@ class OutputParameters(BaseModel):
     out_group: str | None = "detections"
 
 
-class Parameters(BaseData):
+class EdgeParameters(BaseData):
     """
     Edge detection parameters for use with `edge_detection.driver`.
 
@@ -78,11 +78,11 @@ class Parameters(BaseData):
     :param output: Output parameters.
     """
 
-    name: ClassVar[str] = "edge_detection"
-    default_ui_json: ClassVar[Path] = assets_path() / "uijson/edge_detection.ui.json"
+    name: ClassVar[str] = "edges"
+    default_ui_json: ClassVar[Path] = assets_path() / "uijson/edges.ui.json"
     title: ClassVar[str] = "Edge Detection"
     run_command: ClassVar[str] = "curve_apps.edge_detection.driver"
 
-    source: SourceParameters
-    detection: DetectionParameters
-    output: OutputParameters
+    source: EdgeSourceParameters
+    detection: EdgeDetectionParameters
+    output: EdgeOutputParameters = EdgeOutputParameters()

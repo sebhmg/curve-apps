@@ -8,19 +8,19 @@
 from __future__ import annotations
 
 import re
+
 import numpy as np
-from typing import Sequence
+from geoapps.utils.formatters import string_name
+from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
+from matplotlib.contour import ContourSet
 from scipy.interpolate import LinearNDInterpolator
 from scipy.spatial import Delaunay
-from matplotlib.contour import ContourSet
 
-from geoh5py.objects import ObjectBase, Curve, Points, Surface
-from geoapps.utils.formatters import string_name
-
-from curve_apps.trend_lines.params import DetectionParameters, Parameters
+from curve_apps.contours.params import ContourDetectionParameters, ContourParameters
+from curve_apps.trend_lines.params import TrendLineDetectionParameters
 
 
-def extract_data(contours: ContourSet) -> Sequence[np.ndarray]:
+def extract_data(contours: ContourSet) -> tuple[list, list, list]:
     """
     Return vertices, cells, values array representations of the contour set.
 
@@ -45,6 +45,7 @@ def extract_data(contours: ContourSet) -> Sequence[np.ndarray]:
 
     return vertices, cells, values
 
+
 def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
     """
     Uses entity z values to add height column to an Nx2 vertices array.
@@ -55,20 +56,22 @@ def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
     returns: Nx3 array of vertices.
     """
     if isinstance(entity, (Points, Curve, Surface)):
-        z_interp = LinearNDInterpolator(
-            entity.vertices[:, :2], entity.vertices[:, 2]
-        )
+        if entity.vertices is None:
+            raise ValueError("Entity does not have vertices.")
+        z_interp = LinearNDInterpolator(entity.vertices[:, :2], entity.vertices[:, 2])
         vertices = np.c_[vertices, z_interp(vertices)]
-    else:
+    elif isinstance(entity, Grid2D):
         vertices = np.c_[
             vertices,
             np.ones(vertices.shape[0]) * entity.origin["z"],
         ]
 
     return vertices
+
+
 def contours_to_curve(
     contours: ContourSet,
-    params: Parameters,
+    params: ContourParameters,
 ) -> Curve:
     """
     Extract vertices, cells, values from matploltlib.ContourSet object.
@@ -79,25 +82,24 @@ def contours_to_curve(
     """
     vertices, cells, values = extract_data(contours)
     if vertices:
-        vertices = np.vstack(vertices)
+        locations = np.vstack(vertices)
         if params.output.z_value:
-            vertices = np.c_[vertices, np.hstack(values)]
+            locations = np.c_[locations, np.hstack(values)]
         else:
-            vertices = set_vertices_height(vertices, params.source.objects)
+            locations = set_vertices_height(locations, params.source.objects)
 
     curve = Curve.create(
         params.geoh5,
         name=string_name(params.output.export_as),
-        vertices=vertices,
+        vertices=locations,
         cells=np.vstack(cells).astype("uint32"),
     )
-    curve.add_data(
-        {params.detection.contour_string: {"values": np.hstack(values)}}
-    )
+    curve.add_data({params.detection.contour_string: {"values": np.hstack(values)}})
 
-    return curve, values
+    return curve
 
-def get_contour_list(params: DetectionParameters) -> list[float]:
+
+def get_contour_list(params: ContourDetectionParameters) -> list[float]:
     """
     Compute contours requested by input parameters.
 
@@ -109,27 +111,30 @@ def get_contour_list(params: DetectionParameters) -> list[float]:
         and params.interval_spacing != 0
     ):
         interval_contours = np.arange(
-            params.interval_min, params.interval_max + params.interval_spacing, params.interval_spacing
+            params.interval_min,
+            params.interval_max + params.interval_spacing,  # type: ignore
+            params.interval_spacing,
         ).tolist()
     else:
         interval_contours = []
 
     if params.fixed_contours != "" and params.fixed_contours is not None:
-        if type(params.fixed_contours) is str:
+        if isinstance(params.fixed_contours, str):
             fixed_contours = re.split(",", params.fixed_contours.replace(" ", ""))
             fixed_contours = [float(c) for c in fixed_contours]
-        elif type(params.fixed_contours) is float:
+        elif isinstance(params.fixed_contours, float):
             fixed_contours = [params.fixed_contours]
     else:
-        fixed_contours = []
+        fixed_contours = []  # type: ignore
 
-    contours = np.unique(np.sort(interval_contours + fixed_contours))
+    contours = np.unique(np.sort(interval_contours + fixed_contours)).tolist()
     return contours
+
 
 def find_curves(
     vertices: np.ndarray,
     parts: np.ndarray,
-    params: DetectionParameters = DetectionParameters(),
+    params: TrendLineDetectionParameters = TrendLineDetectionParameters(),
 ) -> list[list[list[float]]]:
     """
     Find curves in a set of points.

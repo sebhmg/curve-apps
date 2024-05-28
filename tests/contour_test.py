@@ -10,19 +10,18 @@ from geoh5py import Workspace
 from geoh5py.objects import Points
 
 from curve_apps.contours.driver import ContoursDriver
-from curve_apps.contours.params import Parameters
+from curve_apps.contours.params import ContourParameters
 
 
-def test_get_contours(tmp_path):
-
+def get_contour_data(tmp_path):
     ws = Workspace(tmp_path / "test.geoh5")
     x = np.linspace(0, 11, 20)
     y = np.linspace(0, 11, 20)
-    X, Y = np.meshgrid(x, y)
-    Z = np.ones_like(X)
-    Z[X > 5] = 10
-    values = Z.flatten()
-    vertices = np.c_[X.flatten(), Y.flatten(), np.zeros_like(values)]
+    x_grid, y_grid = np.meshgrid(x, y)
+    z_grid = np.ones_like(x_grid)
+    z_grid[x_grid > 5] = 10
+    values = z_grid.flatten()
+    vertices = np.c_[x_grid.flatten(), y_grid.flatten(), np.zeros_like(values)]
     pts = Points.create(ws, name="my points", vertices=vertices)
     data = pts.add_data({"my data": {"values": values}})
 
@@ -32,6 +31,13 @@ def test_get_contours(tmp_path):
         "data": data,
         "fixed_contours": [10.0],
     }
-    params = Parameters.build(params_dict)
+    params = ContourParameters.build(params_dict)
     contours = ContoursDriver.get_contours(params)
+
+    return contours, params
+
+
+def test_get_contours(tmp_path):
+
+    contours, _ = get_contour_data(tmp_path)
     assert np.all(contours.allsegs[0][0][:, 0] > 5)

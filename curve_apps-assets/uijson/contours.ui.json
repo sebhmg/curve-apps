@@ -66,45 +66,10 @@
         "enabled": false
     },
     "z_value": {
-        "group": "Contours",
+        "group": "Output",
         "main": true,
         "label": "Assign Z from values",
         "value": false
-    },
-    "azimuth": {
-        "group": "Window",
-        "groupOptional": true,
-        "enabled": false,
-        "label": "Azimuth",
-        "min": -90.0,
-        "max": 90.0,
-        "value": 0.0
-    },
-    "center_x": {
-        "group": "Window",
-        "enabled": false,
-        "label": "Easting",
-        "value": 0.0
-    },
-    "center_y": {
-        "group": "Window",
-        "enabled": false,
-        "label": "Northing",
-        "value": 0.0
-    },
-    "width": {
-        "group": "Window",
-        "enabled": false,
-        "label": "Width",
-        "min": 0.0,
-        "value": 0.0
-    },
-    "height": {
-        "group": "Window",
-        "enabled": false,
-        "label": "Height",
-        "min": 0.0,
-        "value": 0.0
     },
     "export_as": {
         "group": "Output",

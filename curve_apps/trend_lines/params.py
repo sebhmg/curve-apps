@@ -23,7 +23,7 @@ from pydantic import BaseModel, ConfigDict
 from curve_apps import assets_path
 
 
-class SourceParameters(BaseModel):
+class TrendLineSourceParameters(BaseModel):
     """
     Source parameters expected by the ui.json file format.
 
@@ -39,7 +39,7 @@ class SourceParameters(BaseModel):
     parts: Data | None = None
 
 
-class DetectionParameters(BaseModel):
+class TrendLineDetectionParameters(BaseModel):
     """
     Detection parameters expected by the ui.json file format.
 
@@ -57,7 +57,7 @@ class DetectionParameters(BaseModel):
     max_distance: float | None = None
 
 
-class OutputParameters(BaseModel):
+class TrendLineOutputParameters(BaseModel):
     """
     Output parameters.
 
@@ -69,7 +69,7 @@ class OutputParameters(BaseModel):
     out_group: str | None = "detections"
 
 
-class Parameters(BaseData):
+class TrendLineParameters(BaseData):
     """
     Trend lines parameters for use with `trend_lines.driver`.
 
@@ -81,8 +81,8 @@ class Parameters(BaseData):
     name: ClassVar[str] = "trend_lines"
     default_ui_json: ClassVar[Path] = assets_path() / "uijson/trend_lines.ui.json"
     title: ClassVar[str] = "Trend Lines Detection"
-    run_command: ClassVar[str] = "curve_apps.trend_lines.driver"
+    run_command: ClassVar[str] = "curve_apps.trend_line_detection.driver"
 
-    source: SourceParameters
-    detection: DetectionParameters
-    output: OutputParameters
+    source: TrendLineSourceParameters
+    detection: TrendLineDetectionParameters
+    output: TrendLineOutputParameters = TrendLineOutputParameters()

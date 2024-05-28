@@ -26,7 +26,7 @@ from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
 from ..driver import BaseCurveDriver
-from .params import DetectionParameters, Parameters
+from .params import EdgeDetectionParameters, EdgeParameters
 
 
 class EdgeDetectionDriver(BaseCurveDriver):
@@ -36,10 +36,10 @@ class EdgeDetectionDriver(BaseCurveDriver):
     :param parameters: Application parameters.
     """
 
-    _parameter_class = Parameters
+    _parameter_class = EdgeParameters
     _default_name = "Edges"
 
-    def __init__(self, parameters: Parameters | InputFile):
+    def __init__(self, parameters: EdgeParameters | InputFile):
         super().__init__(parameters)
 
     def create_output(self, name, parent: ContainerGroup | None = None):
@@ -98,7 +98,7 @@ class EdgeDetectionDriver(BaseCurveDriver):
     def get_edges(
         grid: Grid2D,
         data: FloatData,
-        detection: DetectionParameters,
+        detection: EdgeDetectionParameters,
     ) -> tuple:
         """
         Find edges in gridded data.
