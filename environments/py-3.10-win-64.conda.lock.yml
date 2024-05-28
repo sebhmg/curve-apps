@@ -38,7 +38,7 @@ dependencies:
   - imageio=2.34.1=pyh4b66e23_0
   - importlib-metadata=7.1.0=pyha770c72_0
   - importlib_metadata=7.1.0=hd8ed1ab_0
-  - intel-openmp=2024.1.0=h57928b3_965
+  - intel-openmp=2024.1.0=h57928b3_966
   - jxrlib=1.1=hcfcfb64_3
   - kiwisolver=1.4.5=py310h232114e_1
   - krb5=1.21.2=heb0366b_0

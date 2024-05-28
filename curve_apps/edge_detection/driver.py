@@ -53,10 +53,22 @@ class EdgesDriver(BaseCurveDriver):
         """
         with utils.fetch_active_workspace(self.workspace, mode="r+") as workspace:
             logging.info("Generated edges ...")
-            vertices, cells = EdgesDriver.get_edges(
+            canny_grid = EdgesDriver.get_canny_edges(
                 self.params.source.objects,
                 self.params.source.data,
                 self.params.detection,
+            )
+            vertices, cells = EdgesDriver.get_edges(
+                self.params.source.objects,
+                canny_grid,
+                self.params.detection,
+            )
+
+            if vertices is None or cells is None:
+                return None
+
+            self.params.source.objects.add_data(
+                {"canny filter": {"values": canny_grid.flatten(order="F")}}
             )
             curve = Curve.create(
                 workspace=workspace,
@@ -96,28 +108,25 @@ class EdgesDriver(BaseCurveDriver):
         return curve
 
     @staticmethod
-    def get_edges(
-        grid: Grid2D,
-        data: FloatData,
-        detection: EdgeDetectionParameters,
-    ) -> tuple:
+    def get_canny_edges(
+        grid: Grid2D, data: FloatData, detection: EdgeDetectionParameters
+    ) -> np.ndarray:
         """
-        Find edges in gridded data.
+        Get edges from a grid.
 
-        :params grid: A Grid2D object.
-        :params data: Input data.
-        :params detection: Detection parameters.
+        :param grid: Grid2D object.
+        :param data: FloatData object.
+        :param detection: Detection parameters.
 
-        :returns : n x 3 array. Vertices of edges.
-        :returns : n x 2 float array. Cells of edges.
+        :returns: Edges from Canny transform.
         """
         if grid.shape is None or data.values is None:
-            return None, None
+            raise ValueError("Grid and data must be defined.")
 
         grid_data = data.values.reshape(grid.shape, order="F")
 
         if np.all(np.isnan(grid_data)):
-            return None, None
+            raise ValueError("No data to process.")
 
         # Find edges
         edges = canny(
@@ -129,6 +138,24 @@ class EdgesDriver(BaseCurveDriver):
         )
         grid.add_data({"canny filter": {"values": edges.flatten(order="F")}})
 
+        return edges
+
+    @staticmethod
+    def get_edges(
+        grid: Grid2D,
+        edges: np.ndarray,
+        detection: EdgeDetectionParameters,
+    ) -> tuple[np.ndarray, np.ndarray] | tuple[None, None]:
+        """
+        Find edges in gridded data.
+
+        :params grid: A Grid2D object.
+        :params edges: Edges representation of the grid from Canny transform.
+        :params detection: Detection parameters.
+
+        :returns : n x 3 array. Vertices of edges.
+        :returns : n x 2 float array. Cells of edges.
+        """
         # Find lines
         indices = EdgesDriver.get_line_indices(
             edges,
