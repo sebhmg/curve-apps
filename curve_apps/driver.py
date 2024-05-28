@@ -21,7 +21,8 @@ from pathlib import Path
 from geoapps_utils.driver.data import BaseData
 from geoapps_utils.driver.driver import BaseDriver
 from geoh5py.groups import ContainerGroup
-from geoh5py.objects import ObjectBase
+from geoh5py.objects import Curve, ObjectBase
+from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
 
 logger = logging.getLogger(__name__)
@@ -38,42 +39,59 @@ class BaseCurveDriver(BaseDriver):
     _default_name: str
 
     def __init__(self, parameters: BaseData | InputFile):
+        self._out_group = None
         if isinstance(parameters, InputFile):
             parameters = self._parameter_class.build(parameters)
 
         # TODO need to re-type params in base class
         super().__init__(parameters)
 
+    @property
+    def out_group(self) -> ContainerGroup | None:
+        """Output container group."""
+
+        if self._out_group is None and self.params.output.out_group is not None:
+            self._out_group = ContainerGroup.create(
+                workspace=self.workspace,
+                name=self.params.output.out_group,
+            )
+
+        return self._out_group
+
+    def store(self, curve: Curve):
+        """
+        Update container group and monitoring directory.
+
+        :param curve: Curve object to store.
+        """
+
+        with fetch_active_workspace(self.workspace, mode="r+") as workspace:
+            # with self.workspace.open(mode="r+") as workspace:
+            if self.out_group is not None:
+                curve.parent = self.out_group
+
+            self.update_monitoring_directory(
+                curve if self.out_group is None else self.out_group
+            )
+
+            logger.info(
+                "Curve object '%s' saved to '%s'.",
+                self.params.output.export_as,
+                str(workspace.h5file),
+            )
+
+    @abstractmethod
+    def make_curve(self):
+        pass
+
     def run(self):
         """
         Run method of the driver.
         """
-        with self.workspace.open(mode="r+") as workspace:
-            parent = None
-            if self.params.output.out_group is not None:
-                parent = ContainerGroup.create(
-                    workspace=workspace,
-                    name=self.params.output.out_group,
-                )
-
-            name = self.params.output.export_as or self._default_name
-
-            logger.info("Begin process.")
-            output = self.create_output(name, parent=parent)
-            logger.info("Process completed.")
-
-            if output is not None:
-                self.update_monitoring_directory(
-                    parent if parent is not None else output
-                )
-
-            logger.info("Curve object '%s' saved to '%s'.", name, str(workspace.h5file))
-
-    @abstractmethod
-    def create_output(self, name: str, parent: ContainerGroup | None = None):
-        """
-        Create output.
-        """
+        logging.info("Begin Process ...")
+        curve = self.make_curve()
+        logging.info("Process Complete.")
+        self.store(curve)
 
     @property
     def params(self) -> BaseData:

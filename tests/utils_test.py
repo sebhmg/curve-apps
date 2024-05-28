@@ -13,20 +13,11 @@ from geoh5py.workspace import Workspace
 
 from curve_apps.trend_lines.params import TrendLineDetectionParameters
 from curve_apps.utils import (
-    contours_to_curve,
     extract_data,
     filter_segments_orientation,
     find_curves,
     set_vertices_height,
 )
-from tests.contour_test import get_contour_data
-
-
-def test_contours_to_curve(tmp_path):
-    contours, params = get_contour_data(tmp_path)
-    curve = contours_to_curve(contours, params)
-    assert curve.vertices is not None
-    assert np.all(curve.vertices[:, 0] > 5)
 
 
 def test_extract_data(tmp_path):

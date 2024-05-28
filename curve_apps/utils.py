@@ -10,13 +10,12 @@ from __future__ import annotations
 import re
 
 import numpy as np
-from geoapps.utils.formatters import string_name
 from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
 from matplotlib.contour import ContourSet
 from scipy.interpolate import LinearNDInterpolator
 from scipy.spatial import Delaunay
 
-from curve_apps.contours.params import ContourDetectionParameters, ContourParameters
+from curve_apps.contours.params import ContourDetectionParameters
 from curve_apps.trend_lines.params import TrendLineDetectionParameters
 
 
@@ -67,36 +66,6 @@ def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
         ]
 
     return vertices
-
-
-def contours_to_curve(
-    contours: ContourSet,
-    params: ContourParameters,
-) -> Curve:
-    """
-    Extract vertices, cells, values from matploltlib.ContourSet object.
-
-    :param contours: Object returned from matplotlib.axes.contour.
-
-    :returns: Curve object representation of the contour set.
-    """
-    vertices, cells, values = extract_data(contours)
-    if vertices:
-        locations = np.vstack(vertices)
-        if params.output.z_value:
-            locations = np.c_[locations, np.hstack(values)]
-        else:
-            locations = set_vertices_height(locations, params.source.objects)
-
-    curve = Curve.create(
-        params.geoh5,
-        name=string_name(params.output.export_as),
-        vertices=locations,
-        cells=np.vstack(cells).astype("uint32"),
-    )
-    curve.add_data({params.detection.contour_string: {"values": np.hstack(values)}})
-
-    return curve
 
 
 def get_contour_list(params: ContourDetectionParameters) -> list[float]:

@@ -30,6 +30,7 @@ def get_contour_data(tmp_path):
         "objects": pts,
         "data": data,
         "fixed_contours": [10.0],
+        "export_as": "my curve",
     }
     params = ContourParameters.build(params_dict)
     contours = ContoursDriver.get_contours(params)
@@ -37,7 +38,11 @@ def get_contour_data(tmp_path):
     return contours, params
 
 
-def test_get_contours(tmp_path):
+def test_driver(tmp_path):
+    _, params = get_contour_data(tmp_path)
+    driver = ContoursDriver(params)
+    driver.run()
 
-    contours, _ = get_contour_data(tmp_path)
-    assert np.all(contours.allsegs[0][0][:, 0] > 5)
+    with params.geoh5.open():
+        curve = params.geoh5.get_entity("my curve")[0]
+        assert np.all(curve.vertices[:, 0] > 5)

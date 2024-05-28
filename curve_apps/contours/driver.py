@@ -1,11 +1,14 @@
-# ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-#  Copyright (c) 2024 Mira Geoscience Ltd.                                     '
-#                                                                              '
-#  This file is part of geoapps.                                               '
-#                                                                              '
-#  geoapps is distributed under the terms and conditions of the MIT License    '
-#  (see LICENSE file at the root of this source code package).                 '
-# ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.
+#
+#  This file is part of edge-detection package.
+#
+#  All rights reserved.
+#
+#
+#  This file is part of curve-apps.
+#
+#  curve-apps is distributed under the terms and conditions of the MIT License
+#  (see LICENSE file at the root of this source code package).
 
 from __future__ import annotations
 
@@ -13,14 +16,14 @@ import logging
 import sys
 
 import matplotlib.pyplot as plt
+import numpy as np
 from geoapps.utils.formatters import string_name
-from geoh5py.groups import ContainerGroup
-from geoh5py.objects import Grid2D
+from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
 
 from curve_apps.contours.params import ContourParameters
 from curve_apps.driver import BaseCurveDriver
-from curve_apps.utils import contours_to_curve
+from curve_apps.utils import extract_data, set_vertices_height
 
 logger = logging.getLogger(__name__)
 
@@ -33,10 +36,40 @@ class ContoursDriver(BaseCurveDriver):
     """
 
     _parameter_class = ContourParameters
-    _default_name = "Contours"
 
     def __init__(self, parameters: ContourParameters | InputFile):
         super().__init__(parameters)
+
+    def make_curve(self):
+        """
+        Make curve object from contours detected in source data.
+        """
+
+        with utils.fetch_active_workspace(self.workspace, mode="r+"):
+            logger.info("Generating contours ...")
+            contours = ContoursDriver.get_contours(self.params)
+            vertices, cells, values = extract_data(contours)
+            if vertices:
+                locations = np.vstack(vertices)
+                if self.params.output.z_value:
+                    locations = np.c_[locations, np.hstack(values)]
+                else:
+                    locations = set_vertices_height(
+                        locations, self.params.source.objects
+                    )
+
+            curve = Curve.create(
+                self.workspace,
+                name=string_name(self.params.output.export_as),
+                vertices=locations,
+                cells=np.vstack(cells).astype("uint32"),
+                parent=self.out_group,
+            )
+            curve.add_data(
+                {self.params.detection.contour_string: {"values": np.hstack(values)}}
+            )
+
+            return curve
 
     @staticmethod
     def get_contours(params: ContourParameters):
@@ -61,28 +94,6 @@ class ContoursDriver(BaseCurveDriver):
                 levels=params.detection.contours,
             )
         return contours
-
-    def create_output(self, name, parent: ContainerGroup | None = None):
-        """
-        Run the application for extracting and creating contours from input object.
-
-        :param name: Name of the output object.
-        :param parent: Optional parent group.
-        """
-
-        with utils.fetch_active_workspace(self.workspace) as workspace:
-
-            logger.info("Generating contours ...")
-            contours = ContoursDriver.get_contours(self.params)
-            curve = contours_to_curve(contours, self.params)
-            out_entity = curve
-            if self.params.output.out_group is not None:
-                out_entity = ContainerGroup.create(
-                    workspace, name=string_name(self.params.output.out_group)
-                )
-                curve.parent = out_entity
-
-            self.update_monitoring_directory(out_entity)
 
 
 if __name__ == "__main__":

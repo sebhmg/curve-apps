@@ -13,7 +13,7 @@ from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
 
 from curve_apps import assets_path
-from curve_apps.edge_detection.driver import EdgeDetectionDriver
+from curve_apps.edge_detection.driver import EdgesDriver
 from curve_apps.edge_detection.params import EdgeParameters
 
 
@@ -55,7 +55,7 @@ def test_driver(tmp_path: Path):
         }
     )
 
-    driver = EdgeDetectionDriver(params)
+    driver = EdgesDriver(params)
     driver.run()
 
     with workspace.open():
@@ -94,7 +94,7 @@ def test_merge_length(tmp_path: Path):
         }
     )
 
-    driver = EdgeDetectionDriver(params)
+    driver = EdgesDriver(params)
     driver.run()
 
     with workspace.open():
@@ -124,7 +124,7 @@ def test_input_file(tmp_path: Path):
         ifile.set_data_value(key, value)
 
     ifile.write_ui_json(str(tmp_path / "test_edge_detection"))
-    driver = EdgeDetectionDriver(ifile)
+    driver = EdgesDriver(ifile)
     driver.run()
 
     with workspace.open():

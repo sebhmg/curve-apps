@@ -18,7 +18,6 @@ import logging
 import sys
 
 import numpy as np
-from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve
 from geoh5py.ui_json import InputFile, utils
 from tqdm import tqdm
@@ -38,35 +37,31 @@ class TrendLinesDriver(BaseCurveDriver):
     """
 
     _parameter_class = TrendLineParameters
-    _default_name = "Trendlines"
 
     def __init__(self, parameters: TrendLineParameters | InputFile):
         super().__init__(parameters)
 
-    def create_output(self, name, parent: ContainerGroup | None = None):
-        """
-        Run the application for the detection of curves across an object parts.
+    def make_curve(self):
+        """Make curve object from trend lines detected in source data."""
 
-        :param name: Name of the output object.
-        :param parent: Optional parent group.
-        """
-        with utils.fetch_active_workspace(self.workspace) as workspace:
+        with utils.fetch_active_workspace(self.workspace, mode="r+") as workspace:
+            logging.info("Generating trend lines ...")
             vertices, cells, labels = self.get_connections()
 
             if cells is None:
                 logger.info("No connections found.")
                 return None
 
-            edges = Curve.create(
+            curve = Curve.create(
                 workspace=workspace,
-                name=name,
+                name=self.params.output.export_as,
                 vertices=vertices,
                 cells=cells,
-                parent=parent,
+                parent=self.out_group,
             )
 
-            if edges is not None and self.params.source.data is not None:
-                edges.add_data(
+            if curve is not None and self.params.source.data is not None:
+                curve.add_data(
                     {
                         self.params.source.data.name: {
                             "values": labels,
@@ -76,7 +71,7 @@ class TrendLinesDriver(BaseCurveDriver):
                     }
                 )
 
-        return edges
+        return curve
 
     def get_connections(self) -> tuple:
         """
