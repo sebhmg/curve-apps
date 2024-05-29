@@ -1,9 +1,13 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of edge-detection package.
-#
-#  All rights reserved.
-#
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 import numpy as np
 import pytest
@@ -17,7 +21,7 @@ from curve_apps.contours.params import (
     ContourParameters,
     ContourSourceParameters,
 )
-from curve_apps.edge_detection.params import (
+from curve_apps.edges.params import (
     EdgeDetectionParameters,
     EdgeOutputParameters,
     EdgeParameters,
@@ -48,7 +52,7 @@ def test_edge_detection_params(tmp_path):
         geoh5=ws, source=source_params, detection=detection_params, output=output_params
     )
     assert params.title == "Edge Detection"
-    assert params.run_command == "curve_apps.edge_detection.driver"
+    assert params.run_command == "curve_apps.edges.driver"
 
     params.write_ui_json(tmp_path / "validation.ui.json")
 

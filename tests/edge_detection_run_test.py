@@ -1,9 +1,14 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of curve-apps package.
-#
-#  All rights reserved.
-#
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
 from pathlib import Path
 
 import numpy as np
@@ -13,8 +18,8 @@ from geoh5py.objects import Grid2D
 from geoh5py.ui_json import InputFile
 
 from curve_apps import assets_path
-from curve_apps.edge_detection.driver import EdgesDriver
-from curve_apps.edge_detection.params import EdgeParameters
+from curve_apps.edges.driver import EdgesDriver
+from curve_apps.edges.params import EdgeParameters
 
 
 def setup_example(workspace: Workspace):

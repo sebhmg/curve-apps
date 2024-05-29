@@ -1,14 +1,16 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of edge-detection package.
-#
-#  All rights reserved.
-#
-#
-#  This file is part of curve-apps.
-#
-#  curve-apps is distributed under the terms and conditions of the MIT License
-#  (see LICENSE file at the root of this source code package).
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  This file is part of contours package.                                        '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 from __future__ import annotations
 
@@ -73,6 +75,11 @@ class ContoursDriver(BaseCurveDriver):
 
     @staticmethod
     def get_contours(params: ContourParameters):
+        """
+        Calculate contour from source data.
+
+        :param params: Contour parameters
+        """
 
         entity = params.source.objects
         data = params.source.data
@@ -80,6 +87,7 @@ class ContoursDriver(BaseCurveDriver):
         x, y = locations[:, :2].T
         axis = plt.axes()
         if isinstance(entity, Grid2D):
+            # TODO: Replace with scikit-image contour algorithm
             contours = axis.contour(
                 x.reshape(entity.shape, order="F"),
                 y.reshape(entity.shape, order="F"),
@@ -87,6 +95,7 @@ class ContoursDriver(BaseCurveDriver):
                 levels=params.detection.contours,
             )
         else:
+            # TODO: Replace with scikit-image contour algorithm
             contours = axis.tricontour(
                 x,
                 y,

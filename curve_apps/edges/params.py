@@ -1,14 +1,16 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of edge-detection package.
-#
-#  All rights reserved.
-#
-#
-#  This file is part of curve-apps.
-#
-#  curve-apps is distributed under the terms and conditions of the MIT License
-#  (see LICENSE file at the root of this source code package).
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  This file is part of edges package.                                        '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 from __future__ import annotations
 
@@ -71,7 +73,7 @@ class EdgeOutputParameters(BaseModel):
 
 class EdgeParameters(BaseData):
     """
-    Edge detection parameters for use with `edge_detection.driver`.
+    Edge detection parameters for use with `edges.driver`.
 
     :param detection: Detection parameters expected for the edge detection.
     :param source: Parameters for the source object and data.
@@ -81,7 +83,7 @@ class EdgeParameters(BaseData):
     name: ClassVar[str] = "edges"
     default_ui_json: ClassVar[Path] = assets_path() / "uijson/edges.ui.json"
     title: ClassVar[str] = "Edge Detection"
-    run_command: ClassVar[str] = "curve_apps.edge_detection.driver"
+    run_command: ClassVar[str] = "curve_apps.edges.driver"
 
     source: EdgeSourceParameters
     detection: EdgeDetectionParameters
