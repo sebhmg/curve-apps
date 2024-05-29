@@ -17,7 +17,7 @@ import sys
 
 import matplotlib.pyplot as plt
 import numpy as np
-from geoapps.utils.formatters import string_name
+from geoapps_utils.formatters import string_name
 from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
 

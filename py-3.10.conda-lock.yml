@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 19d5a2bb6622f81c89fd229e9006c5d3c72e3e3c3d2bc37ab07751edbe0e811a
-    linux-64: 099c4671adca836b4c064c0fb65837e3175b26ec6bf3bcafdd8eba40ad107601
+    win-64: 020c0e4c7641e04c10273407e4124fc9216e862f0df3b6ec763ce68e89dcfe27
+    linux-64: 03021c1e044623979a2169510ba2971eccb135d3db439b8f650c16f291dcd317
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -4682,12 +4682,12 @@ package:
     numpy: '>=1.23.5,<1.24.0'
     pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/develop.zip
+  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-761.zip
   hash: {}
   category: main
   source:
     type: url
-    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/develop.zip
+    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-761.zip
   optional: false
 - name: geoapps-utils
   version: 0.4.0a1
@@ -4700,12 +4700,12 @@ package:
     numpy: '>=1.23.5,<1.24.0'
     pydantic: '>=2.5.2,<2.6.0'
     scipy: '>=1.10.1,<1.11.0'
-  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/develop.zip
+  url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-761.zip
   hash: {}
   category: main
   source:
     type: url
-    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/develop.zip
+    url: https://github.com/MiraGeoscience/geoapps-utils/archive/refs/heads/GEOPY-761.zip
   optional: false
 - name: geoh5py
   version: 0.10.0a1
