@@ -1,7 +1,7 @@
 #  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
 #                                                                                '
-#  This file is part of edges package.                                        '
+#  This file is part of edges package.                                           '
 #                                                                                '
 #  All rights reserved.                                                          '
 #                                                                                '

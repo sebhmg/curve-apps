@@ -1,17 +1,13 @@
 #  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
 #                                                                                '
-#  This file is part of trend_lines package.                                        '
-#                                                                                '
 #  All rights reserved.                                                          '
-#                                                                                '
 #                                                                                '
 #  This file is part of curve-apps.                                              '
 #                                                                                '
 #  curve-apps is distributed under the terms and conditions of the MIT License   '
 #  (see LICENSE file at the root of this source code package).                   '
 #  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
 
 from __future__ import annotations
 
@@ -22,7 +18,7 @@ from pathlib import Path
 
 from geoapps_utils.driver.data import BaseData
 from geoapps_utils.driver.driver import BaseDriver
-from geoh5py.groups import ContainerGroup
+from geoh5py.groups import UIJsonGroup
 from geoh5py.objects import Curve, ObjectBase
 from geoh5py.shared.utils import fetch_active_workspace
 from geoh5py.ui_json import InputFile
@@ -49,13 +45,16 @@ class BaseCurveDriver(BaseDriver):
         super().__init__(parameters)
 
     @property
-    def out_group(self) -> ContainerGroup | None:
+    def out_group(self) -> UIJsonGroup | None:
         """Output container group."""
 
         if self._out_group is None and self.params.output.out_group is not None:
-            self._out_group = ContainerGroup.create(
+            self._out_group = UIJsonGroup.create(
                 workspace=self.workspace,
                 name=self.params.output.out_group,
+            )
+            self._out_group.options = InputFile.stringify(  # type: ignore
+                InputFile.demote(self.params.input_file.ui_json)
             )
 
         return self._out_group
@@ -68,14 +67,9 @@ class BaseCurveDriver(BaseDriver):
         """
 
         with fetch_active_workspace(self.workspace, mode="r+") as workspace:
-            # with self.workspace.open(mode="r+") as workspace:
-            if self.out_group is not None:
-                curve.parent = self.out_group
-
             self.update_monitoring_directory(
                 curve if self.out_group is None else self.out_group
             )
-
             logger.info(
                 "Curve object '%s' saved to '%s'.",
                 self.params.output.export_as,
@@ -106,7 +100,7 @@ class BaseCurveDriver(BaseDriver):
             raise TypeError("Parameters must be a BaseData subclass.")
         self._params = val
 
-    def add_ui_json(self, entity: ObjectBase | ContainerGroup) -> None:
+    def add_ui_json(self, entity: ObjectBase | UIJsonGroup) -> None:
         """
         Add ui.json file to entity.
 
