@@ -18,10 +18,10 @@ from pathlib import Path
 from typing import ClassVar
 
 import numpy as np
-from geoapps_utils.conversions import string_to_list
 from geoapps_utils.driver.data import BaseData
 from geoh5py.data import Data
 from geoh5py.objects import Curve, Grid2D, Points, Surface
+from geoh5py.ui_json.utils import str2list
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from curve_apps import assets_path
@@ -67,7 +67,7 @@ class ContourDetectionParameters(BaseModel):
             fixed_contours = val
 
         elif isinstance(val, str):
-            fixed_contours = string_to_list(val)
+            fixed_contours = str2list(val)
 
         else:
             raise ValueError(
