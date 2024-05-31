@@ -68,7 +68,7 @@ class ContoursDriver(BaseCurveDriver):
                 parent=self.out_group,
             )
             curve.add_data(
-                {self.params.detection.contour_string: {"values": np.hstack(values)}}
+                {self.params.source.data.name: {"values": np.hstack(values)}}
             )
 
             return curve

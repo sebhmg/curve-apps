@@ -111,34 +111,6 @@ class ContourDetectionParameters(BaseModel):
         contours.sort()
         return contours
 
-    @property
-    def contour_string(self) -> str:
-        """
-        Return a string representation of the merged interval and fixed contours.
-
-        :returns: A string of comma separated contour values.
-        """
-
-        contour_string = ""
-
-        if self.has_intervals:
-            contour_string += (
-                f"{self.interval_min}:{self.interval_max}:{self.interval_spacing}"
-            )
-
-        if self.fixed_contours is not None:
-
-            fixed_contours = str(self.fixed_contours)
-            for char in ["[", "]", " "]:
-                fixed_contours = fixed_contours.replace(char, "")
-
-            if self.has_intervals:
-                fixed_contours = f",{fixed_contours}"
-
-            contour_string += fixed_contours
-
-        return contour_string
-
 
 class ContourOutputParameters(BaseModel):
     """
