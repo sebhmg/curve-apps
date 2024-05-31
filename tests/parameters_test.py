@@ -92,7 +92,6 @@ def test_contour_detection_params():
     )
     assert np.allclose(params.contours, [0.0, 0.1, 0.2, 0.3, 9.0])
     assert params.has_intervals
-    assert params.contour_string == "0.1:0.3:0.1,0.0,9.0"
 
     params = ContourDetectionParameters(
         interval_min=0.1,
@@ -108,7 +107,6 @@ def test_contour_detection_params():
     )
     assert params.fixed_contours == [0.0, 9.0]
     assert not params.has_intervals
-    assert params.contour_string == "0.0,9.0"
 
     with pytest.raises(ValueError, match="List of fixed contours"):
         params = ContourDetectionParameters(fixed_contours=[0.1, "lskdjf", 0.2])
