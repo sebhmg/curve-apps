@@ -74,10 +74,8 @@
     "export_as": {
         "group": "Output",
         "main": true,
-        "optional": true,
-        "enabled": false,
         "label": "Save as",
-        "value": "Contours"
+        "value": "contours"
     },
     "out_group": {
         "group": "Output",

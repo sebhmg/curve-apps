@@ -103,10 +103,8 @@
     },
     "export_as": {
         "main": true,
-        "optional": true,
-        "enabled": false,
         "label": "Save as",
-        "value": "",
+        "value": "trendlines",
         "group": "Output Preferences"
     },
     "out_group": {
