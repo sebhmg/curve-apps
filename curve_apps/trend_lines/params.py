@@ -1,14 +1,16 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of edge-detection package.
-#
-#  All rights reserved.
-#
-#
-#  This file is part of curve-apps.
-#
-#  curve-apps is distributed under the terms and conditions of the MIT License
-#  (see LICENSE file at the root of this source code package).
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  This file is part of trend_lines package.                                     '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 from __future__ import annotations
 
@@ -23,7 +25,7 @@ from pydantic import BaseModel, ConfigDict
 from curve_apps import assets_path
 
 
-class SourceParameters(BaseModel):
+class TrendLineSourceParameters(BaseModel):
     """
     Source parameters expected by the ui.json file format.
 
@@ -39,7 +41,7 @@ class SourceParameters(BaseModel):
     parts: Data | None = None
 
 
-class DetectionParameters(BaseModel):
+class TrendLineDetectionParameters(BaseModel):
     """
     Detection parameters expected by the ui.json file format.
 
@@ -57,9 +59,9 @@ class DetectionParameters(BaseModel):
     max_distance: float | None = None
 
 
-class OutputParameters(BaseModel):
+class TrendLineOutputParameters(BaseModel):
     """
-    Output parameters expected by the ui.json file format.
+    Output parameters.
 
     :param export_as: Name of the output entity.
     :param out_group: Name of the output group.
@@ -69,9 +71,9 @@ class OutputParameters(BaseModel):
     out_group: str | None = "detections"
 
 
-class Parameters(BaseData):
+class TrendLineParameters(BaseData):
     """
-    Parts connection input parameters.
+    Trend lines parameters for use with `trend_lines.driver`.
 
     :param source: Source data parameters.
     :param detection: Trend line detection parameters.
@@ -81,8 +83,8 @@ class Parameters(BaseData):
     name: ClassVar[str] = "trend_lines"
     default_ui_json: ClassVar[Path] = assets_path() / "uijson/trend_lines.ui.json"
     title: ClassVar[str] = "Trend Lines Detection"
-    run_command: ClassVar[str] = "curve_apps.trend_lines.driver"
+    run_command: ClassVar[str] = "curve_apps.trend_line_detection.driver"
 
-    source: SourceParameters
-    detection: DetectionParameters
-    output: OutputParameters
+    source: TrendLineSourceParameters
+    detection: TrendLineDetectionParameters
+    output: TrendLineOutputParameters = TrendLineOutputParameters()

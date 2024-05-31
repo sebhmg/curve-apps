@@ -1,14 +1,16 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of edge-detection package.
-#
-#  All rights reserved.
-#
-#
-#  This file is part of curve-apps.
-#
-#  curve-apps is distributed under the terms and conditions of the MIT License
-#  (see LICENSE file at the root of this source code package).
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  This file is part of trend_lines package.                                     '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 # pylint: disable=duplicate-code
 
@@ -18,13 +20,12 @@ import logging
 import sys
 
 import numpy as np
-from geoh5py.groups import ContainerGroup
 from geoh5py.objects import Curve
 from geoh5py.ui_json import InputFile, utils
 from tqdm import tqdm
 
 from curve_apps.driver import BaseCurveDriver
-from curve_apps.trend_lines.params import Parameters
+from curve_apps.trend_lines.params import TrendLineParameters
 from curve_apps.utils import find_curves
 
 logger = logging.getLogger(__name__)
@@ -37,36 +38,32 @@ class TrendLinesDriver(BaseCurveDriver):
     :param parameters: Application parameters.
     """
 
-    _parameter_class = Parameters
-    _default_name = "Trendlines"
+    _parameter_class = TrendLineParameters
 
-    def __init__(self, parameters: Parameters | InputFile):
+    def __init__(self, parameters: TrendLineParameters | InputFile):
         super().__init__(parameters)
 
-    def create_output(self, name, parent: ContainerGroup | None = None):
-        """
-        Run the application for the detection of curves across an object parts.
+    def make_curve(self):
+        """Make curve object from trend lines detected in source data."""
 
-        :param name: Name of the output object.
-        :param parent: Optional parent group.
-        """
-        with utils.fetch_active_workspace(self.workspace) as workspace:
+        with utils.fetch_active_workspace(self.workspace, mode="r+") as workspace:
+            logging.info("Generating trend lines ...")
             vertices, cells, labels = self.get_connections()
 
             if cells is None:
                 logger.info("No connections found.")
                 return None
 
-            edges = Curve.create(
+            curve = Curve.create(
                 workspace=workspace,
-                name=name,
+                name=self.params.output.export_as,
                 vertices=vertices,
                 cells=cells,
-                parent=parent,
+                parent=self.out_group,
             )
 
-            if edges is not None and self.params.source.data is not None:
-                edges.add_data(
+            if curve is not None and self.params.source.data is not None:
+                curve.add_data(
                     {
                         self.params.source.data.name: {
                             "values": labels,
@@ -76,7 +73,7 @@ class TrendLinesDriver(BaseCurveDriver):
                     }
                 )
 
-        return edges
+        return curve
 
     def get_connections(self) -> tuple:
         """

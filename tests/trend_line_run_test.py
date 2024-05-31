@@ -1,9 +1,13 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of curve-apps package.
-#
-#  All rights reserved.
-#
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 # pylint: disable=duplicate-code
 
@@ -17,7 +21,7 @@ from geoh5py.ui_json import InputFile
 
 from curve_apps import assets_path
 from curve_apps.trend_lines.driver import TrendLinesDriver
-from curve_apps.trend_lines.params import Parameters
+from curve_apps.trend_lines.params import TrendLineParameters
 
 
 def setup_example(workspace: Workspace):
@@ -59,7 +63,7 @@ def test_driver_curve(tmp_path: Path):
     workspace = Workspace.create(tmp_path / "test_trend_lines.geoh5")
 
     curve, data = setup_example(workspace)
-    params = Parameters.build(
+    params = TrendLineParameters.build(
         {
             "geoh5": workspace,
             "entity": curve,
@@ -73,9 +77,10 @@ def test_driver_curve(tmp_path: Path):
 
     with workspace.open():
         edges = workspace.get_entity("test")[0]
-
+        assert edges is not None
+        assert hasattr(edges, "cells")
         assert len(edges.cells) == 27
-
+        assert hasattr(edges, "get_data")
         values = edges.get_data("values")[0]
 
         assert isinstance(values, ReferencedData)
@@ -99,7 +104,7 @@ def test_driver_points(tmp_path: Path):
         )
         new_data = data.copy(parent=points)
 
-    params = Parameters.build(
+    params = TrendLineParameters.build(
         {
             "geoh5": workspace,
             "entity": points,
@@ -114,9 +119,10 @@ def test_driver_points(tmp_path: Path):
 
     with workspace.open():
         edges = workspace.get_entity("test")[0]
-
+        assert edges is not None
+        assert hasattr(edges, "cells")
         assert len(edges.cells) == 27
-
+        assert hasattr(edges, "get_data")
         values = edges.get_data("values")[0]
 
         assert isinstance(values, ReferencedData)
@@ -139,7 +145,7 @@ def test_driver_points_no_parts(tmp_path: Path):
         points = Points.create(workspace, vertices=curve.vertices)
         new_data = data.copy(parent=points)
 
-    params = Parameters.build(
+    params = TrendLineParameters.build(
         {
             "geoh5": workspace,
             "entity": points,
@@ -153,9 +159,10 @@ def test_driver_points_no_parts(tmp_path: Path):
 
     with workspace.open():
         edges = workspace.get_entity("test")[0]
-
+        assert edges is not None
+        assert hasattr(edges, "cells")
         assert len(edges.cells) == 27
-
+        assert hasattr(edges, "get_data")
         values = edges.get_data("values")[0]
 
         assert isinstance(values, ReferencedData)
@@ -172,7 +179,7 @@ def test_azimuth_filter(tmp_path: Path):
         points = Points.create(workspace, vertices=curve.vertices)
         new_data = data.copy(parent=points)
 
-    params = Parameters.build(
+    params = TrendLineParameters.build(
         {
             "geoh5": workspace,
             "entity": points,
@@ -188,7 +195,8 @@ def test_azimuth_filter(tmp_path: Path):
 
     with workspace.open():
         edges = workspace.get_entity("test")[0]
-
+        assert edges is not None
+        assert hasattr(edges, "cells")
         assert len(edges.cells) == 9
 
 
@@ -216,5 +224,5 @@ def test_input_file(tmp_path: Path):
     with workspace.open():
         edges = workspace.get_entity("square")[0]
         assert edges is not None
-
+        assert hasattr(edges, "children")
         assert any(child for child in edges.children if isinstance(child, FilenameData))

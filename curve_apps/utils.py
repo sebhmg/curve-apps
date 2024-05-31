@@ -1,22 +1,113 @@
-#  Copyright (c) 2024 Mira Geoscience Ltd.
-#
-#  This file is part of edge-detection package.
-#
-#  All rights reserved.
-#
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
+#                                                                                '
+#  All rights reserved.                                                          '
+#                                                                                '
+#  This file is part of curve-apps.                                              '
+#                                                                                '
+#  curve-apps is distributed under the terms and conditions of the MIT License   '
+#  (see LICENSE file at the root of this source code package).                   '
+#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 from __future__ import annotations
 
+import re
+
 import numpy as np
+from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
+from matplotlib.contour import ContourSet
+from scipy.interpolate import LinearNDInterpolator
 from scipy.spatial import Delaunay
 
-from curve_apps.trend_lines.params import DetectionParameters
+from curve_apps.contours.params import ContourDetectionParameters
+from curve_apps.trend_lines.params import TrendLineDetectionParameters
+
+
+def extract_data(contours: ContourSet) -> tuple[list, list, list]:
+    """
+    Return vertices, cells, values array representations of the contour set.
+
+    :param contours: Object returned from matplotlib.axes.contour.
+
+    :returns: Tuple of vertices, cells, values.
+    """
+    vertices, cells, values = [], [], []
+    count = 0
+    for segs, level in zip(contours.allsegs, contours.levels):
+        for poly in segs:
+            n_v = len(poly)
+            vertices.append(poly)
+            cells.append(
+                np.c_[
+                    np.arange(count, count + n_v - 1),
+                    np.arange(count + 1, count + n_v),
+                ]
+            )
+            values.append(np.ones(n_v) * level)
+            count += n_v
+
+    return vertices, cells, values
+
+
+def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
+    """
+    Uses entity z values to add height column to an Nx2 vertices array.
+
+    :param vertices: Nx2 array of vertices.
+    :param entity: geoh5py entity with vertices property.
+
+    returns: Nx3 array of vertices.
+    """
+    if isinstance(entity, (Points, Curve, Surface)):
+        if entity.vertices is None:
+            raise ValueError("Entity does not have vertices.")
+        z_interp = LinearNDInterpolator(entity.vertices[:, :2], entity.vertices[:, 2])
+        vertices = np.c_[vertices, z_interp(vertices)]
+    elif isinstance(entity, Grid2D):
+        vertices = np.c_[
+            vertices,
+            np.ones(vertices.shape[0]) * entity.origin["z"],
+        ]
+
+    return vertices
+
+
+def get_contour_list(params: ContourDetectionParameters) -> list[float]:
+    """
+    Compute contours requested by input parameters.
+
+    :returns: Corresponding list of values in float format.
+    """
+
+    if (
+        None not in [params.interval_min, params.interval_max, params.interval_spacing]
+        and params.interval_spacing != 0
+    ):
+        interval_contours = np.arange(
+            params.interval_min,
+            params.interval_max + params.interval_spacing,  # type: ignore
+            params.interval_spacing,
+        ).tolist()
+    else:
+        interval_contours = []
+
+    if params.fixed_contours != "" and params.fixed_contours is not None:
+        if isinstance(params.fixed_contours, str):
+            fixed_contours = re.split(",", params.fixed_contours.replace(" ", ""))
+            fixed_contours = [float(c) for c in fixed_contours]
+        elif isinstance(params.fixed_contours, float):
+            fixed_contours = [params.fixed_contours]
+    else:
+        fixed_contours = []  # type: ignore
+
+    contours = np.unique(np.sort(interval_contours + fixed_contours)).tolist()
+    return contours
 
 
 def find_curves(
     vertices: np.ndarray,
     parts: np.ndarray,
-    params: DetectionParameters = DetectionParameters(),
+    params: TrendLineDetectionParameters = TrendLineDetectionParameters(),
 ) -> list[list[list[float]]]:
     """
     Find curves in a set of points.
