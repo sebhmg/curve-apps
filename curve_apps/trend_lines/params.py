@@ -84,6 +84,7 @@ class TrendLineParameters(BaseData):
     default_ui_json: ClassVar[Path] = assets_path() / "uijson/trend_lines.ui.json"
     title: ClassVar[str] = "Trend Lines Detection"
     run_command: ClassVar[str] = "curve_apps.trend_line_detection.driver"
+    conda_environment: ClassVar[str] = "curve-apps"
 
     source: TrendLineSourceParameters
     detection: TrendLineDetectionParameters
