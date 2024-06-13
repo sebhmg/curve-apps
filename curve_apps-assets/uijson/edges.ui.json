@@ -2,7 +2,7 @@
     "version": "0.1.0",
     "title": "Edge Detection",
     "conda_environment": "curve_apps",
-    "run_command": "curve_apps.edge_detection.driver",
+    "run_command": "curve_apps.edges.driver",
     "geoh5": "",
     "monitoring_directory": "",
     "workspace_geoh5": "",
