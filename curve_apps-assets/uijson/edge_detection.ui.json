@@ -1,0 +1,107 @@
+{
+    "version": "0.1.0",
+    "title": "Edge Detection",
+    "conda_environment": "curve_apps",
+    "run_command": "curve_apps.edge_detection.driver",
+    "geoh5": "",
+    "monitoring_directory": "",
+    "workspace_geoh5": "",
+    "conda_environment_boolean": false,
+    "objects": {
+        "group": "Data Selection",
+        "meshType": [
+            "{48f5054a-1c5c-4ca4-9048-80f36dc60a06}"
+        ],
+        "main": true,
+        "label": "Object",
+        "value": ""
+    },
+    "data": {
+        "group": "Data Selection",
+        "main": true,
+        "association": [
+            "Cell"
+        ],
+        "dataType": "Float",
+        "label": "Data",
+        "parent": "objects",
+        "value": ""
+    },
+    "line_length": {
+        "group": "Detection Parameters",
+        "main": true,
+        "label": "Line length (pixels)",
+        "min": 1,
+        "max": 100,
+        "value": 12,
+        "tooltip": "The minimum length of a line segment."
+    },
+    "line_gap": {
+        "group": "Detection Parameters",
+        "main": true,
+        "label": "Line gap (pixels)",
+        "min": 1,
+        "max": 100,
+        "value": 1,
+        "tooltip": "The maximum gap between two pixels to be considered connected."
+    },
+    "sigma": {
+        "group": "Detection Parameters",
+        "main": true,
+        "label": "Sigma",
+        "value": 1.0,
+        "min": 0.0,
+        "precision": 1,
+        "lineEdit": true,
+        "max": 10.0,
+        "tooltip": "Standard deviation of the Gaussian filter used to smooth the data."
+    },
+    "threshold": {
+        "group": "Detection Parameters",
+        "main": true,
+        "label": "Threshold",
+        "min": 1,
+        "max": 100,
+        "precision": 1,
+        "lineEdit": true,
+        "value": 1.0,
+        "tooltip": "Threshold value for edge detection."
+    },
+    "window_size": {
+        "group": "Detection Parameters",
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Window Size (pixels)",
+        "min": 16,
+        "max": 512,
+        "value": 64,
+        "tooltip": "The size of the moving window used to compute edges. Smaller values will result in more detailed edges, but may be more sensitive to noise."
+    },
+    "merge_length": {
+        "group": "Detection Parameters",
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Merge Length (m)",
+        "min": 0,
+        "value": 100.0,
+        "tooltip": "If the distance between two nodes is less than this value, the nodes will be merged."
+    },
+    "export_as": {
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Save as",
+        "value": "",
+        "group": "Output Preferences"
+    },
+    "out_group": {
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Group",
+        "value": "",
+        "group": "Output Preferences"
+    }
+}

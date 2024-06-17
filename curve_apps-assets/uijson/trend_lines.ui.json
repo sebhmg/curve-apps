@@ -1,0 +1,120 @@
+{
+    "version": "0.1.0",
+    "title": "Trend Lines",
+    "conda_environment": "curve_apps",
+    "run_command": "curve_apps.trend_lines.driver",
+    "geoh5": "",
+    "monitoring_directory": "",
+    "workspace_geoh5": "",
+    "conda_environment_boolean": false,
+    "entity": {
+        "group": "Data Selection",
+        "meshType": [
+            "{6A057FDC-B355-11E3-95BE-FD84A7FFCB88}",
+            "{202c5db1-a56d-4004-9cad-baafd8899406}"
+        ],
+        "main": true,
+        "label": "Object",
+        "value": ""
+    },
+    "data": {
+        "group": "Data Selection",
+        "main": true,
+        "association": [
+            "Vertex"
+        ],
+        "optional": true,
+        "enabled": false,
+        "dataType": "Referenced",
+        "label": "Data",
+        "parent": "entity",
+        "value": ""
+    },
+    "parts": {
+        "group": "Connection Filters",
+        "main": true,
+        "association": [
+            "Vertex"
+        ],
+        "optional": true,
+        "enabled": false,
+        "label": "Parts",
+        "dataType": [
+            "Referenced",
+            "Float",
+            "Integer"
+        ],
+        "parent": "entity",
+        "tooltip": "Optional parts field to connect",
+        "value": ""
+    },
+    "min_edges": {
+        "group": "Connection Filters",
+        "main": true,
+        "label": "Minimum edges",
+        "min": 1,
+        "value": 1,
+        "enabled": true
+    },
+    "max_distance": {
+        "group": "Connection Filters",
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Maximum distance:",
+        "min": 1,
+        "value": 1
+    },
+    "damping": {
+        "group": "Connection Filters",
+        "main": true,
+        "label": "Damping factor:",
+        "value": 1.0,
+        "min": 0.0,
+        "precision": 2,
+        "lineEdit": true,
+        "max": 0.99,
+        "enabled": true
+    },
+    "azimuth": {
+        "group": "Orientation filter",
+        "main": true,
+        "label": "Azimuth (dd.dd)",
+        "value": 0.0,
+        "min": 0.0,
+        "precision": 2,
+        "lineEdit": true,
+        "groupOptional": true,
+        "max": 360,
+        "optional": true,
+        "enabled": false
+    },
+    "azimuth_tol": {
+        "group": "Orientation filter",
+        "main": true,
+        "label": "Tolerance (dd.dd)",
+        "value": 30.0,
+        "min": 1.0,
+        "precision": 2,
+        "lineEdit": true,
+        "max": 360,
+        "optional": true,
+        "enabled": false
+    },
+    "export_as": {
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Save as",
+        "value": "",
+        "group": "Output Preferences"
+    },
+    "out_group": {
+        "main": true,
+        "optional": true,
+        "enabled": false,
+        "label": "Group",
+        "value": "",
+        "group": "Output Preferences"
+    }
+}

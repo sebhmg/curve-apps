@@ -1,11 +1,11 @@
-#  Copyright (c) 2023 Mira Geoscience Ltd.
+#  Copyright (c) 2024 Mira Geoscience Ltd.
 #
-#  This file is part of edge-detection package.
+#  This file is part of curve-apps package.
 #
 #  All rights reserved.
 #
 
-from edge_detection import assets_path
+from curve_apps import assets_path
 
 
 def test_assets_directory_exist():
