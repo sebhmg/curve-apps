@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-__version__ = "0.1.0-rc.3"
+__version__ = "0.1.0"
 
 
 def assets_path() -> Path:
