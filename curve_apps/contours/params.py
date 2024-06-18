@@ -142,7 +142,6 @@ class ContourParameters(BaseData):
     name: ClassVar[str] = "contours"
     default_ui_json: ClassVar[Path] = assets_path() / "uijson/contours.ui.json"
     title: ClassVar[str] = "Contour Detection"
-    conda_environment: ClassVar[str] = "curve_apps"
     run_command: ClassVar[str] = "curve_apps.contour_detection.driver"
 
     source: ContourSourceParameters
