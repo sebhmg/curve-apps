@@ -14,6 +14,7 @@ from __future__ import annotations
 import re
 
 import numpy as np
+from geoapps_utils.numerical import weighted_average
 from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
 from matplotlib.contour import ContourSet
 from scipy.interpolate import LinearNDInterpolator
@@ -21,6 +22,43 @@ from scipy.spatial import Delaunay
 
 from curve_apps.contours.params import ContourDetectionParameters
 from curve_apps.trend_lines.params import TrendLineDetectionParameters
+
+
+def interp_to_grid(
+    entity: ObjectBase, values: np.ndarray, resolution, max_distance
+) -> tuple[list[np.ndarray], np.ndarray]:
+    """
+    Interpolate values into a regular grid based on entity locations.
+
+    :param entity: Geoh5py object with locations data.
+    :param values: Data to be interpolated to grid.
+    :param resolution: Grid resolution
+    :param max_distance: Maximum distance used in weighted average.
+    """
+
+    grid = []
+    for i in np.arange(2):
+        grid += [
+            np.arange(
+                entity.locations[:, i].min(),
+                entity.locations[:, i].max() + resolution,
+                resolution,
+            )
+        ]
+
+    x, y = np.meshgrid(grid[0], grid[1])
+    z = np.zeros_like(x)
+    values = weighted_average(
+        entity.locations,
+        np.c_[x.flatten(), y.flatten(), z.flatten()],
+        [values],
+        threshold=resolution / 2.0,
+        n=8,
+        max_distance=max_distance,
+    )
+    values = values[0].reshape(x.shape)
+
+    return grid, values
 
 
 def extract_data(contours: ContourSet) -> tuple[list, list, list]:
