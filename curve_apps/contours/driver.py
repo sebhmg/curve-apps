@@ -61,19 +61,12 @@ class ContoursDriver(BaseCurveDriver):
             vertices, edges, values = ContoursDriver.get_contours(
                 grid, data, self.params.detection.contours
             )
-            if len(vertices) > 0:
-                locations = vertices
-                if self.params.output.z_value:
-                    locations = np.c_[locations, values]
-                else:
-                    locations = set_vertices_height(
-                        locations, self.params.source.objects
-                    )
+
+            locations = vertices
+            if self.params.output.z_value:
+                locations = np.c_[locations, values]
             else:
-                raise ValueError(
-                    "No contours detected. Check that the requested contour "
-                    "values are within the bounds of the data."
-                )
+                locations = set_vertices_height(locations, self.params.source.objects)
 
             curve = Curve.create(
                 self.workspace,
@@ -122,6 +115,12 @@ class ContoursDriver(BaseCurveDriver):
                 edges.append(segment_edges)
                 values.append([contour] * nv)
                 v0 += nv
+
+        if not vertices:
+            raise ValueError(
+                "No contours detected. Check that the requested contour "
+                "values are within the bounds of the data."
+            )
 
         return (
             np.vstack(vertices),
