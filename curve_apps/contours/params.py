@@ -49,12 +49,16 @@ class ContourDetectionParameters(BaseModel):
     :param interval_max: Maximum value for contours.
     :param interval_spacing: Step size for contours.
     :param fixed_contours: String defining list of fixed contours.
+    :param max_distance: Maximum distance for interpolation.
+    :param resolution: Resolution of underlying grid.
     """
 
     interval_min: float | None = None
     interval_max: float | None = None
     interval_spacing: float | None = None
     fixed_contours: list[float] | None = None
+    max_distance: float = 500.0
+    resolution: float = 50.0
 
     @field_validator("fixed_contours", mode="before")
     @classmethod
@@ -138,6 +142,7 @@ class ContourParameters(BaseData):
     name: ClassVar[str] = "contours"
     default_ui_json: ClassVar[Path] = assets_path() / "uijson/contours.ui.json"
     title: ClassVar[str] = "Contour Detection"
+    conda_environment: ClassVar[str] = "curve_apps"
     run_command: ClassVar[str] = "curve_apps.contour_detection.driver"
 
     source: ContourSourceParameters
