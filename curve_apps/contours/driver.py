@@ -110,7 +110,7 @@ class ContoursDriver(BaseCurveDriver):
             for coord in coords:
                 segment_vertices = interp(coord[:, 1], coord[:, 0])
                 nv = len(segment_vertices)
-                segment_edges = np.c_[np.arange(nv-1),  np.arange(1, nv)] + v0
+                segment_edges = np.c_[np.arange(nv - 1), np.arange(1, nv)] + v0
                 vertices.append(segment_vertices)
                 edges.append(segment_edges)
                 values.append([contour] * nv)
