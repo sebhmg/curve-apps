@@ -45,7 +45,7 @@ python = "^3.9, <3.11"
 numpy = "~1.23.5"  # also in geoh5py
 pydantic = "~2.5.2"
 scikit-image = "~0.20.0"
-scipy = "~1.10.1"
+scipy = "~1.13"
 tqdm = "~4.66.1"
 matplotlib = "~3.7.1"
 
@@ -62,7 +62,7 @@ geoapps-utils = {url = "https://github.com/MiraGeoscience/geoapps-utils/archive/
 ## indirect dependencies, forcing them here for installation through Conda not pip
 #---------------------------------------------------------------------------------
 h5py = "^3.2.1"  # from geoh5py
-Pillow = "~10.1.0"  # from geoh5py
+Pillow = "~10.3.0"  # from geoh5py
 
 # pin down package versions when Conda is behind PyPI
 #----------------------------------------------------
