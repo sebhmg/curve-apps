@@ -25,7 +25,7 @@ from curve_apps.trend_lines.params import TrendLineDetectionParameters
 
 
 def interp_to_grid(
-    entity: ObjectBase, values: np.ndarray, resolution, max_distance
+    entity: ObjectBase, values: np.ndarray, resolution: float, max_distance: float
 ) -> tuple[list[np.ndarray], np.ndarray]:
     """
     Interpolate values into a regular grid based on entity locations.
