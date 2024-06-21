@@ -57,8 +57,12 @@ class ContoursDriver(BaseCurveDriver):
             data = self.params.source.data
 
             if isinstance(self.params.source.objects, Grid2D):
-                x_grid = entity.origin["x"] + (entity.u_cell_size * np.arange(entity.shape[0]))
-                y_grid = entity.origin["y"] + (entity.v_cell_size * np.arange(entity.shape[1]))
+                x_grid = entity.origin["x"] + (
+                    entity.u_cell_size * np.arange(entity.shape[0])
+                )
+                y_grid = entity.origin["y"] + (
+                    entity.v_cell_size * np.arange(entity.shape[1])
+                )
                 grid = [x_grid, y_grid]
                 data = data.values.reshape(entity.shape[::-1], order="C")
 
@@ -70,18 +74,15 @@ class ContoursDriver(BaseCurveDriver):
                     self.params.detection.max_distance,
                 )
 
-            vertices, edges, values = ContoursDriver.get_contours(
+            locations, edges, values = ContoursDriver.get_contours(
                 grid, data, self.params.detection.contours
             )
 
             if isinstance(entity, Grid2D):
-                vertices = rotate_xyz(
-                    vertices,
-                    center=entity.origin.tolist(),
-                    theta=entity.rotation
+                locations = rotate_xyz(
+                    locations, center=entity.origin.tolist(), theta=entity.rotation
                 )
 
-            locations = vertices
             if self.params.output.z_value:
                 locations = np.c_[locations, values]
             else:

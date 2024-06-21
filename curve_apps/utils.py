@@ -56,7 +56,7 @@ def interp_to_grid(
         n=8,
         max_distance=max_distance,
     )
-    values = values[0].reshape(x.shape, order="F")
+    values = values[0].reshape(x.shape)
 
     return grid, values
 
@@ -99,7 +99,11 @@ def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
     if isinstance(entity, (Points, Curve, Surface)):
         if entity.vertices is None:
             raise ValueError("Entity does not have vertices.")
-        z_interp = LinearNDInterpolator(entity.vertices[:, :2], entity.vertices[:, 2])
+        z_interp = LinearNDInterpolator(
+            entity.vertices[:, :2],
+            entity.vertices[:, 2],
+            fill_value=np.mean(entity.vertices[:, 2]),
+        )
         vertices = np.c_[vertices, z_interp(vertices)]
     elif isinstance(entity, Grid2D):
         vertices = np.c_[

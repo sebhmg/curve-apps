@@ -56,9 +56,9 @@ def test_driver(tmp_path):
 def test_image_to_grid():
     x = np.linspace(0, 10, 21)
     y = np.linspace(0, 20, 11)
-    x_grid, y_grid = np.meshgrid(x, y)
+    x_grid, _ = np.meshgrid(x, y)
 
-    interp = ContoursDriver.image_to_grid(x_grid, [x_grid, y_grid])
+    interp = ContoursDriver.image_to_grid(x_grid, [x, y])
     assert np.allclose(interp(0, 0), [0, 0])
     assert np.allclose(interp(20, 10), [10, 20])
     assert np.allclose(interp(10, 5), [5, 10])
