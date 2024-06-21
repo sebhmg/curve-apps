@@ -20,7 +20,8 @@ from collections.abc import Callable
 
 import numpy as np
 from geoapps_utils.formatters import string_name
-from geoh5py.objects import Curve
+from geoapps_utils.transformations import rotate_xyz
+from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
 from scipy.interpolate import interp1d
 from skimage import measure
@@ -51,16 +52,34 @@ class ContoursDriver(BaseCurveDriver):
 
         with utils.fetch_active_workspace(self.workspace, mode="r+"):
             logger.info("Generating contours ...")
-            grid, data = interp_to_grid(
-                self.params.source.objects,
-                self.params.source.data.values,
-                self.params.detection.resolution,
-                self.params.detection.max_distance,
-            )
+
+            entity = self.params.source.objects
+            data = self.params.source.data
+
+            if isinstance(self.params.source.objects, Grid2D):
+                x_grid = entity.origin["x"] + (entity.u_cell_size * np.arange(entity.shape[0]))
+                y_grid = entity.origin["y"] + (entity.v_cell_size * np.arange(entity.shape[1]))
+                grid = [x_grid, y_grid]
+                data = data.values.reshape(entity.shape[::-1], order="C")
+
+            else:
+                grid, data = interp_to_grid(
+                    self.params.source.objects,
+                    self.params.source.data.values,
+                    self.params.detection.resolution,
+                    self.params.detection.max_distance,
+                )
 
             vertices, edges, values = ContoursDriver.get_contours(
                 grid, data, self.params.detection.contours
             )
+
+            if isinstance(entity, Grid2D):
+                vertices = rotate_xyz(
+                    vertices,
+                    center=entity.origin.tolist(),
+                    theta=entity.rotation
+                )
 
             locations = vertices
             if self.params.output.z_value:
@@ -103,7 +122,7 @@ class ContoursDriver(BaseCurveDriver):
         v0 = 0
         for contour in contour_list:
 
-            coords = measure.find_contours(data, contour, fully_connected="low")
+            coords = measure.find_contours(data, contour)
             if not coords:
                 continue
 
@@ -129,16 +148,16 @@ class ContoursDriver(BaseCurveDriver):
         )
 
     @staticmethod
-    def image_to_grid(image, grid) -> Callable:
+    def image_to_grid(image: np.ndarray, grid: list[np.ndarray]) -> Callable:
         """
         Returns a function to interpolate from image to grid coordinates.
 
         :param grid: list of x and y grids.
         """
-        col = np.arange(image.shape[1])
         row = np.arange(image.shape[0])
-        x_interp = interp1d(col, np.unique(grid[0]))
-        y_interp = interp1d(row, np.unique(grid[1]))
+        col = np.arange(image.shape[1])
+        x_interp = interp1d(col, grid[0])
+        y_interp = interp1d(row, grid[1])
 
         def interpolator(col, row):
             return np.c_[x_interp(col), y_interp(row)]

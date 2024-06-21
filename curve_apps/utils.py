@@ -37,11 +37,11 @@ def interp_to_grid(
     """
 
     grid = []
-    for i in np.arange(2):
+    for dim in np.arange(2):
         grid += [
             np.arange(
-                entity.locations[:, i].min(),
-                entity.locations[:, i].max() + resolution,
+                entity.locations[:, dim].min(),
+                entity.locations[:, dim].max() + resolution,
                 resolution,
             )
         ]
@@ -56,7 +56,7 @@ def interp_to_grid(
         n=8,
         max_distance=max_distance,
     )
-    values = values[0].reshape(x.shape)
+    values = values[0].reshape(x.shape, order="F")
 
     return grid, values
 
