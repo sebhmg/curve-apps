@@ -165,37 +165,6 @@ class ContoursDriver(BaseCurveDriver):
 
         return interpolator
 
-    # @staticmethod
-    # def get_contours(params: ContourParameters):
-    #     """
-    #     Calculate contour from source data.
-    #
-    #     :param params: Contour parameters
-    #     """
-    #
-    #     entity = params.source.objects
-    #     data = params.source.data
-    #     locations = entity.locations
-    #     x, y = locations[:, :2].T
-    #     axis = plt.axes()
-    #     if isinstance(entity, Grid2D):
-    #         # TODO: Replace with scikit-image contour algorithm
-    #         contours = axis.contour(
-    #             x.reshape(entity.shape, order="F"),
-    #             y.reshape(entity.shape, order="F"),
-    #             data.values.reshape(entity.shape, order="F"),
-    #             levels=params.detection.contours,
-    #         )
-    #     else:
-    #         # TODO: Replace with scikit-image contour algorithm
-    #         contours = axis.tricontour(
-    #             x,
-    #             y,
-    #             data.values,
-    #             levels=params.detection.contours,
-    #         )
-    #     return contours
-
 
 if __name__ == "__main__":
     file = sys.argv[1]
