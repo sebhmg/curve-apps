@@ -17,7 +17,6 @@ from collections.abc import Callable
 import numpy as np
 from geoapps_utils.numerical import weighted_average
 from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
-from matplotlib.contour import ContourSet
 from scipy.interpolate import LinearNDInterpolator, interp1d
 from scipy.spatial import Delaunay
 
@@ -79,32 +78,6 @@ def interp_to_grid(
     values = values[0].reshape(x.shape)
 
     return grid, values
-
-
-def extract_data(contours: ContourSet) -> tuple[list, list, list]:
-    """
-    Return vertices, cells, values array representations of the contour set.
-
-    :param contours: Object returned from matplotlib.axes.contour.
-
-    :returns: Tuple of vertices, cells, values.
-    """
-    vertices, cells, values = [], [], []
-    count = 0
-    for segs, level in zip(contours.allsegs, contours.levels):
-        for poly in segs:
-            n_v = len(poly)
-            vertices.append(poly)
-            cells.append(
-                np.c_[
-                    np.arange(count, count + n_v - 1),
-                    np.arange(count + 1, count + n_v),
-                ]
-            )
-            values.append(np.ones(n_v) * level)
-            count += n_v
-
-    return vertices, cells, values
 
 
 def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):

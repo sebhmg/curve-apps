@@ -9,33 +9,17 @@
 #  (see LICENSE file at the root of this source code package).                   '
 #  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pytest
-from geoh5py.objects import Curve, Grid2D, Points
+from geoh5py.objects import Grid2D, Points
 from geoh5py.workspace import Workspace
 
 from curve_apps.trend_lines.params import TrendLineDetectionParameters
 from curve_apps.utils import (
-    extract_data,
     filter_segments_orientation,
     find_curves,
     set_vertices_height,
 )
-
-
-def test_extract_data(tmp_path):
-    ws = Workspace(tmp_path / "test.geoh5")
-    x = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
-    y = np.linspace(-0.5 * np.pi, 0.5 * np.pi, 20)
-    x_grid, y_grid = np.meshgrid(x, y)
-    z_grid = np.cos(x_grid) * np.cos(y_grid)
-    _, ax = plt.subplots()
-    contour = ax.contour(x_grid, y_grid, z_grid, levels=1)
-    vertices, cells, values = extract_data(contour)
-    vertices = np.c_[np.vstack(vertices), np.zeros(len(vertices[0]))]
-    Curve.create(ws, vertices=vertices, cells=cells, name="my curve")
-    assert all(values[0] == 0.5)
 
 
 def test_set_vertices_height(tmp_path):
