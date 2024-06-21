@@ -15,6 +15,7 @@ from geoh5py.objects import Points
 
 from curve_apps.contours.driver import ContoursDriver
 from curve_apps.contours.params import ContourParameters
+from curve_apps.utils import image_to_grid_coordinate_transfer
 
 
 def get_contour_data(tmp_path):
@@ -58,7 +59,7 @@ def test_image_to_grid():
     y = np.linspace(0, 20, 11)
     x_grid, _ = np.meshgrid(x, y)
 
-    interp = ContoursDriver.image_to_grid(x_grid, [x, y])
+    interp = image_to_grid_coordinate_transfer(x_grid, [x, y])
     assert np.allclose(interp(0, 0), [0, 0])
     assert np.allclose(interp(20, 10), [10, 20])
     assert np.allclose(interp(10, 5), [5, 10])

@@ -12,16 +12,36 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 
 import numpy as np
 from geoapps_utils.numerical import weighted_average
 from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
 from matplotlib.contour import ContourSet
-from scipy.interpolate import LinearNDInterpolator
+from scipy.interpolate import LinearNDInterpolator, interp1d
 from scipy.spatial import Delaunay
 
 from curve_apps.contours.params import ContourDetectionParameters
 from curve_apps.trend_lines.params import TrendLineDetectionParameters
+
+
+def image_to_grid_coordinate_transfer(
+    image: np.ndarray, grid: list[np.ndarray]
+) -> Callable:
+    """
+    Returns a function to interpolate from image to grid coordinates.
+
+    :param grid: list of x and y grids.
+    """
+    row = np.arange(image.shape[0])
+    col = np.arange(image.shape[1])
+    x_interp = interp1d(col, grid[0])
+    y_interp = interp1d(row, grid[1])
+
+    def interpolator(col, row):
+        return np.c_[x_interp(col), y_interp(row)]
+
+    return interpolator
 
 
 def interp_to_grid(

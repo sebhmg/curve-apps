@@ -16,19 +16,21 @@ from __future__ import annotations
 
 import logging
 import sys
-from collections.abc import Callable
 
 import numpy as np
 from geoapps_utils.formatters import string_name
 from geoapps_utils.transformations import rotate_xyz
 from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
-from scipy.interpolate import interp1d
 from skimage import measure
 
 from curve_apps.contours.params import ContourParameters
 from curve_apps.driver import BaseCurveDriver
-from curve_apps.utils import interp_to_grid, set_vertices_height
+from curve_apps.utils import (
+    image_to_grid_coordinate_transfer,
+    interp_to_grid,
+    set_vertices_height,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -118,7 +120,7 @@ class ContoursDriver(BaseCurveDriver):
         :param contour_list: list of contour values.
         """
 
-        interp = ContoursDriver.image_to_grid(data, grid)
+        interp = image_to_grid_coordinate_transfer(data, grid)
         vertices, edges, values = [], [], []
         v0 = 0
         for contour in contour_list:
@@ -147,23 +149,6 @@ class ContoursDriver(BaseCurveDriver):
             np.vstack(edges).astype("uint32"),
             np.hstack(values),
         )
-
-    @staticmethod
-    def image_to_grid(image: np.ndarray, grid: list[np.ndarray]) -> Callable:
-        """
-        Returns a function to interpolate from image to grid coordinates.
-
-        :param grid: list of x and y grids.
-        """
-        row = np.arange(image.shape[0])
-        col = np.arange(image.shape[1])
-        x_interp = interp1d(col, grid[0])
-        y_interp = interp1d(row, grid[1])
-
-        def interpolator(col, row):
-            return np.c_[x_interp(col), y_interp(row)]
-
-        return interpolator
 
 
 if __name__ == "__main__":
