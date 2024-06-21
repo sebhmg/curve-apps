@@ -12,41 +12,72 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 
 import numpy as np
+from geoapps_utils.numerical import weighted_average
 from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
-from matplotlib.contour import ContourSet
-from scipy.interpolate import LinearNDInterpolator
+from scipy.interpolate import LinearNDInterpolator, interp1d
 from scipy.spatial import Delaunay
 
 from curve_apps.contours.params import ContourDetectionParameters
 from curve_apps.trend_lines.params import TrendLineDetectionParameters
 
 
-def extract_data(contours: ContourSet) -> tuple[list, list, list]:
+def image_to_grid_coordinate_transfer(
+    image: np.ndarray, grid: list[np.ndarray]
+) -> Callable:
     """
-    Return vertices, cells, values array representations of the contour set.
+    Returns a function to interpolate from image to grid coordinates.
 
-    :param contours: Object returned from matplotlib.axes.contour.
-
-    :returns: Tuple of vertices, cells, values.
+    :param grid: list of x and y grids.
     """
-    vertices, cells, values = [], [], []
-    count = 0
-    for segs, level in zip(contours.allsegs, contours.levels):
-        for poly in segs:
-            n_v = len(poly)
-            vertices.append(poly)
-            cells.append(
-                np.c_[
-                    np.arange(count, count + n_v - 1),
-                    np.arange(count + 1, count + n_v),
-                ]
+    row = np.arange(image.shape[0])
+    col = np.arange(image.shape[1])
+    x_interp = interp1d(col, grid[0])
+    y_interp = interp1d(row, grid[1])
+
+    def interpolator(col, row):
+        return np.c_[x_interp(col), y_interp(row)]
+
+    return interpolator
+
+
+def interp_to_grid(
+    entity: ObjectBase, values: np.ndarray, resolution: float, max_distance: float
+) -> tuple[list[np.ndarray], np.ndarray]:
+    """
+    Interpolate values into a regular grid based on entity locations.
+
+    :param entity: Geoh5py object with locations data.
+    :param values: Data to be interpolated to grid.
+    :param resolution: Grid resolution
+    :param max_distance: Maximum distance used in weighted average.
+    """
+
+    grid = []
+    for dim in np.arange(2):
+        grid += [
+            np.arange(
+                entity.locations[:, dim].min(),
+                entity.locations[:, dim].max() + resolution,
+                resolution,
             )
-            values.append(np.ones(n_v) * level)
-            count += n_v
+        ]
 
-    return vertices, cells, values
+    x, y = np.meshgrid(grid[0], grid[1])
+    z = np.zeros_like(x)
+    values = weighted_average(
+        entity.locations,
+        np.c_[x.flatten(), y.flatten(), z.flatten()],
+        [values],
+        threshold=resolution / 2.0,
+        n=8,
+        max_distance=max_distance,
+    )
+    values = values[0].reshape(x.shape)
+
+    return grid, values
 
 
 def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
@@ -61,7 +92,11 @@ def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
     if isinstance(entity, (Points, Curve, Surface)):
         if entity.vertices is None:
             raise ValueError("Entity does not have vertices.")
-        z_interp = LinearNDInterpolator(entity.vertices[:, :2], entity.vertices[:, 2])
+        z_interp = LinearNDInterpolator(
+            entity.vertices[:, :2],
+            entity.vertices[:, 2],
+            fill_value=np.mean(entity.vertices[:, 2]),
+        )
         vertices = np.c_[vertices, z_interp(vertices)]
     elif isinstance(entity, Grid2D):
         vertices = np.c_[

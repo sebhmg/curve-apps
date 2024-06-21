@@ -65,6 +65,18 @@
         "optional": true,
         "enabled": false
     },
+    "max_distance": {
+        "enabled": true,
+        "label": "Max Interpolation Distance (m)",
+        "main": true,
+        "value": 500.0
+    },
+    "resolution": {
+        "enabled": true,
+        "label": "Base grid resolution (m)",
+        "main": true,
+        "value": 50.0
+    },
     "z_value": {
         "group": "Output",
         "main": true,
