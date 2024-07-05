@@ -15,8 +15,8 @@
 version: 1
 metadata:
   content_hash:
-    win-64: 26e9d616b59a819c12744e9ef56864c083283c594eb6054c59d1d4b519891b4d
-    linux-64: a841e2bbfe5cca69a32270a37f09133d3e56d92dc4a977f21559690e3a281d4c
+    win-64: 5379cba7064c699a05e2accc943c0a2738bc20f62cff9153ef29c1a8a30df5c6
+    linux-64: 5d8a966215b8c379ad05e41cfbe47fe48030795a203b4dc40b7e390dae7f1d92
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -2883,37 +2883,37 @@ package:
   category: dev
   optional: true
 - name: pydantic
-  version: 2.5.3
+  version: 2.8.0
   manager: conda
   platform: linux-64
   dependencies:
     annotated-types: '>=0.4.0'
-    pydantic-core: 2.14.6
-    python: '>=3.7,<3.12.4.0a0'
+    pydantic-core: 2.20.0
+    python: '>=3.7'
     typing-extensions: '>=4.6.1'
-  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.5.3-pyhd8ed1ab_0.conda
+  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.8.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 3569001fd8b37e542aaefdf5de124e19
-    sha256: 07ec778cbf17737b740f0547fb5cba91a7bff52945fe637287458e4119c58ffe
+    md5: 2d9e3275aace5688f31a9a01a8fdf381
+    sha256: 07b60383c98e811d00c7918581bfcf41a6973035687859d96e88b652d2bed5b3
   category: main
   optional: false
 - name: pydantic
-  version: 2.5.3
+  version: 2.8.0
   manager: conda
   platform: win-64
   dependencies:
+    python: '>=3.7'
     typing-extensions: '>=4.6.1'
     annotated-types: '>=0.4.0'
-    python: '>=3.7,<3.12.4.0a0'
-    pydantic-core: 2.14.6
-  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.5.3-pyhd8ed1ab_0.conda
+    pydantic-core: 2.20.0
+  url: https://conda.anaconda.org/conda-forge/noarch/pydantic-2.8.0-pyhd8ed1ab_0.conda
   hash:
-    md5: 3569001fd8b37e542aaefdf5de124e19
-    sha256: 07ec778cbf17737b740f0547fb5cba91a7bff52945fe637287458e4119c58ffe
+    md5: 2d9e3275aace5688f31a9a01a8fdf381
+    sha256: 07b60383c98e811d00c7918581bfcf41a6973035687859d96e88b652d2bed5b3
   category: main
   optional: false
 - name: pydantic-core
-  version: 2.14.6
+  version: 2.20.0
   manager: conda
   platform: linux-64
   dependencies:
@@ -2921,14 +2921,14 @@ package:
     python: '>=3.10,<3.11.0a0'
     python_abi: 3.10.*
     typing-extensions: '>=4.6.0,!=4.7.0'
-  url: https://conda.anaconda.org/conda-forge/linux-64/pydantic-core-2.14.6-py310hcb5633a_1.conda
+  url: https://conda.anaconda.org/conda-forge/linux-64/pydantic-core-2.20.0-py310he421c4c_0.conda
   hash:
-    md5: f0f6b7e4b3d134f070288963ed4fbeee
-    sha256: 3bdc1ef89f9e431392aec8ed5695d8aefc7b65a014cc46934f75e87779f89745
+    md5: baa527f18cad39c3c11f98525baffe78
+    sha256: eae5c2640c8a528367835a65ceb9027b26b1994893d92031b74017f750237645
   category: main
   optional: false
 - name: pydantic-core
-  version: 2.14.6
+  version: 2.20.0
   manager: conda
   platform: win-64
   dependencies:
@@ -2938,10 +2938,10 @@ package:
     ucrt: '>=10.0.20348.0'
     vc: '>=14.2,<15'
     vc14_runtime: '>=14.29.30139'
-  url: https://conda.anaconda.org/conda-forge/win-64/pydantic-core-2.14.6-py310h87d50f1_1.conda
+  url: https://conda.anaconda.org/conda-forge/win-64/pydantic-core-2.20.0-py310hc226416_0.conda
   hash:
-    md5: e1055e9fe6ac345e7b8d85acda87dacc
-    sha256: 88dbd555fbf8fdc1dbf54c000e82061527d8bd7905ae85e5f9c034450d8b1d3c
+    md5: 31d176c36cb892124cab34e02725eb1f
+    sha256: 219b68e6bf9f223c46e8738508b32e2810f0cb0ffe679303fadce3efc01ab102
   category: main
   optional: false
 - name: pygments
