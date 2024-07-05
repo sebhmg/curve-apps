@@ -7,17 +7,15 @@ in a semi-automated fashion. The applications are designed with a user-interface
 `geoh5 format <https://mirageoscience-geoh5py.readthedocs-hosted.com/en/stable/content/geoh5_format/index.html>`_,
 open storage format.
 
- - `Edge detection <edge_detection>`__.
+ - :ref:`Edge Detection <edge_detection>`.
     .. figure:: ./images/edge_detection/edge_detection_landing.png
-            :align: center
+            :align: left
             :width: 50%
-            :target: #Edge Detection
 
- - `Trend lines <trend_lines>`__.
+ - :ref:`Trend Lines <trend_lines>`.
     .. figure:: ./images/trend_lines/example_filtered_azimuth.png
-            :align: center
+            :align: left
             :width: 40%
-            :target: #Trend Lines
 
 
 Content
@@ -31,6 +29,7 @@ Content
    edge_detection
    trend_lines
    api/curve_apps
+   release_notes
 
 
 License
