@@ -60,16 +60,6 @@ geoh5py = {git = "https://github.com/MiraGeoscience/geoh5py.git", rev = "develop
 geoapps-utils = {git = "https://github.com/MiraGeoscience/geoapps-utils.git", rev = "develop"}
 #geoapps-utils = {url = "http://localhost:8888/geoapps-utils.tar.gz"}
 
-## indirect dependencies, forcing them here for installation through Conda not pip
-#---------------------------------------------------------------------------------
-h5py = "^3.2.1"  # from geoh5py
-Pillow = "~10.3.0"  # from geoh5py
-
-# pin down package versions when Conda is behind PyPI
-#----------------------------------------------------
-pywavelets = "~1.4.1"  # from scikit-image
-tifffile = "2024.2.12"  # from scikit-image
-
 ## about pip dependencies
 # to be specified to work with conda-lock
 # - from PyPI: my_package = { version = "1.2.3", source = "pypi" }
@@ -92,6 +82,18 @@ tomli = "*"
 [tool.conda-lock]
 platforms = ['win-64', 'linux-64']
 channels = ['conda-forge']
+
+[tool.conda-lock.dependencies]
+
+## indirect dependencies, forcing them here for installation through Conda not pip
+#---------------------------------------------------------------------------------
+h5py = ">=3.2.1, <4.0.0"  # from geoh5py
+Pillow = ">=10.3.0, <10.4.0"  # from geoh5py
+
+# pin down package versions when Conda is behind PyPI
+#----------------------------------------------------
+pywavelets = ">=1.4.1, <1.5.0"  # from scikit-image
+tifffile = "2024.2.12"  # from scikit-image
 
 [tool.isort]
 profile = "black"
