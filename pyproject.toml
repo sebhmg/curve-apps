@@ -90,11 +90,6 @@ channels = ['conda-forge']
 h5py = ">=3.2.1, <4.0.0"  # from geoh5py
 Pillow = ">=10.3.0, <10.4.0"  # from geoh5py
 
-# pin down package versions when Conda is behind PyPI
-#----------------------------------------------------
-pywavelets = ">=1.4.1, <1.5.0"  # from scikit-image
-tifffile = "2024.2.12"  # from scikit-image
-
 [tool.isort]
 profile = "black"
 
