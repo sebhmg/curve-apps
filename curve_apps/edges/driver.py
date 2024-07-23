@@ -19,7 +19,10 @@ import logging
 import sys
 
 import numpy as np
-from geoapps_utils.locations import get_overlapping_limits, map_indices_to_coordinates
+from geoapps_utils.utils.locations import (
+    get_overlapping_limits,
+    map_indices_to_coordinates,
+)
 from geoh5py.data import FloatData
 from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils

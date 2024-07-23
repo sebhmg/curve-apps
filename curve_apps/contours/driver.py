@@ -18,8 +18,8 @@ import logging
 import sys
 
 import numpy as np
-from geoapps_utils.formatters import string_name
-from geoapps_utils.transformations import rotate_xyz
+from geoapps_utils.utils.formatters import string_name
+from geoapps_utils.utils.transformations import rotate_xyz
 from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
 from skimage import measure

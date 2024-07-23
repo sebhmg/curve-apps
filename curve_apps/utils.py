@@ -15,7 +15,7 @@ import re
 from collections.abc import Callable
 
 import numpy as np
-from geoapps_utils.numerical import weighted_average
+from geoapps_utils.utils.numerical import weighted_average
 from geoh5py.objects import Curve, Grid2D, ObjectBase, Points, Surface
 from scipy.interpolate import LinearNDInterpolator, interp1d
 from scipy.spatial import Delaunay
