@@ -89,7 +89,7 @@ def set_vertices_height(vertices: np.ndarray, entity: ObjectBase):
 
     returns: Nx3 array of vertices.
     """
-    if isinstance(entity, (Points, Curve, Surface)):
+    if isinstance(entity, Points | Curve | Surface):
         if entity.vertices is None:
             raise ValueError("Entity does not have vertices.")
         z_interp = LinearNDInterpolator(
@@ -142,7 +142,7 @@ def get_contour_list(params: ContourDetectionParameters) -> list[float]:
 def find_curves(
     vertices: np.ndarray,
     parts: np.ndarray,
-    params: TrendLineDetectionParameters = TrendLineDetectionParameters(),
+    params: TrendLineDetectionParameters | None = None,
 ) -> list[list[list[float]]]:
     """
     Find curves in a set of points.
@@ -153,6 +153,9 @@ def find_curves(
 
     :return: List of curves.
     """
+    if params is None:
+        params = TrendLineDetectionParameters()
+
     tri = Delaunay(vertices, qhull_options="QJ")
     if tri.simplices is None:  # pylint: disable=no-member
         return []
