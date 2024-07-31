@@ -28,6 +28,7 @@ from curve_apps.driver import BaseCurveDriver
 from curve_apps.trend_lines.params import TrendLineParameters
 from curve_apps.utils import find_curves
 
+
 logger = logging.getLogger(__name__)
 
 

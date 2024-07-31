@@ -32,6 +32,7 @@ from curve_apps.utils import (
     set_vertices_height,
 )
 
+
 logger = logging.getLogger(__name__)
 
 
@@ -124,7 +125,6 @@ class ContoursDriver(BaseCurveDriver):
         vertices, edges, values = [], [], []
         v0 = 0
         for contour in contour_list:
-
             coords = measure.find_contours(data, contour)
             if not coords:
                 continue

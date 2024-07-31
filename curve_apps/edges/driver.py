@@ -33,6 +33,7 @@ from skimage.transform import probabilistic_hough_line
 from curve_apps.driver import BaseCurveDriver
 from edges.params import EdgeDetectionParameters, EdgeParameters
 
+
 logger = logging.getLogger(__name__)
 
 
