@@ -19,6 +19,7 @@ import logging
 import sys
 
 import numpy as np
+from edges.params import EdgeDetectionParameters, EdgeParameters
 from geoapps_utils.utils.locations import (
     get_overlapping_limits,
     map_indices_to_coordinates,
@@ -31,7 +32,6 @@ from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
 from curve_apps.driver import BaseCurveDriver
-from edges.params import EdgeDetectionParameters, EdgeParameters
 
 
 logger = logging.getLogger(__name__)
