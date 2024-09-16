@@ -139,7 +139,6 @@ def test_contour_params_from_uijson(tmp_path):
         "fixed_contours": "0, 9",
         "z_value": True,
         "export_as": "my contours",
-        "out_group": "Contours",
     }
 
     ifile = InputFile.read_ui_json(
@@ -158,4 +157,4 @@ def test_contour_params_from_uijson(tmp_path):
     assert params.detection.fixed_contours == [0.0, 9.0]
     assert params.output.z_value == updates["z_value"]
     assert params.output.export_as == updates["export_as"]
-    assert params.output.out_group == updates["out_group"]
+    assert params.output.out_group is None
