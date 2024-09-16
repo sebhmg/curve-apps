@@ -30,8 +30,9 @@ from scipy.spatial import cKDTree
 from skimage.feature import canny
 from skimage.transform import probabilistic_hough_line
 
-from ..driver import BaseCurveDriver
-from .params import EdgeDetectionParameters, EdgeParameters
+from curve_apps.driver import BaseCurveDriver
+from curve_apps.edges.params import EdgeDetectionParameters, EdgeParameters
+
 
 logger = logging.getLogger(__name__)
 

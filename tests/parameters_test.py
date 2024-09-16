@@ -30,7 +30,6 @@ from curve_apps.edges.params import (
 
 
 def test_edge_detection_params(tmp_path):
-
     n_x, n_y = 10, 15
     with Workspace(tmp_path / "test.geoh5") as ws:
         grid = Grid2D.create(
