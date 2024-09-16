@@ -48,10 +48,10 @@ class BaseCurveDriver(BaseDriver):
     def out_group(self) -> UIJsonGroup | None:
         """Output container group."""
 
-        if self._out_group is None and self.params.output.out_group is not None:
+        if self._out_group is None:
             self._out_group = UIJsonGroup.create(
                 workspace=self.workspace,
-                name=self.params.output.out_group,
+                name=self.params.title,
             )
             self._out_group.options = InputFile.stringify(  # type: ignore
                 InputFile.demote(self.params.input_file.ui_json)
