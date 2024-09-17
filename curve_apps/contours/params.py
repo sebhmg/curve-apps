@@ -20,6 +20,7 @@ from typing import ClassVar
 import numpy as np
 from geoapps_utils.driver.data import BaseData
 from geoh5py.data import Data
+from geoh5py.groups import UIJsonGroup
 from geoh5py.objects import Curve, Grid2D, Points, Surface
 from geoh5py.ui_json.utils import str2list
 from pydantic import BaseModel, ConfigDict, field_validator
@@ -125,9 +126,11 @@ class ContourOutputParameters(BaseModel):
     :param out_group: Name of the output group.
     """
 
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     z_value: bool = False
     export_as: str | None = "Contours"
-    out_group: str | None = None
+    out_group: UIJsonGroup | None = None
 
 
 class ContourParameters(BaseData):

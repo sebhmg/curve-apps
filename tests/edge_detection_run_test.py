@@ -133,7 +133,7 @@ def test_input_file(tmp_path: Path):
     driver.run()
 
     with workspace.open():
-        edges = workspace.get_entity("square")[0]
+        edges = workspace.get_entity("Edge Detection")[0]
         assert edges is not None
         assert hasattr(edges, "children")
 

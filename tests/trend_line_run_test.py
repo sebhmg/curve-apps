@@ -85,7 +85,8 @@ def test_driver_curve(tmp_path: Path):
 
         assert isinstance(values, ReferencedData)
         assert values.values is not None
-        assert values.value_map.map == {0: "Unknown", 1: "A", 2: "B", 3: "C", 4: "D"}
+        assert values.value_map is not None
+        assert values.value_map() == {0: "Unknown", 1: "A", 2: "B", 3: "C", 4: "D"}
 
 
 def test_driver_points(tmp_path: Path):
@@ -127,7 +128,8 @@ def test_driver_points(tmp_path: Path):
 
         assert isinstance(values, ReferencedData)
         assert values.values is not None
-        assert values.value_map.map == {
+        assert values.value_map is not None
+        assert values.value_map() == {
             0: "Unknown",
             1: "A",
             2: "B",
@@ -167,7 +169,8 @@ def test_driver_points_no_parts(tmp_path: Path):
 
         assert isinstance(values, ReferencedData)
         assert values.values is not None
-        assert values.value_map.map == {0: "Unknown", 1: "A", 2: "B", 3: "C", 4: "D"}
+        assert values.value_map is not None
+        assert values.value_map() == {0: "Unknown", 1: "A", 2: "B", 3: "C", 4: "D"}
 
 
 def test_azimuth_filter(tmp_path: Path):
@@ -222,7 +225,7 @@ def test_input_file(tmp_path: Path):
     driver.run()
 
     with workspace.open():
-        edges = workspace.get_entity("square")[0]
+        edges = workspace.get_entity("Trend Lines Detection")[0]
         assert edges is not None
         assert hasattr(edges, "children")
         assert any(child for child in edges.children if isinstance(child, FilenameData))

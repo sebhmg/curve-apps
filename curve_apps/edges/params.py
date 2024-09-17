@@ -19,6 +19,7 @@ from typing import ClassVar
 
 from geoapps_utils.driver.data import BaseData
 from geoh5py.data import FloatData
+from geoh5py.groups import UIJsonGroup
 from geoh5py.objects import Grid2D
 from pydantic import BaseModel, ConfigDict
 
@@ -67,8 +68,10 @@ class EdgeOutputParameters(BaseModel):
     :param out_group: Name of the output group.
     """
 
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     export_as: str | None = "edges"
-    out_group: str | None = "detections"
+    out_group: UIJsonGroup | None = None
 
 
 class EdgeParameters(BaseData):
