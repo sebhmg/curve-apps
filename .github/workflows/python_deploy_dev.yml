@@ -1,0 +1,20 @@
+name: Deploy python package in development
+
+on:
+  push:
+    tags:
+      - '*' # Push events to every tag not containing /
+
+jobs:
+  call-workflow-publish:
+    name: Publish package on JFrog Artifactory
+    uses: MiraGeoscience/CI-tools/.github/workflows/reusable-python-publish_package.yml@DEVOPS-504
+    with:
+      package-manager: 'conda'
+      package-name: 'curve_apps'
+      version-tag: ${{ github.ref_name }}
+      python-version: '3.10'
+      repo-names: "['public-conda-dev-local']"
+    secrets:
+      JFROG_ARTIFACTORY_URL: ${{ secrets.JFROG_ARTIFACTORY_URL }}
+      JFROG_ARTIFACTORY_TOKEN: ${{ secrets.JFROG_ARTIFACTORY_TOKEN }}
