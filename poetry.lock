@@ -11,6 +11,11 @@ files = [
     {file = "alabaster-1.0.0.tar.gz", hash = "sha256:c00dca57bca26fa62a6d7d0a9fcce65f3e026e9bfe33e9c538fd3fbb2144fd9e"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -21,6 +26,11 @@ files = [
     {file = "annotated_types-0.7.0-py3-none-any.whl", hash = "sha256:1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"},
     {file = "annotated_types-0.7.0.tar.gz", hash = "sha256:aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "astroid"
@@ -36,6 +46,11 @@ files = [
 [package.dependencies]
 typing-extensions = {version = ">=4.0.0", markers = "python_version < \"3.11\""}
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "babel"
 version = "2.16.0"
@@ -50,6 +65,11 @@ files = [
 [package.extras]
 dev = ["freezegun (>=1.0,<2.0)", "pytest (>=6.0)", "pytest-cov"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "certifi"
 version = "2024.8.30"
@@ -60,6 +80,11 @@ files = [
     {file = "certifi-2024.8.30-py3-none-any.whl", hash = "sha256:922820b53db7a7257ffbda3f597266d435245903d80737e34f8a45ff3e3230d8"},
     {file = "certifi-2024.8.30.tar.gz", hash = "sha256:bec941d2aa8195e248a60b31ff9f0558284cf01a52591ceda73ea9afffd69fd9"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "charset-normalizer"
@@ -160,6 +185,11 @@ files = [
     {file = "charset_normalizer-3.3.2-py3-none-any.whl", hash = "sha256:3e4d1f6587322d2788836a99c69062fbb091331ec940e02d12d179c1d53e25fc"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "colorama"
 version = "0.4.6"
@@ -170,6 +200,11 @@ files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "coverage"
@@ -258,6 +293,11 @@ tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.1
 [package.extras]
 toml = ["tomli"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "dill"
 version = "0.3.9"
@@ -273,6 +313,11 @@ files = [
 graph = ["objgraph (>=1.7.2)"]
 profile = ["gprof2dot (>=2022.7.29)"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "docutils"
 version = "0.21.2"
@@ -283,6 +328,11 @@ files = [
     {file = "docutils-0.21.2-py3-none-any.whl", hash = "sha256:dafca5b9e384f0e419294eb4d2ff9fa826435bf15f15b7bd45723e8ad76811b2"},
     {file = "docutils-0.21.2.tar.gz", hash = "sha256:3a6b18732edf182daa3cd12775bbb338cf5691468f91eeeb109deff6ebfa986f"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "exceptiongroup"
@@ -298,47 +348,54 @@ files = [
 [package.extras]
 test = ["pytest (>=6)"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "geoapps-utils"
-version = "0.5.0-alpha.1"
+version = "0.4.0a1"
 description = "Geoapps Utils"
 optional = false
-python-versions = "^3.10"
-files = []
-develop = false
+python-versions = ">=3.10,<4.0"
+files = [
+    {file = "geoapps_utils-0.4.0a1-py3-none-any.whl", hash = "sha256:08488b1d7545acfca6d3be0de4fb4fa8cb9e0d0820c8b7808f99dbf870f18ff5"},
+    {file = "geoapps_utils-0.4.0a1.tar.gz", hash = "sha256:1726d3f7abc9249864e35eaa22d03102f6dea2232e76c6e89d0a97ec677403c1"},
+]
 
 [package.dependencies]
-geoh5py = {git = "https://github.com/MiraGeoscience/geoh5py.git", rev = "release/0.10.0"}
-numpy = "~1.26.0"
-pydantic = "^2.5.2"
-scipy = "~1.14.0"
+geoh5py = ">=0.10.0a0.dev0,<0.11"
+numpy = ">=1.26.0,<1.27.0"
+pydantic = ">=2.5.2,<3.0.0"
+scipy = ">=1.14.0,<1.15.0"
 
 [package.source]
-type = "git"
-url = "https://github.com/MiraGeoscience/geoapps-utils.git"
-reference = "develop"
-resolved_reference = "6cd7b813d9b17a6eacfce289e76f465d9fde4083"
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "geoh5py"
-version = "0.10.0-alpha.1"
+version = "0.10.0a1"
 description = "Python API for geoh5, an open file format for geoscientific data"
 optional = false
-python-versions = "^3.10"
-files = []
-develop = false
+python-versions = ">=3.10,<4.0"
+files = [
+    {file = "geoh5py-0.10.0a1-py3-none-any.whl", hash = "sha256:1efb05146e63f17bd916a0a13913cb7847ba221d1a4b0eb8efa5cba73facc15b"},
+    {file = "geoh5py-0.10.0a1.tar.gz", hash = "sha256:6e10aa305ee32dcb33a39059dc8f5448ffabff13c8d262b41d43e044d3087220"},
+]
 
 [package.dependencies]
-h5py = "^3.2.1"
-numpy = "~1.26.0"
-Pillow = "~10.3.0"
-pydantic = "^2.5.2"
+h5py = ">=3.2.1,<4.0.0"
+numpy = ">=1.26.0,<1.27.0"
+pillow = ">=10.3.0,<10.4.0"
+pydantic = ">=2.5.2,<3.0.0"
 
 [package.source]
-type = "git"
-url = "https://github.com/MiraGeoscience/geoh5py.git"
-reference = "release/0.10.0"
-resolved_reference = "0615540b1334fe69e3a92b341d38f4dd10541cb5"
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "h5py"
@@ -378,6 +435,11 @@ files = [
 [package.dependencies]
 numpy = ">=1.19.3"
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "idna"
 version = "3.10"
@@ -391,6 +453,11 @@ files = [
 
 [package.extras]
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "imageio"
@@ -425,6 +492,11 @@ rawpy = ["numpy (>2)", "rawpy"]
 test = ["fsspec[github]", "pytest", "pytest-cov"]
 tifffile = ["tifffile"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "imagesize"
 version = "1.4.1"
@@ -436,6 +508,11 @@ files = [
     {file = "imagesize-1.4.1.tar.gz", hash = "sha256:69150444affb9cb0d5cc5a92b3676f0b2fb7cd9ae39e947a5e11a36b4497cd4a"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "iniconfig"
 version = "2.0.0"
@@ -446,6 +523,11 @@ files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "isort"
@@ -460,6 +542,11 @@ files = [
 
 [package.extras]
 colors = ["colorama (>=0.4.6)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "jinja2"
@@ -477,6 +564,11 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "lazy-loader"
@@ -496,6 +588,11 @@ packaging = "*"
 dev = ["changelist (==0.5)"]
 lint = ["pre-commit (==3.7.0)"]
 test = ["pytest (>=7.4)", "pytest-cov (>=4.1)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "markupsafe"
@@ -567,6 +664,11 @@ files = [
     {file = "markupsafe-3.0.0.tar.gz", hash = "sha256:03ff62dea2fef3eadf2f1853bc6332bcb0458d9608b11dfb1cd5aeda1c178ea6"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "mccabe"
 version = "0.7.0"
@@ -577,6 +679,11 @@ files = [
     {file = "mccabe-0.7.0-py2.py3-none-any.whl", hash = "sha256:6c2d30ab6be0e4a46919781807b4f0d834ebdd6c6e3dca0bda5a15f863427b6e"},
     {file = "mccabe-0.7.0.tar.gz", hash = "sha256:348e0240c33b60bbdf4e523192ef919f28cb2c3d7d5c7794f74009290f236325"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "networkx"
@@ -595,6 +702,11 @@ developer = ["changelist (==0.5)", "mypy (>=1.1)", "pre-commit (>=3.2)", "rtoml"
 doc = ["myst-nb (>=1.0)", "numpydoc (>=1.7)", "pillow (>=9.4)", "pydata-sphinx-theme (>=0.14)", "sphinx (>=7)", "sphinx-gallery (>=0.14)", "texext (>=0.6.7)"]
 extra = ["lxml (>=4.6)", "pydot (>=2.0)", "pygraphviz (>=1.12)", "sympy (>=1.10)"]
 test = ["pytest (>=7.2)", "pytest-cov (>=4.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "numpy"
@@ -641,6 +753,11 @@ files = [
     {file = "numpy-1.26.4.tar.gz", hash = "sha256:2a02aba9ed12e4ac4eb3ea9421c420301a0c6460d9830d74a9df87efa4912010"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "packaging"
 version = "24.1"
@@ -651,6 +768,11 @@ files = [
     {file = "packaging-24.1-py3-none-any.whl", hash = "sha256:5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124"},
     {file = "packaging-24.1.tar.gz", hash = "sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "pillow"
@@ -738,6 +860,11 @@ tests = ["check-manifest", "coverage", "defusedxml", "markdown2", "olefile", "pa
 typing = ["typing-extensions"]
 xmp = ["defusedxml"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "platformdirs"
 version = "4.3.6"
@@ -754,6 +881,11 @@ docs = ["furo (>=2024.8.6)", "proselint (>=0.14)", "sphinx (>=8.0.2)", "sphinx-a
 test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=8.3.2)", "pytest-cov (>=5)", "pytest-mock (>=3.14)"]
 type = ["mypy (>=1.11.2)"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "pluggy"
 version = "1.5.0"
@@ -768,6 +900,11 @@ files = [
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "pydantic"
@@ -788,6 +925,11 @@ typing-extensions = {version = ">=4.6.1", markers = "python_version < \"3.13\""}
 [package.extras]
 email = ["email-validator (>=2.0.0)"]
 timezone = ["tzdata"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "pydantic-core"
@@ -890,6 +1032,11 @@ files = [
 [package.dependencies]
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "pygments"
 version = "2.18.0"
@@ -903,6 +1050,11 @@ files = [
 
 [package.extras]
 windows-terminal = ["colorama (>=0.4.6)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "pylint"
@@ -929,6 +1081,11 @@ tomlkit = ">=0.10.1"
 spelling = ["pyenchant (>=3.2,<4.0)"]
 testutils = ["gitpython (>3)"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "pytest"
 version = "8.3.3"
@@ -951,6 +1108,11 @@ tomli = {version = ">=1", markers = "python_version < \"3.11\""}
 [package.extras]
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "pytest-cov"
 version = "5.0.0"
@@ -968,6 +1130,11 @@ pytest = ">=4.6"
 
 [package.extras]
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "virtualenv"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "pywavelets"
@@ -1020,6 +1187,11 @@ numpy = ">=1.23,<3"
 [package.extras]
 optional = ["scipy (>=1.9)"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "requests"
 version = "2.32.3"
@@ -1040,6 +1212,11 @@ urllib3 = ">=1.21.1,<3"
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "scikit-image"
@@ -1091,6 +1268,11 @@ docs = ["dask[array] (>=2022.9.2)", "ipywidgets", "kaleido", "matplotlib (>=3.6)
 optional = ["SimpleITK", "astropy (>=3.1.2)", "cloudpickle (>=0.2.1)", "dask[array] (>=1.0.0,!=2.17.0)", "matplotlib (>=3.3)", "pooch (>=1.3.0)", "pyamg"]
 test = ["asv", "codecov", "matplotlib (>=3.3)", "pooch (>=1.3.0)", "pytest (>=5.2.0)", "pytest-cov (>=2.7.0)", "pytest-faulthandler", "pytest-localserver"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "scipy"
 version = "1.14.1"
@@ -1141,6 +1323,11 @@ dev = ["cython-lint (>=0.12.2)", "doit (>=0.36.0)", "mypy (==1.10.0)", "pycodest
 doc = ["jupyterlite-pyodide-kernel", "jupyterlite-sphinx (>=0.13.1)", "jupytext", "matplotlib (>=3.5)", "myst-nb", "numpydoc", "pooch", "pydata-sphinx-theme (>=0.15.2)", "sphinx (>=5.0.0,<=7.3.7)", "sphinx-design (>=0.4.0)"]
 test = ["Cython", "array-api-strict (>=2.0)", "asv", "gmpy2", "hypothesis (>=6.30)", "meson", "mpmath", "ninja", "pooch", "pytest", "pytest-cov", "pytest-timeout", "pytest-xdist", "scikit-umfpack", "threadpoolctl"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "snowballstemmer"
 version = "2.2.0"
@@ -1151,6 +1338,11 @@ files = [
     {file = "snowballstemmer-2.2.0-py2.py3-none-any.whl", hash = "sha256:c8e1716e83cc398ae16824e5572ae04e0d9fc2c6b985fb0f900f5f0c96ecba1a"},
     {file = "snowballstemmer-2.2.0.tar.gz", hash = "sha256:09b16deb8547d3412ad7b590689584cd0fe25ec8db3be37788be3810cbf19cb1"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "sphinx"
@@ -1187,6 +1379,11 @@ docs = ["sphinxcontrib-websupport"]
 lint = ["flake8 (>=6.0)", "mypy (==1.11.0)", "pytest (>=6.0)", "ruff (==0.5.5)", "sphinx-lint (>=0.9)", "tomli (>=2)", "types-Pillow (==10.2.0.20240520)", "types-Pygments (==2.18.0.20240506)", "types-colorama (==0.4.15.20240311)", "types-defusedxml (==0.7.0.20240218)", "types-docutils (==0.21.0.20240724)", "types-requests (>=2.30.0)"]
 test = ["cython (>=3.0)", "defusedxml (>=0.7.1)", "pytest (>=8.0)", "setuptools (>=70.0)", "typing_extensions (>=4.9)"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "sphinx-autodoc-typehints"
 version = "2.4.4"
@@ -1205,6 +1402,11 @@ sphinx = ">=8.0.2"
 docs = ["furo (>=2024.8.6)"]
 numpy = ["nptyping (>=2.5)"]
 testing = ["covdefaults (>=2.3)", "coverage (>=7.6.1)", "defusedxml (>=0.7.1)", "diff-cover (>=9.1.1)", "pytest (>=8.3.2)", "pytest-cov (>=5)", "sphobjinv (>=2.3.1.1)", "typing-extensions (>=4.12.2)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "sphinx-rtd-theme"
@@ -1225,6 +1427,11 @@ sphinxcontrib-jquery = ">=4,<5"
 [package.extras]
 dev = ["bump2version", "transifex-client", "twine", "wheel"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "sphinxcontrib-applehelp"
 version = "2.0.0"
@@ -1240,6 +1447,11 @@ files = [
 lint = ["mypy", "ruff (==0.5.5)", "types-docutils"]
 standalone = ["Sphinx (>=5)"]
 test = ["pytest"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "sphinxcontrib-devhelp"
@@ -1257,6 +1469,11 @@ lint = ["mypy", "ruff (==0.5.5)", "types-docutils"]
 standalone = ["Sphinx (>=5)"]
 test = ["pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "sphinxcontrib-htmlhelp"
 version = "2.1.0"
@@ -1273,6 +1490,11 @@ lint = ["mypy", "ruff (==0.5.5)", "types-docutils"]
 standalone = ["Sphinx (>=5)"]
 test = ["html5lib", "pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "sphinxcontrib-jquery"
 version = "4.1"
@@ -1287,6 +1509,11 @@ files = [
 [package.dependencies]
 Sphinx = ">=1.8"
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "sphinxcontrib-jsmath"
 version = "1.0.1"
@@ -1300,6 +1527,11 @@ files = [
 
 [package.extras]
 test = ["flake8", "mypy", "pytest"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "sphinxcontrib-qthelp"
@@ -1317,6 +1549,11 @@ lint = ["mypy", "ruff (==0.5.5)", "types-docutils"]
 standalone = ["Sphinx (>=5)"]
 test = ["defusedxml (>=0.7.1)", "pytest"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "sphinxcontrib-serializinghtml"
 version = "2.0.0"
@@ -1332,6 +1569,11 @@ files = [
 lint = ["mypy", "ruff (==0.5.5)", "types-docutils"]
 standalone = ["Sphinx (>=5)"]
 test = ["pytest"]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "tifffile"
@@ -1355,6 +1597,11 @@ test = ["cmapfile", "czifile", "dask", "defusedxml", "fsspec", "imagecodecs", "l
 xml = ["defusedxml", "lxml"]
 zarr = ["fsspec", "zarr"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "tomli"
 version = "2.0.2"
@@ -1366,6 +1613,11 @@ files = [
     {file = "tomli-2.0.2.tar.gz", hash = "sha256:d46d457a85337051c36524bc5349dd91b1877838e2979ac5ced3e710ed8a60ed"},
 ]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "tomlkit"
 version = "0.13.2"
@@ -1376,6 +1628,11 @@ files = [
     {file = "tomlkit-0.13.2-py3-none-any.whl", hash = "sha256:7a974427f6e119197f670fbbbeae7bef749a6c14e793db934baefc1b5f03efde"},
     {file = "tomlkit-0.13.2.tar.gz", hash = "sha256:fff5fe59a87295b278abd31bec92c15d9bc4a06885ab12bcea52c71119392e79"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "tqdm"
@@ -1397,6 +1654,11 @@ notebook = ["ipywidgets (>=6)"]
 slack = ["slack-sdk"]
 telegram = ["requests"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [[package]]
 name = "typing-extensions"
 version = "4.12.2"
@@ -1407,6 +1669,11 @@ files = [
     {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
     {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
 ]
+
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
 
 [[package]]
 name = "urllib3"
@@ -1425,7 +1692,12 @@ h2 = ["h2 (>=4,<5)"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
 
+[package.source]
+type = "legacy"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+reference = "jfrog-server"
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10, <3.11"
-content-hash = "2651128ab59dc29c7f04b62c2ed31aa7891be8001ea5e3534d7941544464f0c2"
+content-hash = "b5791d4b9218e44f571465ccc65df8d312a4a1427f30aa12ea910e511041f117"
