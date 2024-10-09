@@ -79,6 +79,11 @@ sphinx-autodoc-typehints = "*"
 sphinx-rtd-theme = "*"
 tomli = "*"
 
+[[tool.poetry.source]]
+name = "public"
+url = "https://mirageoscienceltd.jfrog.io/artifactory/api/pypi/public-pypi-dev/simple"
+priority = "supplemental"
+
 [tool.conda-lock]
 platforms = ['win-64', 'linux-64']
 channels = ['conda-forge']
