@@ -12,8 +12,8 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 import tomli as toml
 import yaml
@@ -31,6 +31,7 @@ def get_pyproject_version():
 
     return pyproject["tool"]["poetry"]["version"]
 
+
 def get_conda_recipe_version():
     path = Path(__file__).resolve().parents[1] / "meta.yaml"
 
@@ -44,12 +45,15 @@ def get_conda_recipe_version():
 
     return recipe["package"]["version"]
 
+
+
 def test_version_is_consistent():
     assert curve_apps.__version__ == get_pyproject_version()
 
 def test_conda_version_is_pypi():
     version = Version(get_conda_recipe_version())
     assert version is not None
+
 
 def test_version_is_semver():
     semver_re = (
@@ -59,3 +63,4 @@ def test_version_is_semver():
         r"(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
     )
     assert re.search(semver_re, curve_apps.__version__) is not None
+

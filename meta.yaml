@@ -10,7 +10,7 @@ source:
   # sha256: d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed
   # curl -sL https://github.com/MiraGeoscience/{{ name }}/archive/v{{ version }}.tar.gz | openssl sha256
   path: ../{{ name }}
- 
+
 
 build:
   noarch: python
@@ -49,7 +49,7 @@ about:
   description: |
     Auto-detection of trends and edges in geoscientific data.
   license: MIT
-  license_file: 
+  license_file:
     - LICENSE
   doc_url: https://mirageoscience-curve-apps.readthedocs-hosted.com/
   dev_url: https://github.com/MiraGeoscience/curve-apps
