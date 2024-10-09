@@ -12,8 +12,8 @@
 from __future__ import annotations
 
 import re
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 import tomli as toml
 import yaml
@@ -30,6 +30,7 @@ def get_pyproject_version():
 
     return pyproject["tool"]["poetry"]["version"]
 
+
 def get_conda_recipe_version():
     path = Path(__file__).resolve().parents[1] / "meta.yaml"
 
@@ -42,6 +43,7 @@ def get_conda_recipe_version():
     recipe = yaml.safe_load(rendered_yaml)
 
     return recipe["package"]["version"]
+
 
 def get_conda_recipe_source_url():
     path = Path(__file__).resolve().parents[1] / "meta.yaml"
@@ -56,9 +58,11 @@ def get_conda_recipe_source_url():
 
     return (recipe["source"]["url"], recipe["source"]["sha256"])
 
+
 def test_version_is_consistent():
     assert curve_apps.__version__ == get_pyproject_version()
     assert curve_apps.__version__ == get_conda_recipe_version()
+
 
 def test_version_is_semver():
     semver_re = (
@@ -69,6 +73,7 @@ def test_version_is_semver():
     )
     assert re.search(semver_re, curve_apps.__version__) is not None
 
+
 def test_conda_recipe_source_is_valid():
     url, sha256 = get_conda_recipe_source_url()
 
@@ -76,7 +81,7 @@ def test_conda_recipe_source_is_valid():
         ["curl", "-sL", url, "|", "openssl", "sha256"],
         capture_output=True,
         text=True,
-        shell=True
+        shell=True,
     )
 
     result_sha256 = result.stdout.strip().split(" ")[-1]
