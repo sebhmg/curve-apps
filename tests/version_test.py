@@ -12,7 +12,6 @@
 from __future__ import annotations
 
 import re
-import subprocess
 from pathlib import Path
 
 import tomli as toml
@@ -46,9 +45,9 @@ def get_conda_recipe_version():
     return recipe["package"]["version"]
 
 
-
 def test_version_is_consistent():
     assert curve_apps.__version__ == get_pyproject_version()
+
 
 def test_conda_version_is_pypi():
     version = Version(get_conda_recipe_version())
@@ -63,4 +62,3 @@ def test_version_is_semver():
         r"(?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$"
     )
     assert re.search(semver_re, curve_apps.__version__) is not None
-
