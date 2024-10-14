@@ -27,8 +27,10 @@ from geoh5py.data import FloatData
 from geoh5py.objects import Curve, Grid2D
 from geoh5py.ui_json import InputFile, utils
 from scipy.spatial import cKDTree
-from skimage.feature import canny
-from skimage.transform import probabilistic_hough_line
+from skimage.feature import canny  # pylint: disable=no-name-in-module
+from skimage.transform import (  # pylint: disable=no-name-in-module
+    probabilistic_hough_line,
+)
 
 from curve_apps.driver import BaseCurveDriver
 from curve_apps.edges.params import EdgeDetectionParameters, EdgeParameters
@@ -226,7 +228,7 @@ class EdgesDriver(BaseCurveDriver):
                     line_length=line_length,
                     threshold=threshold,
                     line_gap=line_gap,
-                    seed=0,
+                    rng=0,
                 )
 
                 if np.any(lines):
