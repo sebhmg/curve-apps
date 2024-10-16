@@ -218,6 +218,7 @@ def walk_edges(  # pylint: disable=too-many-arguments
     edges: np.ndarray,
     vertices: np.ndarray,
     damping: float = 0.0,
+    *,
     mask: np.ndarray | None = None,
 ) -> tuple[list, np.ndarray]:
     """

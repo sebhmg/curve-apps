@@ -162,4 +162,4 @@ def test_filter_segments_orientation():
     assert np.all(ind)
 
     ind = filter_segments_orientation(points, segments, 5, 1)
-    assert ~np.all(ind)
+    assert ~np.all(ind)  # pylint: disable=invalid-unary-operand-type
