@@ -19,11 +19,3 @@ curve\_apps.contours.params module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: curve_apps.contours
-   :members:
-   :undoc-members:
-   :show-inheritance:

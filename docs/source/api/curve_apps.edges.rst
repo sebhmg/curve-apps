@@ -19,11 +19,3 @@ curve\_apps.edges.params module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: curve_apps.edges
-   :members:
-   :undoc-members:
-   :show-inheritance:

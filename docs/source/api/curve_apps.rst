@@ -29,11 +29,3 @@ curve\_apps.utils module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: curve_apps
-   :members:
-   :undoc-members:
-   :show-inheritance:
