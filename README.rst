@@ -1,9 +1,9 @@
 |coverage| |maintainability| |precommit_ci| |docs| |style| |version| |status| |pyversions|
 
 
-.. |docs| image:: https://readthedocs.org/projects/curve-apps/badge/
+.. |docs| image:: https://readthedocs.com/projects/mirageoscience-curve-apps/badge/?version=latest
     :alt: Documentation Status
-    :target: https://curve-apps.readthedocs.io/en/latest/?badge=latest
+    :target: https://mirageoscience-curve-apps.readthedocs-hosted.com/en/latest/?badge=latest
 
 .. |coverage| image:: https://codecov.io/gh/MiraGeoscience/curve-apps/branch/develop/graph/badge.svg
     :alt: Code coverage
@@ -45,7 +45,7 @@ Auto-detection of trends and edges in geoscientific data.
 
 Documentation
 ^^^^^^^^^^^^^
-`Online documentation <https://edge-detection.readthedocs.io/en/latest/>`_
+`Online documentation <https://mirageoscience-curve-apps.readthedocs-hosted.com/en/latest/>`_
 
 
 Installation
