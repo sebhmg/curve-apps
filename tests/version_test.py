@@ -47,6 +47,9 @@ def get_conda_recipe_version():
 
 def test_version_is_consistent():
     assert curve_apps.__version__ == get_pyproject_version()
+    normalized_conda_version = Version(get_conda_recipe_version())
+    normalized_version = Version(curve_apps.__version__)
+    assert normalized_conda_version == normalized_version
 
 
 def test_conda_version_is_pypi():
