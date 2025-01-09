@@ -1,13 +1,11 @@
-#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-#  Copyright (c) 2024 Mira Geoscience Ltd.                                       '
-#                                                                                '
-#  All rights reserved.                                                          '
-#                                                                                '
-#  This file is part of curve-apps.                                              '
-#                                                                                '
-#  curve-apps is distributed under the terms and conditions of the MIT License   '
-#  (see LICENSE file at the root of this source code package).                   '
-#  '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+# ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+#  Copyright (c) 2024-2025 Mira Geoscience Ltd.                                '
+#                                                                              '
+#  This file is part of edge-detection package.                                '
+#                                                                              '
+#  All rights reserved.                                                        '
+#                                                                              '
+# ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 from __future__ import annotations
 
@@ -54,6 +52,9 @@ def interp_to_grid(
     :param resolution: Grid resolution
     :param max_distance: Maximum distance used in weighted average.
     """
+
+    if entity.locations is None:
+        raise ValueError("Entity must have locations.")
 
     grid = []
     for dim in np.arange(2):
