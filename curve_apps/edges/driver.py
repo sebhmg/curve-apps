@@ -223,7 +223,7 @@ class EdgesDriver(BaseCurveDriver):
                     line_length=line_length,
                     threshold=threshold,
                     line_gap=line_gap,
-                    seed=0,
+                    rng=0,
                 )
 
                 if np.any(lines):
