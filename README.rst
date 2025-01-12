@@ -13,24 +13,24 @@
     :alt: Coding style
     :target: https://github.com/pf/black
 
-.. |version| image:: https://img.shields.io/pypi/v/edge-detection.svg
+.. |version| image:: https://img.shields.io/pypi/v/curve-apps.svg
     :alt: version on PyPI
-    :target: https://pypi.python.org/pypi/edge-detection/
+    :target: https://pypi.python.org/pypi/curve-apps/
 
-.. |status| image:: https://img.shields.io/pypi/status/edge-detection.svg
+.. |status| image:: https://img.shields.io/pypi/status/curve-apps.svg
     :alt: version status on PyPI
-    :target: https://pypi.python.org/pypi/edge-detection/
+    :target: https://pypi.python.org/pypi/curve-apps/
 
-.. |pyversions| image:: https://img.shields.io/pypi/pyversions/edge-detection.svg
+.. |pyversions| image:: https://img.shields.io/pypi/pyversions/curve-apps.svg
     :alt: Python versions
-    :target: https://pypi.python.org/pypi/edge-detection/
+    :target: https://pypi.python.org/pypi/curve-apps/
 
-.. |precommit_ci| image:: https://results.pre-commit.ci/badge/github/MiraGeoscience/edge-detection/develop.svg
+.. |precommit_ci| image:: https://results.pre-commit.ci/badge/github/MiraGeoscience/curve-apps/develop.svg
     :alt: pre-commit.ci status
-    :target: https://results.pre-commit.ci/latest/github/MiraGeoscience/edge-detection/develop
+    :target: https://results.pre-commit.ci/latest/github/MiraGeoscience/curve-apps/develop
 
 .. |maintainability| image:: https://api.codeclimate.com/v1/badges/_token_/maintainability
-   :target: https://codeclimate.com/github/MiraGeoscience/edge-detection/maintainability
+   :target: https://codeclimate.com/github/MiraGeoscience/curve-apps/maintainability
    :alt: Maintainability
 
 
