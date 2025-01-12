@@ -9,7 +9,12 @@ from datetime import datetime
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "curve-apps"
+
+# The full version, including alpha/beta/rc tags.
 release = "0.2.0-rc.1"
+# The short X.Y.Z version.
+version = ".".join(release.split(".")[:3])
+
 
 project_copyright = "%Y, Mira Geoscience Ltd"
 
@@ -35,7 +40,9 @@ autodoc_typehints = "signature"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "alabaster"
-html_static_path = ["_static"]
+html_theme_options = {
+    'description': f"version {release}",
+}
 
 # Enable numref
 numfig = True
