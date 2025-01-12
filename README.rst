@@ -1,4 +1,4 @@
-|coverage| |maintainability| |precommit_ci| |docs| |style| |version| |status| |pyversions|
+|coverage| |precommit_ci| |docs| |style| |version| |status| |pyversions|
 
 
 .. |docs| image:: https://readthedocs.com/projects/mirageoscience-curve-apps/badge/?version=latest
@@ -29,9 +29,11 @@
     :alt: pre-commit.ci status
     :target: https://results.pre-commit.ci/latest/github/MiraGeoscience/curve-apps/develop
 
-.. |maintainability| image:: https://api.codeclimate.com/v1/badges/_token_/maintainability
-   :target: https://codeclimate.com/github/MiraGeoscience/curve-apps/maintainability
-   :alt: Maintainability
+.. TODO: configure Code Climate and add top |maintainability| link new |coverage|
+    .. |maintainability| image:: https://api.codeclimate.com/v1/badges/_token_/maintainability
+    :target: https://codeclimate.com/github/MiraGeoscience/curve-apps/maintainability
+    :alt: Maintainability
+
 
 
 curve-apps
