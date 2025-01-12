@@ -1,12 +1,12 @@
 # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #  Copyright (c) 2024-2025 Mira Geoscience Ltd.                                '
 #                                                                              '
-#  This file is part of edge-detection package.                                '
+#  This file is part of curve-apps package.                                    '
 #                                                                              '
-#  All rights reserved.                                                        '
+#  curve-apps is distributed under the terms and conditions of the MIT License '
+#  (see LICENSE file at the root of this source code package).                 '
 #                                                                              '
 # ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-# pylint: disable=duplicate-code
 
 from pathlib import Path
 
