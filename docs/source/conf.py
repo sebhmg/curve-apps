@@ -3,11 +3,15 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+from datetime import datetime
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "curve-apps"
 release = "0.2.0-beta.2"
+
+project_copyright = "%Y, Mira Geoscience Ltd"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -35,3 +39,10 @@ html_static_path = ["_static"]
 
 # Enable numref
 numfig = True
+
+def get_copyright_notice():
+    return f"Copyright {datetime.now().strftime(project_copyright)}"
+
+rst_epilog = f"""
+.. |copyright_notice| replace:: {get_copyright_notice()}.
+"""
