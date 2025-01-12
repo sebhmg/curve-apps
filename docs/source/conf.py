@@ -9,7 +9,7 @@ from datetime import datetime
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "curve-apps"
-release = "0.2.0-beta.2"
+release = "0.2.0-rc.1"
 
 project_copyright = "%Y, Mira Geoscience Ltd"
 
